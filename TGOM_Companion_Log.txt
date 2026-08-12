@@ -1,0 +1,924 @@
+[2026-08-12 16:30:30] [-----] LOGGER START v0.1.0
+[2026-08-12 16:30:30] [PLAYER_PARTY]
+[2026-08-12 16:30:51] [MESSAGE] [map=53(Intro) pos=9,7 event=1] <ac>Gym Leader Registration: Starting... Please be patient...
+[2026-08-12 16:30:57] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bHello! Sorry to keep you waiting!
+[2026-08-12 16:30:59] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bWelcome to Gym Leader Registration!
+[2026-08-12 16:31:02] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bThis program is designed to help ensure the Gym you take over is customized to fit how you battle.
+[2026-08-12 16:31:05] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bYou have been chosen for your skill and promise as a Trainer. We know you won't let us down.
+[2026-08-12 16:31:07] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bIf you need help, I am certainly capable of giving it.
+[2026-08-12 16:31:08] [CHOICE] [map=53(Intro) pos=9,7 event=1] Controls / Job / No info needed => Controls
+[2026-08-12 16:31:08] [CHOICE] [map=53(Intro) pos=9,7 event=1] Controls / Job / No info needed => Controls
+[2026-08-12 16:32:11] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bIf you need help, I am certainly capable of giving it.
+[2026-08-12 16:32:13] [CHOICE] [map=53(Intro) pos=9,7 event=1] Controls / Job / No info needed => Job
+[2026-08-12 16:32:13] [CHOICE] [map=53(Intro) pos=9,7 event=1] Controls / Job / No info needed => Job
+[2026-08-12 16:32:13] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bWell then, without further ado...
+[2026-08-12 16:32:15] [MESSAGE] [map=53(Intro) pos=9,7 event=1] <ac>Your job is to test\n the strength of local Trainers and ensure only the best of the best make it to the Champion.
+[2026-08-12 16:32:25] [MESSAGE] [map=53(Intro) pos=9,7 event=1] <ac>However, that is not all.\n The city that owns the Gym\n will expect a lot from you. Keep them happy and, most importantly,\n safe.
+[2026-08-12 16:32:27] [MESSAGE] [map=53(Intro) pos=9,7 event=1] <ac>You will be a role model to some,\n a challenge to many,\n and, overall, a great Trainer.
+[2026-08-12 16:32:29] [MESSAGE] [map=53(Intro) pos=9,7 event=1] <ac>This is more than just you flaunting your power.\n This is your chance to put yourself\n in new situations,\n some you've never dreamed of.
+[2026-08-12 16:32:31] [MESSAGE] [map=53(Intro) pos=9,7 event=1] <ac>Get in touch with the community,\n help the weak,\n challenge the strong.\n This is your duty.
+[2026-08-12 16:32:35] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bIf you need help, I am certainly capable of giving it.
+[2026-08-12 16:32:36] [CHOICE] [map=53(Intro) pos=9,7 event=1] Controls / Job / No info needed => Controls
+[2026-08-12 16:32:36] [CHOICE] [map=53(Intro) pos=9,7 event=1] Controls / Job / No info needed => Controls
+[2026-08-12 16:32:43] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bIf you need help, I am certainly capable of giving it.
+[2026-08-12 16:32:45] [CHOICE] [map=53(Intro) pos=9,7 event=1] Controls / Job / No info needed => No info needed
+[2026-08-12 16:32:45] [CHOICE] [map=53(Intro) pos=9,7 event=1] Controls / Job / No info needed => No info needed
+[2026-08-12 16:32:46] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bAs you are well aware there is a certain restriction placed on Gyms.
+[2026-08-12 16:32:48] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bOnly Pokemon of a single type can be used at a Gym, although there are some exceptions.
+[2026-08-12 16:32:50] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bWe will talk more about this later. For now, give it some thought.
+[2026-08-12 16:32:53] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bIt seems some of the program's data is corrupted. Which picture is yours?
+[2026-08-12 16:32:58] [CHOICE] [map=53(Intro) pos=9,7 event=1] The one on the left... / The one on the right... => The one on the left...
+[2026-08-12 16:32:58] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bAlright, can you please re-enter your name?
+[2026-08-12 16:33:20] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bSo you're Glaciferno?
+[2026-08-12 16:33:21] [CHOICE] [map=53(Intro) pos=9,7 event=1] Yes / No => Yes
+[2026-08-12 16:33:21] [CHOICE] [map=53(Intro) pos=9,7 event=1] Yes / No => Yes
+[2026-08-12 16:33:21] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bGlaciferno, are you ready?
+[2026-08-12 16:33:22] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bYour time as a Gym Leader draws near.
+[2026-08-12 16:33:23] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bYou'll face fun times and tough challenges.
+[2026-08-12 16:33:24] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bEverything you do matters. Keep up appearances, young Trainer.
+[2026-08-12 16:33:25] [MESSAGE] [map=53(Intro) pos=9,7 event=1] \bLet's get you started.
+[2026-08-12 16:33:27] [MESSAGE] [map=53(Intro) pos=9,7 event=1] Now, about the type you will master...
+[2026-08-12 16:33:28] [MESSAGE] [map=53(Intro) pos=9,7 event=1] Please choose the ball that represents your partner Pokemon's type.
+[2026-08-12 16:33:38] [MESSAGE] [map=53(Intro) pos=4,8 event=7] Do you chose Ice?
+[2026-08-12 16:33:40] [CHOICE] [map=53(Intro) pos=4,8 event=7] Yes / No => No
+[2026-08-12 16:33:40] [CHOICE] [map=53(Intro) pos=4,8 event=7] Yes / No => No
+[2026-08-12 16:33:42] [MESSAGE] [map=53(Intro) pos=6,11 event=14] Do you chose Fighting?
+[2026-08-12 16:33:43] [CHOICE] [map=53(Intro) pos=6,11 event=14] Yes / No => No
+[2026-08-12 16:33:43] [CHOICE] [map=53(Intro) pos=6,11 event=14] Yes / No => No
+[2026-08-12 16:33:47] [MESSAGE] [map=53(Intro) pos=1,8 event=15] Do you chose Dark?
+[2026-08-12 16:33:48] [CHOICE] [map=53(Intro) pos=1,8 event=15] Yes / No => No
+[2026-08-12 16:33:48] [CHOICE] [map=53(Intro) pos=1,8 event=15] Yes / No => No
+[2026-08-12 16:33:50] [MESSAGE] [map=53(Intro) pos=6,5 event=8] Do you chose Poison?
+[2026-08-12 16:33:51] [CHOICE] [map=53(Intro) pos=6,5 event=8] Yes / No => No
+[2026-08-12 16:33:51] [CHOICE] [map=53(Intro) pos=6,5 event=8] Yes / No => No
+[2026-08-12 16:33:55] [MESSAGE] [map=53(Intro) pos=1,2 event=16] Do you chose Ghost?
+[2026-08-12 16:33:56] [CHOICE] [map=53(Intro) pos=1,2 event=16] Yes / No => No
+[2026-08-12 16:33:56] [CHOICE] [map=53(Intro) pos=1,2 event=16] Yes / No => No
+[2026-08-12 16:33:59] [MESSAGE] [map=53(Intro) pos=4,8 event=7] Do you chose Ice?
+[2026-08-12 16:34:00] [CHOICE] [map=53(Intro) pos=4,8 event=7] Yes / No => No
+[2026-08-12 16:34:00] [CHOICE] [map=53(Intro) pos=4,8 event=7] Yes / No => No
+[2026-08-12 16:34:03] [MESSAGE] [map=53(Intro) pos=9,6 event=3] Do you chose Fire?
+[2026-08-12 16:34:04] [CHOICE] [map=53(Intro) pos=9,6 event=3] Yes / No => Yes
+[2026-08-12 16:34:04] [CHOICE] [map=53(Intro) pos=9,6 event=3] Yes / No => Yes
+[2026-08-12 16:34:04] [MESSAGE] [map=53(Intro) pos=9,6 event=1] It seems there are three Pokemon listed in my database with that type. Please select your partner.
+[2026-08-12 16:34:16] [CHOICE] [map=53(Intro) pos=9,6 event=1] Growlithe / Vulpix / Magby / On second thought... => On second thought...
+[2026-08-12 16:34:16] [MESSAGE] [map=53(Intro) pos=9,6 event=1] Do you wish to pick a different type?
+[2026-08-12 16:34:19] [CHOICE] [map=53(Intro) pos=9,6 event=1] Yes / No => Yes
+[2026-08-12 16:34:19] [CHOICE] [map=53(Intro) pos=9,6 event=1] Yes / No => Yes
+[2026-08-12 16:34:23] [MESSAGE] [map=53(Intro) pos=4,8 event=7] Do you chose Ice?
+[2026-08-12 16:34:24] [CHOICE] [map=53(Intro) pos=4,8 event=7] Yes / No => Yes
+[2026-08-12 16:34:24] [CHOICE] [map=53(Intro) pos=4,8 event=7] Yes / No => Yes
+[2026-08-12 16:34:24] [MESSAGE] [map=53(Intro) pos=4,8 event=1] It seems there are three Pokemon listed in my database with that type. Please select your partner.
+[2026-08-12 16:34:40] [CHOICE] [map=53(Intro) pos=4,8 event=1] Swinub / Bergmite / Lapras / On second thought... => On second thought...
+[2026-08-12 16:34:40] [MESSAGE] [map=53(Intro) pos=4,8 event=1] Do you wish to pick a different type?
+[2026-08-12 16:34:41] [CHOICE] [map=53(Intro) pos=4,8 event=1] Yes / No => Yes
+[2026-08-12 16:34:41] [CHOICE] [map=53(Intro) pos=4,8 event=1] Yes / No => Yes
+[2026-08-12 16:34:44] [MESSAGE] [map=53(Intro) pos=9,6 event=3] Do you chose Fire?
+[2026-08-12 16:34:44] [CHOICE] [map=53(Intro) pos=9,6 event=3] Yes / No => Yes
+[2026-08-12 16:34:44] [CHOICE] [map=53(Intro) pos=9,6 event=3] Yes / No => Yes
+[2026-08-12 16:34:44] [MESSAGE] [map=53(Intro) pos=9,6 event=1] It seems there are three Pokemon listed in my database with that type. Please select your partner.
+[2026-08-12 17:01:08] [CHOICE] [map=53(Intro) pos=9,6 event=1] Growlithe / Vulpix / Magby / On second thought... => Growlithe
+[2026-08-12 17:01:08] [MESSAGE] [map=53(Intro) pos=9,6 event=1] A nice choice for any Trainer. A well-rounded Pokemon with no strategy it can do at least decently. Is this your Pokemon?
+[2026-08-12 17:01:16] [CHOICE] [map=53(Intro) pos=9,6 event=1] Yes / No => No
+[2026-08-12 17:01:16] [CHOICE] [map=53(Intro) pos=9,6 event=1] Yes / No => No
+[2026-08-12 17:01:16] [CHOICE] [map=53(Intro) pos=9,6 event=1] Growlithe / Vulpix / Magby / On second thought... => Vulpix
+[2026-08-12 17:01:16] [MESSAGE] [map=53(Intro) pos=9,6 event=1] A Pokemon with more of a focus toward defense. Its tricky moveset is ideal for more strategic Trainers. Is this your Pokemon?
+[2026-08-12 17:01:21] [CHOICE] [map=53(Intro) pos=9,6 event=1] Yes / No => No
+[2026-08-12 17:01:21] [CHOICE] [map=53(Intro) pos=9,6 event=1] Yes / No => No
+[2026-08-12 17:01:22] [CHOICE] [map=53(Intro) pos=9,6 event=1] Growlithe / Vulpix / Magby / On second thought... => Magby
+[2026-08-12 17:01:22] [MESSAGE] [map=53(Intro) pos=9,6 event=1] A straight-forward Pokemon that takes a while to raise. Is this your Pokemon?
+[2026-08-12 17:01:24] [CHOICE] [map=53(Intro) pos=9,6 event=1] Yes / No => No
+[2026-08-12 17:01:24] [CHOICE] [map=53(Intro) pos=9,6 event=1] Yes / No => No
+[2026-08-12 17:01:25] [CHOICE] [map=53(Intro) pos=9,6 event=1] Growlithe / Vulpix / Magby / On second thought... => Growlithe
+[2026-08-12 17:01:25] [MESSAGE] [map=53(Intro) pos=9,6 event=1] A nice choice for any Trainer. A well-rounded Pokemon with no strategy it can do at least decently. Is this your Pokemon?
+[2026-08-12 17:01:31] [CHOICE] [map=53(Intro) pos=9,6 event=1] Yes / No => Yes
+[2026-08-12 17:01:31] [CHOICE] [map=53(Intro) pos=9,6 event=1] Yes / No => Yes
+[2026-08-12 17:01:31] [MESSAGE] [map=53(Intro) pos=9,6 event=1] Glaciferno obtained Growlithe!\wtnp[80]
+[2026-08-12 17:01:35] [MESSAGE] [map=53(Intro) pos=9,6 event=1] Would you like to give a nickname to Growlithe?
+[2026-08-12 17:01:44] [CHOICE] [map=53(Intro) pos=9,6 event=1] Yes / No => No
+[2026-08-12 17:01:44] [CHOICE] [map=53(Intro) pos=9,6 event=1] Yes / No => No
+[2026-08-12 17:01:44] [MESSAGE] [map=53(Intro) pos=9,6 event=1] Alright, Glaciferno. Your time has come. You will begin tomorrow. Prepare yourself, and we will see you there!
+[2026-08-12 17:01:50] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] ???: Oh! Hello, there. You must be our new Gym Leader, correct? Glaciferno was your name?
+[2026-08-12 17:04:15] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] My name is Dalton! I am the mayor around here. We'll be partners in crime for the time being, so I hope I'll be of help to you!
+[2026-08-12 17:04:22] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] Although, I will say, you have your work quite cut out for you. The last Gym Leader left the place in disarray!
+[2026-08-12 17:04:24] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] It was quite saddening. He left in the dead of night. No word of where he went or anything.
+[2026-08-12 17:04:26] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] Not even his sister or Gym Trainers know what became of him.
+[2026-08-12 17:04:29] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] And to add insult to injury, a gang has started threatening the city. A filthy group called the Rough Riders.
+[2026-08-12 17:04:32] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] They were trouble when even when the old Gym Leader was around, but they redoubled their effort the second he left!
+[2026-08-12 17:04:40] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] It was like they knew exactly when he left.
+[2026-08-12 17:04:42] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] Oh, but look at me, bringing up bad memories. Best to forget such things, now that you're here!
+[2026-08-12 17:04:44] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] Although... Well, let's just say that the residents of the city might be a bit... Wary of new Gym Leaders.
+[2026-08-12 17:04:48] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] But, don't you worry! With me by your side, we'll reshape the image of a Gym Leader in their minds!
+[2026-08-12 17:04:50] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] Umbal City is just straight ahead, past the New Day Plain and the Winding Woods! I'll be waiting for you in front of the Gym.
+[2026-08-12 17:04:54] [MESSAGE] [map=2(New Day Plain) pos=45,20 event=2] Make sure you have everything you need! Pokedex, Pokegear, and Running Shoes, of course!
+[2026-08-12 17:05:03] [MESSAGE] [map=2(New Day Plain) pos=45,16] An item in the Bag can be registered to this key for instant use.
+[2026-08-12 17:05:49] [MESSAGE] [map=2(New Day Plain) pos=38,10 event=4] Oh! Are you the new Gym Leader? I wish the best for you.
+[2026-08-12 17:05:50] [MESSAGE] [map=2(New Day Plain) pos=38,10 event=4] Here, take this.
+[2026-08-12 17:05:50] [MESSAGE] [map=2(New Day Plain) pos=38,10 event=4] You obtained a Poké Ball!\wtnp[30]
+[2026-08-12 17:05:52] [MESSAGE] [map=2(New Day Plain) pos=38,10 event=4] You put the Poké Ball in\nyour Bag's <icon=bagPocket3>Poké Balls pocket.
+[2026-08-12 17:05:53] [MESSAGE] [map=2(New Day Plain) pos=38,10 event=4] One more, just in case.
+[2026-08-12 17:05:54] [MESSAGE] [map=2(New Day Plain) pos=38,10 event=4] You obtained a Poké Ball!\wtnp[30]
+[2026-08-12 17:05:56] [MESSAGE] [map=2(New Day Plain) pos=38,10 event=4] You put the Poké Ball in\nyour Bag's <icon=bagPocket3>Poké Balls pocket.
+[2026-08-12 17:05:57] [MESSAGE] [map=2(New Day Plain) pos=38,10 event=4] Now that you've accepted my gift, please promise me something. Promise me you won't leave Umbal City the same way the other Gym Leader did.
+[2026-08-12 17:06:01] [MESSAGE] [map=2(New Day Plain) pos=38,10 event=4] Please, take care.
+[2026-08-12 17:06:07] [MESSAGE] [map=2(New Day Plain) pos=33,10] An item in the Bag can be registered to this key for instant use.
+[2026-08-12 17:06:13] [MESSAGE] [map=2(New Day Plain) pos=22,9 event=3] You found a Soothe Bell!\wtnp[30]
+[2026-08-12 17:06:15] [MESSAGE] [map=2(New Day Plain) pos=22,9 event=3] You put the Soothe Bell in\nyour Bag's <icon=bagPocket1>Items pocket.
+[2026-08-12 17:06:19] [-----] [map=2(New Day Plain) pos=21,9] BATTLE START
+[2026-08-12 17:06:19] [OPPONENT] [map=2(New Day Plain) pos=21,9] Wild battle
+[2026-08-12 17:06:19] [PLAYER_PARTY] [map=2(New Day Plain) pos=21,9] Growlithe [Growlithe] Lv.5 HP 21/21
+[2026-08-12 17:06:21] [BATTLE] [map=2(New Day Plain) pos=21,9] Oh! A wild Gastly appeared!
+[2026-08-12 17:06:22] [BATTLE] [map=2(New Day Plain) pos=21,9] Go! Growlithe!
+[2026-08-12 17:06:26] [BATTLE] [map=2(New Day Plain) pos=21,9] The wild Gastly's Attack fell!
+[2026-08-12 17:06:33] [TURN] [map=2(New Day Plain) pos=21,9] Turn 1
+[2026-08-12 17:06:33] [BATTLE] [map=2(New Day Plain) pos=21,9] Growlithe used Ember!
+[2026-08-12 17:06:34] [HP] [map=2(New Day Plain) pos=21,9] The wild Gastly: 15/15 -> 6/15 (-9)
+[2026-08-12 17:06:35] [BATTLE] [map=2(New Day Plain) pos=21,9] The wild Gastly used Confuse Ray!
+[2026-08-12 17:06:38] [BATTLE] [map=2(New Day Plain) pos=21,9] Growlithe became confused!
+[2026-08-12 17:06:42] [TURN] [map=2(New Day Plain) pos=21,9] Turn 2
+[2026-08-12 17:06:42] [BATTLE] [map=2(New Day Plain) pos=21,9] Glaciferno threw a Poké Ball!
+[2026-08-12 17:06:50] [BATTLE] [map=2(New Day Plain) pos=21,9] Gotcha! Gastly was caught!
+[2026-08-12 17:06:54] [BATTLE] [map=2(New Day Plain) pos=21,9] Growlithe got 28 Exp. Points!
+[2026-08-12 17:06:57] [BATTLE] [map=2(New Day Plain) pos=21,9] Gastly's data was added to the Pokédex.
+[2026-08-12 17:07:01] [BATTLE] [map=2(New Day Plain) pos=21,9] Gastly has been added to your party.
+[2026-08-12 17:07:02] [BATTLE_RESULT] [map=2(New Day Plain) pos=21,9] CAUGHT
+[2026-08-12 17:07:02] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=21,9] Growlithe [Growlithe] Lv.5 HP 21/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:07:02] [-----] [map=2(New Day Plain) pos=21,9] BATTLE END
+[2026-08-12 17:07:08] [-----] [map=2(New Day Plain) pos=14,9] BATTLE START
+[2026-08-12 17:07:08] [OPPONENT] [map=2(New Day Plain) pos=14,9] Wild battle
+[2026-08-12 17:07:08] [PLAYER_PARTY] [map=2(New Day Plain) pos=14,9] Growlithe [Growlithe] Lv.5 HP 21/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:07:09] [BATTLE] [map=2(New Day Plain) pos=14,9] Oh! A wild Zubat appeared!
+[2026-08-12 17:07:10] [BATTLE] [map=2(New Day Plain) pos=14,9] Go! Growlithe!
+[2026-08-12 17:07:14] [BATTLE] [map=2(New Day Plain) pos=14,9] The wild Zubat's Attack cannot be lowered!
+[2026-08-12 17:07:16] [TURN] [map=2(New Day Plain) pos=14,9] Turn 1
+[2026-08-12 17:07:16] [BATTLE] [map=2(New Day Plain) pos=14,9] Growlithe used Ember!
+[2026-08-12 17:07:17] [HP] [map=2(New Day Plain) pos=14,9] The wild Zubat: 12/12 -> 0/12 (-12)
+[2026-08-12 17:07:18] [BATTLE] [map=2(New Day Plain) pos=14,9] The wild Zubat fainted!
+[2026-08-12 17:07:21] [BATTLE] [map=2(New Day Plain) pos=14,9] Growlithe got 5 Exp. Points!
+[2026-08-12 17:07:22] [BATTLE_RESULT] [map=2(New Day Plain) pos=14,9] WIN
+[2026-08-12 17:07:22] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=14,9] Growlithe [Growlithe] Lv.5 HP 21/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:07:22] [-----] [map=2(New Day Plain) pos=14,9] BATTLE END
+[2026-08-12 17:07:28] [-----] [map=2(New Day Plain) pos=22,5] BATTLE START
+[2026-08-12 17:07:28] [OPPONENT] [map=2(New Day Plain) pos=22,5] Wild battle
+[2026-08-12 17:07:28] [PLAYER_PARTY] [map=2(New Day Plain) pos=22,5] Growlithe [Growlithe] Lv.5 HP 21/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:07:30] [BATTLE] [map=2(New Day Plain) pos=22,5] Oh! A wild Gastly appeared!
+[2026-08-12 17:07:30] [BATTLE] [map=2(New Day Plain) pos=22,5] Go! Growlithe!
+[2026-08-12 17:07:34] [BATTLE] [map=2(New Day Plain) pos=22,5] The wild Gastly's Attack fell!
+[2026-08-12 17:07:35] [TURN] [map=2(New Day Plain) pos=22,5] Turn 1
+[2026-08-12 17:07:35] [BATTLE] [map=2(New Day Plain) pos=22,5] Growlithe used Ember!
+[2026-08-12 17:07:36] [HP] [map=2(New Day Plain) pos=22,5] The wild Gastly: 11/11 -> 0/11 (-11)
+[2026-08-12 17:07:37] [BATTLE] [map=2(New Day Plain) pos=22,5] The wild Gastly fainted!
+[2026-08-12 17:07:41] [BATTLE] [map=2(New Day Plain) pos=22,5] Growlithe got 6 Exp. Points!
+[2026-08-12 17:07:42] [BATTLE_RESULT] [map=2(New Day Plain) pos=22,5] WIN
+[2026-08-12 17:07:42] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=22,5] Growlithe [Growlithe] Lv.5 HP 21/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:07:42] [-----] [map=2(New Day Plain) pos=22,5] BATTLE END
+[2026-08-12 17:07:45] [-----] [map=2(New Day Plain) pos=22,6] BATTLE START
+[2026-08-12 17:07:45] [OPPONENT] [map=2(New Day Plain) pos=22,6] Wild battle
+[2026-08-12 17:07:45] [PLAYER_PARTY] [map=2(New Day Plain) pos=22,6] Growlithe [Growlithe] Lv.5 HP 21/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:07:46] [BATTLE] [map=2(New Day Plain) pos=22,6] Oh! A wild Murkrow appeared!
+[2026-08-12 17:07:47] [BATTLE] [map=2(New Day Plain) pos=22,6] Go! Growlithe!
+[2026-08-12 17:07:51] [BATTLE] [map=2(New Day Plain) pos=22,6] The wild Murkrow's Attack fell!
+[2026-08-12 17:07:57] [TURN] [map=2(New Day Plain) pos=22,6] Turn 1
+[2026-08-12 17:07:57] [BATTLE] [map=2(New Day Plain) pos=22,6] Growlithe used Ember!
+[2026-08-12 17:07:58] [HP] [map=2(New Day Plain) pos=22,6] The wild Murkrow: 12/12 -> 0/12 (-12)
+[2026-08-12 17:07:59] [BATTLE] [map=2(New Day Plain) pos=22,6] The wild Murkrow fainted!
+[2026-08-12 17:08:01] [BATTLE] [map=2(New Day Plain) pos=22,6] Growlithe got 8 Exp. Points!
+[2026-08-12 17:08:03] [BATTLE_RESULT] [map=2(New Day Plain) pos=22,6] WIN
+[2026-08-12 17:08:03] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=22,6] Growlithe [Growlithe] Lv.5 HP 21/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:08:03] [-----] [map=2(New Day Plain) pos=22,6] BATTLE END
+[2026-08-12 17:08:17] [-----] [map=2(New Day Plain) pos=34,19] BATTLE START
+[2026-08-12 17:08:17] [OPPONENT] [map=2(New Day Plain) pos=34,19] Wild battle
+[2026-08-12 17:08:17] [PLAYER_PARTY] [map=2(New Day Plain) pos=34,19] Growlithe [Growlithe] Lv.5 HP 21/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:08:19] [BATTLE] [map=2(New Day Plain) pos=34,19] Oh! A wild Zubat appeared!
+[2026-08-12 17:08:21] [BATTLE] [map=2(New Day Plain) pos=34,19] Go! Growlithe!
+[2026-08-12 17:08:25] [BATTLE] [map=2(New Day Plain) pos=34,19] The wild Zubat's Attack cannot be lowered!
+[2026-08-12 17:08:27] [TURN] [map=2(New Day Plain) pos=34,19] Turn 1
+[2026-08-12 17:08:27] [BATTLE] [map=2(New Day Plain) pos=34,19] Growlithe used Ember!
+[2026-08-12 17:08:28] [HP] [map=2(New Day Plain) pos=34,19] The wild Zubat: 13/13 -> 2/13 (-11)
+[2026-08-12 17:08:29] [BATTLE] [map=2(New Day Plain) pos=34,19] The wild Zubat used Absorb!
+[2026-08-12 17:08:30] [HP] [map=2(New Day Plain) pos=34,19] Growlithe: 21/21 -> 20/21 (-1)
+[2026-08-12 17:08:31] [BATTLE] [map=2(New Day Plain) pos=34,19] It's not very effective...
+[2026-08-12 17:08:31] [BATTLE] [map=2(New Day Plain) pos=34,19] Growlithe had its energy drained!
+[2026-08-12 17:08:34] [HP] [map=2(New Day Plain) pos=34,19] The wild Zubat: 2/13 -> 3/13 (+1)
+[2026-08-12 17:08:35] [TURN] [map=2(New Day Plain) pos=34,19] Turn 2
+[2026-08-12 17:08:35] [BATTLE] [map=2(New Day Plain) pos=34,19] Growlithe used Ember!
+[2026-08-12 17:08:36] [HP] [map=2(New Day Plain) pos=34,19] The wild Zubat: 3/13 -> 0/13 (-3)
+[2026-08-12 17:08:37] [BATTLE] [map=2(New Day Plain) pos=34,19] The wild Zubat fainted!
+[2026-08-12 17:08:40] [BATTLE] [map=2(New Day Plain) pos=34,19] Growlithe got 12 Exp. Points!
+[2026-08-12 17:09:37] [BATTLE_RESULT] [map=2(New Day Plain) pos=34,19] WIN
+[2026-08-12 17:09:37] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=34,19] Growlithe [Growlithe] Lv.5 HP 20/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:09:37] [-----] [map=2(New Day Plain) pos=34,19] BATTLE END
+[2026-08-12 17:09:43] [-----] [map=2(New Day Plain) pos=26,20] BATTLE START
+[2026-08-12 17:09:43] [OPPONENT] [map=2(New Day Plain) pos=26,20] Wild battle
+[2026-08-12 17:09:43] [PLAYER_PARTY] [map=2(New Day Plain) pos=26,20] Growlithe [Growlithe] Lv.5 HP 20/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:09:44] [BATTLE] [map=2(New Day Plain) pos=26,20] Oh! A wild Murkrow appeared!
+[2026-08-12 17:09:45] [BATTLE] [map=2(New Day Plain) pos=26,20] Go! Growlithe!
+[2026-08-12 17:09:49] [BATTLE] [map=2(New Day Plain) pos=26,20] The wild Murkrow's Attack fell!
+[2026-08-12 17:09:50] [TURN] [map=2(New Day Plain) pos=26,20] Turn 1
+[2026-08-12 17:09:50] [BATTLE] [map=2(New Day Plain) pos=26,20] Growlithe used Ember!
+[2026-08-12 17:09:51] [HP] [map=2(New Day Plain) pos=26,20] The wild Murkrow: 12/12 -> 2/12 (-10)
+[2026-08-12 17:09:52] [BATTLE] [map=2(New Day Plain) pos=26,20] The wild Murkrow used Peck!
+[2026-08-12 17:09:53] [HP] [map=2(New Day Plain) pos=26,20] Growlithe: 20/21 -> 17/21 (-3)
+[2026-08-12 17:09:54] [TURN] [map=2(New Day Plain) pos=26,20] Turn 2
+[2026-08-12 17:09:54] [BATTLE] [map=2(New Day Plain) pos=26,20] Growlithe used Ember!
+[2026-08-12 17:09:55] [HP] [map=2(New Day Plain) pos=26,20] The wild Murkrow: 2/12 -> 0/12 (-2)
+[2026-08-12 17:09:56] [BATTLE] [map=2(New Day Plain) pos=26,20] The wild Murkrow fainted!
+[2026-08-12 17:09:59] [BATTLE] [map=2(New Day Plain) pos=26,20] Growlithe got 8 Exp. Points!
+[2026-08-12 17:10:01] [BATTLE_RESULT] [map=2(New Day Plain) pos=26,20] WIN
+[2026-08-12 17:10:01] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=26,20] Growlithe [Growlithe] Lv.5 HP 17/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:10:01] [-----] [map=2(New Day Plain) pos=26,20] BATTLE END
+[2026-08-12 17:10:09] [-----] [map=2(New Day Plain) pos=18,20] BATTLE START
+[2026-08-12 17:10:09] [OPPONENT] [map=2(New Day Plain) pos=18,20] Wild battle
+[2026-08-12 17:10:09] [PLAYER_PARTY] [map=2(New Day Plain) pos=18,20] Growlithe [Growlithe] Lv.5 HP 17/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:10:10] [BATTLE] [map=2(New Day Plain) pos=18,20] Oh! A wild Zubat appeared!
+[2026-08-12 17:10:11] [BATTLE] [map=2(New Day Plain) pos=18,20] Go! Growlithe!
+[2026-08-12 17:10:14] [BATTLE] [map=2(New Day Plain) pos=18,20] The wild Zubat's Attack cannot be lowered!
+[2026-08-12 17:10:16] [TURN] [map=2(New Day Plain) pos=18,20] Turn 1
+[2026-08-12 17:10:16] [BATTLE] [map=2(New Day Plain) pos=18,20] Growlithe used Ember!
+[2026-08-12 17:10:17] [HP] [map=2(New Day Plain) pos=18,20] The wild Zubat: 12/12 -> 0/12 (-12)
+[2026-08-12 17:10:18] [BATTLE] [map=2(New Day Plain) pos=18,20] The wild Zubat fainted!
+[2026-08-12 17:10:21] [BATTLE] [map=2(New Day Plain) pos=18,20] Growlithe got 5 Exp. Points!
+[2026-08-12 17:10:22] [BATTLE_RESULT] [map=2(New Day Plain) pos=18,20] WIN
+[2026-08-12 17:10:22] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=18,20] Growlithe [Growlithe] Lv.5 HP 17/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:10:22] [-----] [map=2(New Day Plain) pos=18,20] BATTLE END
+[2026-08-12 17:10:27] [-----] [map=2(New Day Plain) pos=13,19] BATTLE START
+[2026-08-12 17:10:27] [OPPONENT] [map=2(New Day Plain) pos=13,19] Wild battle
+[2026-08-12 17:10:27] [PLAYER_PARTY] [map=2(New Day Plain) pos=13,19] Growlithe [Growlithe] Lv.5 HP 17/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:10:29] [BATTLE] [map=2(New Day Plain) pos=13,19] Oh! A wild Sableye appeared!
+[2026-08-12 17:10:29] [BATTLE] [map=2(New Day Plain) pos=13,19] Go! Growlithe!
+[2026-08-12 17:10:33] [BATTLE] [map=2(New Day Plain) pos=13,19] The wild Sableye's Attack fell!
+[2026-08-12 17:10:34] [TURN] [map=2(New Day Plain) pos=13,19] Turn 1
+[2026-08-12 17:10:34] [BATTLE] [map=2(New Day Plain) pos=13,19] Growlithe used Ember!
+[2026-08-12 17:10:35] [HP] [map=2(New Day Plain) pos=13,19] The wild Sableye: 12/12 -> 0/12 (-12)
+[2026-08-12 17:10:36] [BATTLE] [map=2(New Day Plain) pos=13,19] The wild Sableye fainted!
+[2026-08-12 17:10:39] [BATTLE] [map=2(New Day Plain) pos=13,19] Growlithe got 13 Exp. Points!
+[2026-08-12 17:10:40] [BATTLE_RESULT] [map=2(New Day Plain) pos=13,19] WIN
+[2026-08-12 17:10:40] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=13,19] Growlithe [Growlithe] Lv.5 HP 17/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:10:40] [-----] [map=2(New Day Plain) pos=13,19] BATTLE END
+[2026-08-12 17:10:47] [-----] [map=2(New Day Plain) pos=12,19] BATTLE START
+[2026-08-12 17:10:47] [OPPONENT] [map=2(New Day Plain) pos=12,19] Wild battle
+[2026-08-12 17:10:47] [PLAYER_PARTY] [map=2(New Day Plain) pos=12,19] Growlithe [Growlithe] Lv.5 HP 17/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:10:48] [BATTLE] [map=2(New Day Plain) pos=12,19] Oh! A wild Zubat appeared!
+[2026-08-12 17:10:49] [BATTLE] [map=2(New Day Plain) pos=12,19] Go! Growlithe!
+[2026-08-12 17:10:52] [BATTLE] [map=2(New Day Plain) pos=12,19] The wild Zubat's Attack cannot be lowered!
+[2026-08-12 17:10:54] [TURN] [map=2(New Day Plain) pos=12,19] Turn 1
+[2026-08-12 17:10:54] [BATTLE] [map=2(New Day Plain) pos=12,19] Growlithe used Ember!
+[2026-08-12 17:10:54] [HP] [map=2(New Day Plain) pos=12,19] The wild Zubat: 14/14 -> 4/14 (-10)
+[2026-08-12 17:10:56] [BATTLE] [map=2(New Day Plain) pos=12,19] The wild Zubat used Supersonic!
+[2026-08-12 17:10:56] [BATTLE] [map=2(New Day Plain) pos=12,19] The wild Zubat's attack missed!
+[2026-08-12 17:10:58] [TURN] [map=2(New Day Plain) pos=12,19] Turn 2
+[2026-08-12 17:10:58] [BATTLE] [map=2(New Day Plain) pos=12,19] Growlithe used Ember!
+[2026-08-12 17:10:59] [HP] [map=2(New Day Plain) pos=12,19] The wild Zubat: 4/14 -> 0/14 (-4)
+[2026-08-12 17:11:00] [BATTLE] [map=2(New Day Plain) pos=12,19] The wild Zubat fainted!
+[2026-08-12 17:11:03] [BATTLE] [map=2(New Day Plain) pos=12,19] Growlithe got 12 Exp. Points!
+[2026-08-12 17:11:03] [BATTLE_RESULT] [map=2(New Day Plain) pos=12,19] WIN
+[2026-08-12 17:11:03] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=12,19] Growlithe [Growlithe] Lv.5 HP 17/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:11:03] [-----] [map=2(New Day Plain) pos=12,19] BATTLE END
+[2026-08-12 17:11:09] [-----] [map=2(New Day Plain) pos=12,24] BATTLE START
+[2026-08-12 17:11:09] [OPPONENT] [map=2(New Day Plain) pos=12,24] Wild battle
+[2026-08-12 17:11:09] [PLAYER_PARTY] [map=2(New Day Plain) pos=12,24] Growlithe [Growlithe] Lv.5 HP 17/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:11:10] [BATTLE] [map=2(New Day Plain) pos=12,24] Oh! A wild Rattata appeared!
+[2026-08-12 17:11:10] [BATTLE] [map=2(New Day Plain) pos=12,24] Go! Growlithe!
+[2026-08-12 17:11:14] [BATTLE] [map=2(New Day Plain) pos=12,24] The wild Rattata's Attack fell!
+[2026-08-12 17:11:15] [TURN] [map=2(New Day Plain) pos=12,24] Turn 1
+[2026-08-12 17:11:15] [BATTLE] [map=2(New Day Plain) pos=12,24] Growlithe used Ember!
+[2026-08-12 17:11:16] [HP] [map=2(New Day Plain) pos=12,24] The wild Rattata: 13/13 -> 0/13 (-13)
+[2026-08-12 17:11:17] [BATTLE] [map=2(New Day Plain) pos=12,24] The wild Rattata fainted!
+[2026-08-12 17:11:19] [BATTLE] [map=2(New Day Plain) pos=12,24] Growlithe got 13 Exp. Points!
+[2026-08-12 17:11:20] [BATTLE_RESULT] [map=2(New Day Plain) pos=12,24] WIN
+[2026-08-12 17:11:20] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=12,24] Growlithe [Growlithe] Lv.5 HP 17/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:11:20] [-----] [map=2(New Day Plain) pos=12,24] BATTLE END
+[2026-08-12 17:11:26] [-----] [map=2(New Day Plain) pos=14,19] BATTLE START
+[2026-08-12 17:11:26] [OPPONENT] [map=2(New Day Plain) pos=14,19] Wild battle
+[2026-08-12 17:11:26] [PLAYER_PARTY] [map=2(New Day Plain) pos=14,19] Growlithe [Growlithe] Lv.5 HP 17/21 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:11:28] [BATTLE] [map=2(New Day Plain) pos=14,19] Oh! A wild Sableye appeared!
+[2026-08-12 17:11:28] [BATTLE] [map=2(New Day Plain) pos=14,19] Go! Growlithe!
+[2026-08-12 17:11:32] [BATTLE] [map=2(New Day Plain) pos=14,19] The wild Sableye's Attack fell!
+[2026-08-12 17:12:17] [TURN] [map=2(New Day Plain) pos=14,19] Turn 1
+[2026-08-12 17:12:17] [BATTLE] [map=2(New Day Plain) pos=14,19] Growlithe used Ember!
+[2026-08-12 17:12:18] [HP] [map=2(New Day Plain) pos=14,19] The wild Sableye: 12/12 -> 1/12 (-11)
+[2026-08-12 17:12:19] [BATTLE] [map=2(New Day Plain) pos=14,19] The wild Sableye used Scratch!
+[2026-08-12 17:12:20] [HP] [map=2(New Day Plain) pos=14,19] Growlithe: 17/21 -> 15/21 (-2)
+[2026-08-12 17:12:21] [TURN] [map=2(New Day Plain) pos=14,19] Turn 2
+[2026-08-12 17:12:21] [BATTLE] [map=2(New Day Plain) pos=14,19] Growlithe used Ember!
+[2026-08-12 17:12:22] [HP] [map=2(New Day Plain) pos=14,19] The wild Sableye: 1/12 -> 0/12 (-1)
+[2026-08-12 17:12:23] [BATTLE] [map=2(New Day Plain) pos=14,19] The wild Sableye fainted!
+[2026-08-12 17:12:25] [BATTLE] [map=2(New Day Plain) pos=14,19] Growlithe got 13 Exp. Points!
+[2026-08-12 17:12:26] [BATTLE] [map=2(New Day Plain) pos=14,19] Growlithe grew to Lv. 6!
+[2026-08-12 17:12:27] [BATTLE_RESULT] [map=2(New Day Plain) pos=14,19] WIN
+[2026-08-12 17:12:27] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=14,19] Growlithe [Growlithe] Lv.6 HP 18/24 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:12:27] [-----] [map=2(New Day Plain) pos=14,19] BATTLE END
+[2026-08-12 17:12:33] [-----] [map=2(New Day Plain) pos=21,19] BATTLE START
+[2026-08-12 17:12:33] [OPPONENT] [map=2(New Day Plain) pos=21,19] Wild battle
+[2026-08-12 17:12:33] [PLAYER_PARTY] [map=2(New Day Plain) pos=21,19] Growlithe [Growlithe] Lv.6 HP 18/24 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:12:34] [BATTLE] [map=2(New Day Plain) pos=21,19] Oh! A wild Absol appeared!
+[2026-08-12 17:12:35] [BATTLE] [map=2(New Day Plain) pos=21,19] Go! Growlithe!
+[2026-08-12 17:12:39] [BATTLE] [map=2(New Day Plain) pos=21,19] The wild Absol's Attack fell!
+[2026-08-12 17:12:40] [TURN] [map=2(New Day Plain) pos=21,19] Turn 1
+[2026-08-12 17:12:40] [BATTLE] [map=2(New Day Plain) pos=21,19] The wild Absol used Quick Attack!
+[2026-08-12 17:12:42] [HP] [map=2(New Day Plain) pos=21,19] Growlithe: 18/24 -> 15/24 (-3)
+[2026-08-12 17:12:43] [BATTLE] [map=2(New Day Plain) pos=21,19] Growlithe used Ember!
+[2026-08-12 17:12:44] [HP] [map=2(New Day Plain) pos=21,19] The wild Absol: 17/17 -> 7/17 (-10)
+[2026-08-12 17:12:48] [TURN] [map=2(New Day Plain) pos=21,19] Turn 2
+[2026-08-12 17:12:48] [BATTLE] [map=2(New Day Plain) pos=21,19] Glaciferno threw a Poké Ball!
+[2026-08-12 17:12:54] [BATTLE] [map=2(New Day Plain) pos=21,19] Oh no! The Pokémon broke free!
+[2026-08-12 17:12:55] [BATTLE] [map=2(New Day Plain) pos=21,19] The wild Absol used Quick Attack!
+[2026-08-12 17:12:57] [HP] [map=2(New Day Plain) pos=21,19] Growlithe: 15/24 -> 12/24 (-3)
+[2026-08-12 17:14:00] [TURN] [map=2(New Day Plain) pos=21,19] Turn 3
+[2026-08-12 17:14:00] [BATTLE] [map=2(New Day Plain) pos=21,19] The wild Absol used Quick Attack!
+[2026-08-12 17:14:01] [HP] [map=2(New Day Plain) pos=21,19] Growlithe: 12/24 -> 9/24 (-3)
+[2026-08-12 17:14:02] [BATTLE] [map=2(New Day Plain) pos=21,19] Growlithe used Ember!
+[2026-08-12 17:14:03] [HP] [map=2(New Day Plain) pos=21,19] The wild Absol: 7/17 -> 0/17 (-7)
+[2026-08-12 17:14:04] [BATTLE] [map=2(New Day Plain) pos=21,19] The wild Absol fainted!
+[2026-08-12 17:14:06] [BATTLE] [map=2(New Day Plain) pos=21,19] Growlithe got 64 Exp. Points!
+[2026-08-12 17:14:08] [BATTLE_RESULT] [map=2(New Day Plain) pos=21,19] WIN
+[2026-08-12 17:14:08] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=21,19] Growlithe [Growlithe] Lv.6 HP 9/24 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:14:08] [-----] [map=2(New Day Plain) pos=21,19] BATTLE END
+[2026-08-12 17:14:15] [-----] [map=2(New Day Plain) pos=26,19] BATTLE START
+[2026-08-12 17:14:15] [OPPONENT] [map=2(New Day Plain) pos=26,19] Wild battle
+[2026-08-12 17:14:15] [PLAYER_PARTY] [map=2(New Day Plain) pos=26,19] Growlithe [Growlithe] Lv.6 HP 9/24 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:14:16] [BATTLE] [map=2(New Day Plain) pos=26,19] Oh! A wild Sentret appeared!
+[2026-08-12 17:14:19] [BATTLE] [map=2(New Day Plain) pos=26,19] Go! Growlithe!
+[2026-08-12 17:14:22] [BATTLE] [map=2(New Day Plain) pos=26,19] The wild Sentret's Attack fell!
+[2026-08-12 17:14:23] [TURN] [map=2(New Day Plain) pos=26,19] Turn 1
+[2026-08-12 17:14:23] [BATTLE] [map=2(New Day Plain) pos=26,19] Growlithe used Ember!
+[2026-08-12 17:14:24] [HP] [map=2(New Day Plain) pos=26,19] The wild Sentret: 15/15 -> 3/15 (-12)
+[2026-08-12 17:14:26] [BATTLE] [map=2(New Day Plain) pos=26,19] The wild Sentret was burned!
+[2026-08-12 17:14:26] [BATTLE] [map=2(New Day Plain) pos=26,19] The wild Sentret used Growl!
+[2026-08-12 17:14:27] [BATTLE] [map=2(New Day Plain) pos=26,19] Growlithe's Attack fell!
+[2026-08-12 17:14:29] [HP] [map=2(New Day Plain) pos=26,19] The wild Sentret: 3/15 -> 2/15 (-1)
+[2026-08-12 17:14:29] [BATTLE] [map=2(New Day Plain) pos=26,19] The wild Sentret was hurt by its burn!
+[2026-08-12 17:14:30] [TURN] [map=2(New Day Plain) pos=26,19] Turn 2
+[2026-08-12 17:14:30] [BATTLE] [map=2(New Day Plain) pos=26,19] Growlithe used Ember!
+[2026-08-12 17:14:31] [HP] [map=2(New Day Plain) pos=26,19] The wild Sentret: 2/15 -> 0/15 (-2)
+[2026-08-12 17:14:32] [BATTLE] [map=2(New Day Plain) pos=26,19] The wild Sentret fainted!
+[2026-08-12 17:14:33] [BATTLE] [map=2(New Day Plain) pos=26,19] Growlithe got 17 Exp. Points!
+[2026-08-12 17:14:34] [BATTLE_RESULT] [map=2(New Day Plain) pos=26,19] WIN
+[2026-08-12 17:14:34] [PLAYER_PARTY_AFTER] [map=2(New Day Plain) pos=26,19] Growlithe [Growlithe] Lv.6 HP 9/24 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:14:34] [-----] [map=2(New Day Plain) pos=26,19] BATTLE END
+[2026-08-12 17:14:44] [MESSAGE] [map=2(New Day Plain) pos=46,6 event=6] You found a Potion!\wtnp[30]
+[2026-08-12 17:14:46] [MESSAGE] [map=2(New Day Plain) pos=46,6 event=6] You put the Potion in\nyour Bag's <icon=bagPocket2>Medicine pocket.
+[2026-08-12 17:14:53] [MESSAGE] [map=3(Winding Woods) pos=42,27 event=1] So, you're the new Gym Leader? Let's see what you've got!
+[2026-08-12 17:14:56] [-----] [map=3(Winding Woods) pos=42,27 event=1] BATTLE START
+[2026-08-12 17:14:56] [OPPONENT] [map=3(Winding Woods) pos=42,27 event=1] Lass Ellen
+[2026-08-12 17:14:56] [PLAYER_PARTY] [map=3(Winding Woods) pos=42,27 event=1] Growlithe [Growlithe] Lv.6 HP 9/24 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:14:57] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] You are challenged by Lass Ellen!
+[2026-08-12 17:14:58] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] Lass Ellen sent out Starly!
+[2026-08-12 17:15:01] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] Go! Growlithe!
+[2026-08-12 17:15:05] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] The opposing Starly's Attack fell!
+[2026-08-12 17:15:10] [TURN] [map=3(Winding Woods) pos=42,27 event=1] Turn 1
+[2026-08-12 17:15:10] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] Growlithe used Ember!
+[2026-08-12 17:15:12] [HP] [map=3(Winding Woods) pos=42,27 event=1] The opposing Starly: 15/15 -> 2/15 (-13)
+[2026-08-12 17:15:13] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] The opposing Starly used Growl!
+[2026-08-12 17:15:14] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] Growlithe's Attack fell!
+[2026-08-12 17:15:16] [TURN] [map=3(Winding Woods) pos=42,27 event=1] Turn 2
+[2026-08-12 17:15:16] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] Growlithe used Ember!
+[2026-08-12 17:15:17] [HP] [map=3(Winding Woods) pos=42,27 event=1] The opposing Starly: 2/15 -> 0/15 (-2)
+[2026-08-12 17:15:18] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] The opposing Starly fainted!
+[2026-08-12 17:15:21] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] Growlithe got 29 Exp. Points!
+[2026-08-12 17:15:24] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] Lass Ellen sent out Flabébé!
+[2026-08-12 17:15:27] [TURN] [map=3(Winding Woods) pos=42,27 event=1] Turn 3
+[2026-08-12 17:15:27] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] Growlithe used Ember!
+[2026-08-12 17:15:28] [HP] [map=3(Winding Woods) pos=42,27 event=1] The opposing Flabébé: 17/17 -> 8/17 (-9)
+[2026-08-12 17:15:29] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] The opposing Flabébé used Tackle!
+[2026-08-12 17:15:30] [HP] [map=3(Winding Woods) pos=42,27 event=1] Growlithe: 9/24 -> 6/24 (-3)
+[2026-08-12 17:15:32] [TURN] [map=3(Winding Woods) pos=42,27 event=1] Turn 4
+[2026-08-12 17:15:32] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] Growlithe used Ember!
+[2026-08-12 17:15:33] [HP] [map=3(Winding Woods) pos=42,27 event=1] The opposing Flabébé: 8/17 -> 0/17 (-8)
+[2026-08-12 17:15:34] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] The opposing Flabébé fainted!
+[2026-08-12 17:15:37] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] Growlithe got 57 Exp. Points!
+[2026-08-12 17:15:41] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] Growlithe grew to Lv. 7!
+[2026-08-12 17:15:43] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] You defeated Lass Ellen!
+[2026-08-12 17:15:44] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] Well, I'll be.
+[2026-08-12 17:15:44] [BATTLE] [map=3(Winding Woods) pos=42,27 event=1] You got $64 for winning!
+[2026-08-12 17:15:45] [BATTLE_RESULT] [map=3(Winding Woods) pos=42,27 event=1] WIN
+[2026-08-12 17:15:45] [PLAYER_PARTY_AFTER] [map=3(Winding Woods) pos=42,27 event=1] Growlithe [Growlithe] Lv.7 HP 8/26 | Gastly [Gastly] Lv.3 HP 6/15
+[2026-08-12 17:15:45] [-----] [map=3(Winding Woods) pos=42,27 event=1] BATTLE END
+[2026-08-12 17:15:45] [MESSAGE] [map=3(Winding Woods) pos=42,27 event=1] Your Reputation went up by 10!
+[2026-08-12 17:16:01] [MESSAGE] [map=2(New Day Plain) pos=51,4 event=5] ...
+[2026-08-12 17:16:03] [MESSAGE] [map=2(New Day Plain) pos=50,3 event=5] ...
+[2026-08-12 17:16:04] [MESSAGE] [map=2(New Day Plain) pos=50,3 event=5] ...
+[2026-08-12 17:16:57] [MESSAGE] [map=1(Umbal City) pos=34,36] An item in the Bag can be registered to this key for instant use.
+[2026-08-12 17:17:11] [MESSAGE] [map=1(Umbal City) pos=6,33 event=92] Umbal City Item Storage
+[2026-08-12 17:17:18] [MESSAGE] [map=1(Umbal City) pos=16,43 event=102] It's rude to enter unannounced!
+[2026-08-12 17:17:23] [MESSAGE] [map=41(Comics 'n Cards) pos=8,11 event=9] Hello! Welcome to Comics 'n Cards!
+[2026-08-12 17:17:24] [MESSAGE] [map=41(Comics 'n Cards) pos=8,11 event=9] To promote the crossover between Rio Quest and Triple Triad, we are giving out a pack of cards and one copy of Rio Quest's main character, Lukka!
+[2026-08-12 17:17:28] [MESSAGE] [map=41(Comics 'n Cards) pos=8,11 event=9] You obtained a Starter Pack!\wtnp[30]
+[2026-08-12 17:17:30] [MESSAGE] [map=41(Comics 'n Cards) pos=8,11 event=9] You put the Starter Pack in\nyour Bag's <icon=bagPocket1>Items pocket.
+[2026-08-12 17:17:31] [MESSAGE] [map=41(Comics 'n Cards) pos=8,11 event=9] If you don't know how to play, try talking to the players at the tables. They're always looking for another player!
+[2026-08-12 17:17:40] [MESSAGE] [map=42(Umbal City Arcade) pos=13,23 event=1] Welcome to the Arcade!
+[2026-08-12 17:17:41] [MESSAGE] [map=42(Umbal City Arcade) pos=13,23 event=1] You'll need this to play!
+[2026-08-12 17:17:41] [MESSAGE] [map=42(Umbal City Arcade) pos=13,23 event=1] You obtained an Arcade Card!\wtnp[30]
+[2026-08-12 17:17:43] [MESSAGE] [map=42(Umbal City Arcade) pos=13,23 event=1] You put the Arcade Card in\nyour Bag's <icon=bagPocket8>Key Items pocket.
+[2026-08-12 17:17:44] [MESSAGE] [map=42(Umbal City Arcade) pos=13,23 event=1] You start off with 50 points on it! You can spend money to get more at the counter. Enjoy your time!
+[2026-08-12 17:17:50] [MESSAGE] [map=1(Umbal City) pos=41,45 event=105] \bI'm the Day-Care Man.
+[2026-08-12 17:17:51] [MESSAGE] [map=1(Umbal City) pos=41,45 event=105] \bI help take care of the precious Pokémon of trainers.
+[2026-08-12 17:17:52] [MESSAGE] [map=1(Umbal City) pos=41,45 event=105] \bAny Pokémon you'd like to have raised you can leave in my wife's care.
+[2026-08-12 17:17:58] [MESSAGE] [map=34(Pokemon Daycare) pos=3,5 event=1] \rI'm the Day-Care Lady. We can raise Pokémon for you.
+[2026-08-12 17:17:59] [MESSAGE] [map=34(Pokemon Daycare) pos=3,5 event=1] \rWould you like us to raise your Pokémon?
+[2026-08-12 17:18:00] [CHOICE] [map=34(Pokemon Daycare) pos=3,5 event=1] Yes / No => No
+[2026-08-12 17:18:00] [CHOICE] [map=34(Pokemon Daycare) pos=3,5 event=1] Yes / No => No
+[2026-08-12 17:18:00] [MESSAGE] [map=34(Pokemon Daycare) pos=3,5 event=1] \rOh, fine, then.\nCome again.
+[2026-08-12 17:18:10] [MESSAGE] [map=1(Umbal City) pos=50,25 event=94] Umbal City Inn
+[2026-08-12 17:18:24] [MESSAGE] [map=33(Poké Center) pos=9,6 event=3] \rHello, and welcome to the Pokémon Center.
+[2026-08-12 17:18:24] [MESSAGE] [map=33(Poké Center) pos=9,6 event=3] \rWe restore your tired Pokémon to full health.
+[2026-08-12 17:18:25] [MESSAGE] [map=33(Poké Center) pos=9,6 event=3] \rWould you like to rest your Pokémon?
+[2026-08-12 17:18:26] [CHOICE] [map=33(Poké Center) pos=9,6 event=3] Yes / No => Yes
+[2026-08-12 17:18:26] [CHOICE] [map=33(Poké Center) pos=9,6 event=3] Yes / No => Yes
+[2026-08-12 17:18:26] [MESSAGE] [map=33(Poké Center) pos=9,6 event=3] \rOK, I'll take your Pokémon for a few seconds.
+[2026-08-12 17:18:30] [MESSAGE] [map=33(Poké Center) pos=9,6 event=3] \rThank you for waiting.
+[2026-08-12 17:18:32] [MESSAGE] [map=33(Poké Center) pos=9,6 event=3] \rWe've restored your Pokémon to full health.
+[2026-08-12 17:18:34] [MESSAGE] [map=33(Poké Center) pos=9,6 event=3] \rWe hope to see you again!
+[2026-08-12 17:18:36] [MESSAGE] [map=33(Poké Center) pos=7,10 event=4] Are you familiar with weather, terrain, and atmosphere? If you don't, I can help you out.
+[2026-08-12 17:18:39] [CHOICE] [map=33(Poké Center) pos=7,10 event=4] Terrain / Weather / Atmosphere / No, thank you! => Terrain
+[2026-08-12 17:18:39] [CHOICE] [map=33(Poké Center) pos=7,10 event=4] Terrain / Weather / Atmosphere / No, thank you! => Terrain
+[2026-08-12 17:18:39] [MESSAGE] [map=33(Poké Center) pos=7,10 event=4] Terrain only effects Pokemon on the ground. These effects power up moves of their own type. Misty Terrain boosts Fairy type moves, for example!
+[2026-08-12 17:18:42] [MESSAGE] [map=33(Poké Center) pos=7,10 event=4] They also have other neat effects, like healing each turn or blocking priority moves.
+[2026-08-12 17:18:43] [MESSAGE] [map=33(Poké Center) pos=7,10 event=4] Keep in mind that effects like these affect everyone, you and your opponent!
+[2026-08-12 17:18:45] [MESSAGE] [map=33(Poké Center) pos=7,10 event=4] Remember, you can have one Weather, Terrain, and Atmosphere at a time. The next one of each used overrides the old one.
+[2026-08-12 17:18:50] [MESSAGE] [map=33(Poké Center) pos=7,10 event=4] Are you familiar with weather, terrain, and atmosphere? If you don't, I can help you out.
+[2026-08-12 17:18:53] [CHOICE] [map=33(Poké Center) pos=7,10 event=4] Terrain / Weather / Atmosphere / No, thank you! => Atmosphere
+[2026-08-12 17:18:53] [CHOICE] [map=33(Poké Center) pos=7,10 event=4] Terrain / Weather / Atmosphere / No, thank you! => Atmosphere
+[2026-08-12 17:18:53] [MESSAGE] [map=33(Poké Center) pos=7,10 event=4] Atmosphere effecting moves are pretty new. They aid 3 different Pokemon types.
+[2026-08-12 17:18:55] [MESSAGE] [map=33(Poké Center) pos=7,10 event=4] Intense Atmosphere boosts the critical hit rate of Fighting, Dragon, and Rock Pokemon and boosts Fighting type moves.
+[2026-08-12 17:19:02] [MESSAGE] [map=33(Poké Center) pos=7,10 event=4] Keep in mind that effects like these affect everyone, you and your opponent!
+[2026-08-12 17:19:03] [MESSAGE] [map=33(Poké Center) pos=7,10 event=4] Remember, you can have one Weather, Terrain, and Atmosphere at a time. The next one of each used overrides the old one.
+[2026-08-12 17:19:10] [MESSAGE] [map=33(Poké Center) pos=15,5 event=6] Psst... I have something for you...
+[2026-08-12 17:19:11] [MESSAGE] [map=33(Poké Center) pos=15,5 event=6] You obtained TR121 Hidden Power!\wtnp[30]
+[2026-08-12 17:19:13] [MESSAGE] [map=33(Poké Center) pos=15,5 event=6] You put the TR121 in\nyour Bag's <icon=bagPocket4>TMs & HMs pocket.
+[2026-08-12 17:19:14] [MESSAGE] [map=33(Poké Center) pos=15,5 event=6] I got this at a Record Shop in Opulance City.
+[2026-08-12 17:19:15] [MESSAGE] [map=33(Poké Center) pos=15,5 event=6] I'm quite special, you see. I can see the hidden potential in Pokemon.
+[2026-08-12 17:19:17] [MESSAGE] [map=33(Poké Center) pos=15,5 event=6] Talk to me to see what power a Pokemon could wield with that move!
+[2026-08-12 17:19:19] [MESSAGE] [map=33(Poké Center) pos=15,5 event=6] \bI'll tell you what type your Pokémon's Hidden Power will be.
+[2026-08-12 17:19:20] [MESSAGE] [map=33(Poké Center) pos=15,5 event=6] \bMy own hidden power lets me do that.
+[2026-08-12 17:19:21] [CHOICE] [map=33(Poké Center) pos=15,5 event=6] Yes / No => Yes
+[2026-08-12 17:19:21] [CHOICE] [map=33(Poké Center) pos=15,5 event=6] Yes / No => Yes
+[2026-08-12 17:19:23] [MESSAGE] [map=33(Poké Center) pos=15,5 event=6] \bIf this Pokémon were to learn Hidden Power, the move's type would be Fairy.
+[2026-08-12 17:19:26] [MESSAGE] [map=33(Poké Center) pos=15,5 event=6] \bI'll tell you what type your Pokémon's Hidden Power will be.
+[2026-08-12 17:19:27] [MESSAGE] [map=33(Poké Center) pos=15,5 event=6] \bMy own hidden power lets me do that.
+[2026-08-12 17:19:28] [CHOICE] [map=33(Poké Center) pos=15,5 event=6] Yes / No => Yes
+[2026-08-12 17:19:28] [CHOICE] [map=33(Poké Center) pos=15,5 event=6] Yes / No => Yes
+[2026-08-12 17:19:30] [MESSAGE] [map=33(Poké Center) pos=15,5 event=6] \bIf this Pokémon were to learn Hidden Power, the move's type would be Fighting.
+[2026-08-12 17:19:37] [MESSAGE] [map=33(Poké Center) pos=4,4 event=5] Glaciferno booted up the PC.
+[2026-08-12 17:19:38] [MESSAGE] [map=33(Poké Center) pos=4,4 event=5] Which PC should be accessed?
+[2026-08-12 17:19:39] [CHOICE] [map=33(Poké Center) pos=4,4 event=5] Someone's PC / Glaciferno's PC / Log off => Log off
+[2026-08-12 17:19:39] [CHOICE] [map=33(Poké Center) pos=4,4 event=5] Someone's PC / Glaciferno's PC / Log off => Log off
+[2026-08-12 17:19:45] [MESSAGE] [map=1(Umbal City) pos=23,16] An item in the Bag can be registered to this key for instant use.
+[2026-08-12 17:20:12] [MESSAGE] [map=1(Umbal City) pos=23,16] You booted up TR121.
+[2026-08-12 17:20:14] [MESSAGE] [map=1(Umbal City) pos=23,16] Do you want to teach Hidden Power to a Pokémon?
+[2026-08-12 17:20:16] [CHOICE] [map=1(Umbal City) pos=23,16] Yes / No => No
+[2026-08-12 17:20:16] [CHOICE] [map=1(Umbal City) pos=23,16] Yes / No => No
+[2026-08-12 17:26:48] [MESSAGE] [map=1(Umbal City) pos=29,17 event=65] Hey! Have you ever though about parallel universes?
+[2026-08-12 17:26:49] [MESSAGE] [map=1(Umbal City) pos=29,17 event=65] There might be a world were everything is the same except you are slightly different, or were I don't exist whatsoever!
+[2026-08-12 17:26:51] [MESSAGE] [map=1(Umbal City) pos=29,17 event=65] Wanna think about it for a second?
+[2026-08-12 17:26:55] [CHOICE] [map=1(Umbal City) pos=29,17 event=65] A different me... / A world without her... / No, why? => A different me...
+[2026-08-12 17:26:55] [CHOICE] [map=1(Umbal City) pos=29,17 event=65] A different me... / A world without her... / No, why? => A different me...
+[2026-08-12 17:26:59] [MESSAGE] [map=1(Umbal City) pos=30,17 event=115] Dalton: Ah! Glad to see you made it. How was the trip? I hope the locals didn't treat you too poorly.
+[2026-08-12 17:27:02] [MESSAGE] [map=1(Umbal City) pos=30,17 event=115] Anyhow, tomorrow is when you get down to business. You'd better get ready.
+[2026-08-12 17:27:04] [MESSAGE] [map=1(Umbal City) pos=30,17 event=115] Here, let me show you where you'll live while you're here.
+[2026-08-12 17:27:09] [MESSAGE] [map=1(Umbal City) pos=18,17 event=115] This is your home. Get yourself set up and meet me at the town hall afterward.
+[2026-08-12 17:27:18] [MESSAGE] [map=1(Umbal City) pos=30,15 event=120] You need to go to your home!
+[2026-08-12 17:33:45] [MESSAGE] [map=1(Umbal City) pos=23,16] Glaciferno saved the game.\wtnp[30]
+[2026-08-12 17:35:06] [-----] LOGGER START v0.1.0
+[2026-08-12 17:35:06] [PLAYER_PARTY]
+[2026-08-12 17:35:18] [PLAYER_RESET] [map=1(Umbal City) pos=23,16] character_ID 2 -> 1
+[2026-08-12 17:35:23] [MESSAGE] [map=1(Umbal City) pos=23,17] Would you like to save the game?
+[2026-08-12 17:35:25] [CHOICE] [map=1(Umbal City) pos=23,17] Save to File A / Save to another file / Cancel => Save to another file
+[2026-08-12 17:35:25] [CHOICE] [map=1(Umbal City) pos=23,17] Save to File A / Save to another file / Cancel => Save to another file
+[2026-08-12 17:35:26] [MESSAGE] [map=1(Umbal City) pos=23,17] Glaciferno saved the game.\wtnp[30]
+[2026-08-12 17:36:08] [-----] LOGGER START v0.1.0
+[2026-08-12 17:36:08] [PLAYER_PARTY]
+[2026-08-12 17:38:30] [MESSAGE] [map=1(Umbal City) pos=41,45 event=105] \bI'm the Day-Care Man.
+[2026-08-12 17:38:31] [MESSAGE] [map=1(Umbal City) pos=41,45 event=105] \bI help take care of the precious Pokémon of trainers.
+[2026-08-12 17:38:32] [MESSAGE] [map=1(Umbal City) pos=41,45 event=105] \bAny Pokémon you'd like to have raised you can leave in my wife's care.
+[2026-08-12 17:39:05] [MESSAGE] [map=1(Umbal City) pos=30,34 event=117] You need to go to your home!
+[2026-08-12 17:39:18] [MESSAGE] [map=1(Umbal City) pos=16,43 event=102] It's rude to enter unannounced!
+[2026-08-12 17:39:30] [MESSAGE] [map=1(Umbal City) pos=10,32] An item in the Bag can be registered to this key for instant use.
+[2026-08-12 17:39:43] [MESSAGE] [map=40(Umbal City Police Station) pos=3,7 event=2] Hey there, new Gym Leader. Welcome to the Police Station.
+[2026-08-12 17:39:44] [MESSAGE] [map=40(Umbal City Police Station) pos=3,7 event=2] Need help with anything?
+[2026-08-12 17:39:52] [MESSAGE] [map=40(Umbal City Police Station) pos=14,4 event=1] Authorized Personnel only.
+[2026-08-12 17:40:21] [MESSAGE] [map=27(Your House) pos=16,11 event=3] Glaciferno booted up the PC.
+[2026-08-12 17:40:21] [MESSAGE] [map=27(Your House) pos=16,11 event=3] Which PC should be accessed?
+[2026-08-12 17:40:23] [CHOICE] [map=27(Your House) pos=16,11 event=3] Someone's PC / Glaciferno's PC / Log off => Log off
+[2026-08-12 17:40:23] [CHOICE] [map=27(Your House) pos=16,11 event=3] Someone's PC / Glaciferno's PC / Log off => Log off
+[2026-08-12 17:40:29] [MESSAGE] [map=27(Your House) pos=10,4 event=5] It's your stuff! Looks like everything is here.
+[2026-08-12 17:40:30] [MESSAGE] [map=27(Your House) pos=10,4 event=5] Oh! There is an envelope here.
+[2026-08-12 17:40:31] [MESSAGE] [map=27(Your House) pos=10,4 event=5] ...
+[2026-08-12 17:40:31] [MESSAGE] [map=27(Your House) pos=10,4 event=5] Oh! There is a TM in here! It must be your Gym's signature move.
+[2026-08-12 17:40:32] [MESSAGE] [map=27(Your House) pos=10,4 event=5] You obtained TM112 Friction!\wtnp[30]
+[2026-08-12 17:40:34] [MESSAGE] [map=27(Your House) pos=10,4 event=5] You put the TM112 in\nyour Bag's <icon=bagPocket4>TMs & HMs pocket.
+[2026-08-12 17:40:35] [MESSAGE] [map=27(Your House) pos=10,4 event=5] You should probably head to the Town Hall now.
+[2026-08-12 17:40:44] [MESSAGE] [map=27(Your House) pos=10,4] You booted up TM112.
+[2026-08-12 17:40:45] [MESSAGE] [map=27(Your House) pos=10,4] Do you want to teach Friction to a Pokémon?
+[2026-08-12 17:40:46] [CHOICE] [map=27(Your House) pos=10,4] Yes / No => Yes
+[2026-08-12 17:40:46] [CHOICE] [map=27(Your House) pos=10,4] Yes / No => Yes
+[2026-08-12 17:40:50] [MESSAGE] [map=27(Your House) pos=10,4] Growlithe learned Friction!
+[2026-08-12 17:41:11] [MESSAGE] [map=1(Umbal City) pos=43,15 event=103] It's rude to enter unannounced!
+[2026-08-12 17:41:14] [MESSAGE] [map=1(Umbal City) pos=42,17 event=114] \bI'm the Pokémon Move Maniac.
+[2026-08-12 17:41:15] [MESSAGE] [map=1(Umbal City) pos=42,17 event=114] \bI know every single move that Pokémon learn growing up.
+[2026-08-12 17:41:16] [MESSAGE] [map=1(Umbal City) pos=42,17 event=114] \bI'm also a collector of Heart Scales.
+[2026-08-12 17:41:17] [MESSAGE] [map=1(Umbal City) pos=42,17 event=114] \bIf you bring me one, I'll teach a move to one of your Pokémon.
+[2026-08-12 17:41:18] [MESSAGE] [map=1(Umbal City) pos=42,17 event=114] \bIf your Pokémon need to learn a move, come back with a Heart Scale.
+[2026-08-12 17:41:25] [MESSAGE] [map=1(Umbal City) pos=31,24 event=112] ...
+[2026-08-12 17:41:25] [MESSAGE] [map=1(Umbal City) pos=31,24 event=112] She doesn't seem to notice you...
+[2026-08-12 17:41:35] [MESSAGE] [map=30(Umbal City Inn) pos=4,10 event=4] I'm the Rare Candy Man. I come from a faraway place. I can help you bring your Pokemon to new heights.
+[2026-08-12 17:41:38] [MESSAGE] [map=30(Umbal City Inn) pos=4,10 event=4] Welcome! How may I help you?
+[2026-08-12 17:41:40] [CHOICE] [map=30(Umbal City Inn) pos=4,10 event=4] I'm here to buy / I'm here to sell / No, thanks => No, thanks
+[2026-08-12 17:41:40] [CHOICE] [map=30(Umbal City Inn) pos=4,10 event=4] I'm here to buy / I'm here to sell / No, thanks => No, thanks
+[2026-08-12 17:41:40] [MESSAGE] [map=30(Umbal City Inn) pos=4,10 event=4] Do come again!
+[2026-08-12 17:41:43] [MESSAGE] [map=30(Umbal City Inn) pos=3,5 event=3] Hello, Glaciferno. Welcome to the Umbal Inn.
+[2026-08-12 17:41:45] [MESSAGE] [map=30(Umbal City Inn) pos=3,5 event=3] Hello, Glaciferno. Welcome to the Umbal Inn.
+[2026-08-12 17:42:02] [MESSAGE] [map=1(Umbal City) pos=31,37 event=38] Great, another Rough Rider goon...
+[2026-08-12 17:42:03] [MESSAGE] [map=1(Umbal City) pos=31,37 event=38] Great, another Rough Rider goon...
+[2026-08-12 17:42:06] [MESSAGE] [map=1(Umbal City) pos=32,36 event=37] They think they could just come here and assert themselves. Hey, Gym Leader! If you are the person we hope you are, please show this guy out!
+[2026-08-12 17:42:09] [MESSAGE] [map=1(Umbal City) pos=32,36 event=37] They think they could just come here and assert themselves. Hey, Gym Leader! If you are the person we hope you are, please show this guy out!
+[2026-08-12 17:42:15] [MESSAGE] [map=1(Umbal City) pos=28,35 event=53] ???: Alright, since this place is now Rider territory, let's set some ground rules!
+[2026-08-12 17:42:16] [MESSAGE] [map=1(Umbal City) pos=28,35 event=53] First of all, we demand a 100% discount on all items from any shop!
+[2026-08-12 17:42:18] [MESSAGE] [map=1(Umbal City) pos=28,35 event=53] Next, we demand all the items you got that boost a Pokemon's power. Rare Candies, vitamins, the whole nine yards!
+[2026-08-12 17:42:21] [MESSAGE] [map=1(Umbal City) pos=28,35 event=53] Finally, and listen up, this one's important!
+[2026-08-12 17:42:22] [MESSAGE] [map=1(Umbal City) pos=28,35 event=53] Don't help out the new Gym Leader! In fact, run 'em out of town! I mean, what good have any of 'em done for ya, anyhow?
+[2026-08-12 17:42:26] [MESSAGE] [map=1(Umbal City) pos=28,35 event=53] What? Go something to say?!
+[2026-08-12 17:42:27] [MESSAGE] [map=1(Umbal City) pos=28,35 event=53] ... Well?... Say something!!!
+[2026-08-12 17:42:28] [MESSAGE] [map=1(Umbal City) pos=28,35 event=53] ... Alright, wise guy! You asked for it!
+[2026-08-12 17:42:31] [-----] [map=1(Umbal City) pos=28,35 event=53] BATTLE START
+[2026-08-12 17:42:31] [OPPONENT] [map=1(Umbal City) pos=28,35 event=53] Rough Rider Racer
+[2026-08-12 17:42:31] [PLAYER_PARTY] [map=1(Umbal City) pos=28,35 event=53] Growlithe [Growlithe] Lv.7 HP 26/26 | Gastly [Gastly] Lv.3 HP 15/15
+[2026-08-12 17:42:32] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] You are challenged by Rough Rider Racer!
+[2026-08-12 17:42:33] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] Rough Rider Racer sent out Poochyena!
+[2026-08-12 17:42:36] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] Go! Growlithe!
+[2026-08-12 17:42:40] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] The opposing Poochyena's Attack fell!
+[2026-08-12 17:42:43] [TURN] [map=1(Umbal City) pos=28,35 event=53] Turn 1
+[2026-08-12 17:42:43] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] Growlithe used Friction!
+[2026-08-12 17:42:44] [HP] [map=1(Umbal City) pos=28,35 event=53] The opposing Poochyena: 15/15 -> 0/15 (-15)
+[2026-08-12 17:42:45] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] The opposing Poochyena fainted!
+[2026-08-12 17:42:47] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] Growlithe got 29 Exp. Points!
+[2026-08-12 17:42:52] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] Rough Rider Racer sent out Poochyena!
+[2026-08-12 17:42:54] [TURN] [map=1(Umbal City) pos=28,35 event=53] Turn 2
+[2026-08-12 17:42:54] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] Growlithe used Friction!
+[2026-08-12 17:42:55] [HP] [map=1(Umbal City) pos=28,35 event=53] The opposing Poochyena: 16/16 -> 0/16 (-16)
+[2026-08-12 17:42:56] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] The opposing Poochyena fainted!
+[2026-08-12 17:42:58] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] Growlithe got 46 Exp. Points!
+[2026-08-12 17:43:02] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] You defeated Rough Rider Racer!
+[2026-08-12 17:44:02] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] You've got to be kidding!
+[2026-08-12 17:44:02] [BATTLE] [map=1(Umbal City) pos=28,35 event=53] You got $128 for winning!
+[2026-08-12 17:44:03] [BATTLE_RESULT] [map=1(Umbal City) pos=28,35 event=53] WIN
+[2026-08-12 17:44:03] [PLAYER_PARTY_AFTER] [map=1(Umbal City) pos=28,35 event=53] Growlithe [Growlithe] Lv.7 HP 26/26 | Gastly [Gastly] Lv.3 HP 15/15
+[2026-08-12 17:44:03] [-----] [map=1(Umbal City) pos=28,35 event=53] BATTLE END
+[2026-08-12 17:44:03] [MESSAGE] [map=1(Umbal City) pos=28,35 event=53] Your Reputation went up by 15!
+[2026-08-12 17:44:04] [MESSAGE] [map=1(Umbal City) pos=28,35 event=53] But... How?!
+[2026-08-12 17:44:04] [MESSAGE] [map=1(Umbal City) pos=28,35 event=53] Grrr... Outta my way!
+[2026-08-12 17:44:14] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] Dalton: Ah! Glaciferno, glad to see you came!
+[2026-08-12 17:44:16] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] I guess I'd better tell you what you'll need to know. Please, have a seat.
+[2026-08-12 17:44:17] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] First of all, you know a Gym Leader cannot use Pokemon that don't share a type with their Gym. However, there is a caveat.
+[2026-08-12 17:44:20] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] You can use a maximum of two Pokemon that do not share a type with your Gym. They have to know your Gym's signature move, though.
+[2026-08-12 17:44:23] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] I am aware of some Gym Leaders who have partner Pokemon that lose their Gym type when they evolve.
+[2026-08-12 17:44:27] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] Since these are people's partners, they do not count against your party.
+[2026-08-12 17:44:33] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] Also, if you lose too many battles in a row, you forfeit your status as Gym Leader. Same goes if the public isn't too fond of you.
+[2026-08-12 17:44:35] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] Keep the people happy and your pokemon strong! That is the base upon which great Gym Leaders are formed!
+[2026-08-12 17:44:38] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] Helping people out can help bolster your Reputation! Try asking around, especially if someone appears frantic or if they are looking around.
+[2026-08-12 17:44:41] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] Also, you can put your money into helping improve the city by erecting buildings. Talk to the man at the desk for plans and he can help you invest.
+[2026-08-12 17:44:46] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] Finally, you can recruit people to join your Gym as Gym Trainers. Check your mailbox to see if anyone has applied. It can help boost your Reputation.
+[2026-08-12 17:44:49] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] Oh! And I refer to the mailbox outside your house. Not the one on your computer.
+[2026-08-12 17:44:51] [MESSAGE] [map=29(Town Hall) pos=15,10 event=8] For starters, you should get a Gym Guide to assist you. Why don't you head home and check your mail? There may be some applications waiting for you.
+[2026-08-12 17:44:59] [MESSAGE] [map=29(Town Hall) pos=18,7 event=10] Sorry, Gym Leader. Only personnel beyond this point.
+[2026-08-12 17:45:03] [MESSAGE] [map=29(Town Hall) pos=9,10 event=6] Hello, Glaciferno! If you need anything, like a vacation or something, let me know!
+[2026-08-12 17:45:11] [MESSAGE] [map=29(Town Hall) pos=4,3 event=4] Hello, Glaciferno. If you are looking for the mayor, he is over to the right. If its building plans you are after, I can help you there.
+[2026-08-12 17:45:14] [MESSAGE] [map=29(Town Hall) pos=4,3 event=4] But, let's discuss that later. The mayor has a lot he wants to talk about.
+[2026-08-12 17:45:16] [MESSAGE] [map=29(Town Hall) pos=6,4 event=3] Looking for building plans? The man at the desk can help you there. Be careful, plans aren't cheap.
+[2026-08-12 17:45:21] [MESSAGE] [map=29(Town Hall) pos=1,7 event=5] Man, it takes forever for anything to get done around here.
+[2026-08-12 17:45:44] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] There are three applications here. Which one do you want to check out?
+[2026-08-12 17:45:49] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Gym Guy's / Old Gym Guy's / Gym Girl's => Gym Guy's
+[2026-08-12 17:45:49] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Gym Guy's / Old Gym Guy's / Gym Girl's => Gym Guy's
+[2026-08-12 17:45:49] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] A man by the name of Bernard wants to be your Gym Guide. According to his application, he has a a lot of experience in this job.
+[2026-08-12 17:45:53] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] A tried and true choice. A safe bet all around.
+[2026-08-12 17:45:55] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] If this is your Gym Guide, your reputation will go up at a steady rate. Call them?
+[2026-08-12 17:45:57] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Yes / No => No
+[2026-08-12 17:45:57] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Yes / No => No
+[2026-08-12 17:45:58] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Gym Guy's / Old Gym Guy's / Gym Girl's => Old Gym Guy's
+[2026-08-12 17:45:58] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] An old, retired man bored with just sitting around all day. His name is Nathaniel.
+[2026-08-12 17:46:00] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] This choice wouldn't be too popular, though. Your reputation won't go up too much, but you would not have to worry about veteran Trainers as much.
+[2026-08-12 17:46:05] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] Call them?
+[2026-08-12 17:46:06] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Yes / No => No
+[2026-08-12 17:46:06] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Yes / No => No
+[2026-08-12 17:46:07] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Gym Guy's / Old Gym Guy's / Gym Girl's => Gym Girl's
+[2026-08-12 17:46:07] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] A Lass named Sue looking to take a break from training.
+[2026-08-12 17:46:08] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] This choice would definintly get people looking your way. Your reputation would grow fast, but stronger Trainers will visit your Gym more often. Call them?
+[2026-08-12 17:46:14] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Yes / No => No
+[2026-08-12 17:46:14] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Yes / No => No
+[2026-08-12 17:46:17] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Gym Guy's / Old Gym Guy's / Gym Girl's => Gym Girl's
+[2026-08-12 17:46:17] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] A Lass named Sue looking to take a break from training.
+[2026-08-12 17:46:18] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] This choice would definintly get people looking your way. Your reputation would grow fast, but stronger Trainers will visit your Gym more often. Call them?
+[2026-08-12 17:46:21] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Yes / No => Yes
+[2026-08-12 17:46:22] [CHOICE] [map=1(Umbal City) pos=12,16 event=54] Yes / No => Yes
+[2026-08-12 17:46:22] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] ......\wt[5] ......
+[2026-08-12 17:46:23] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] Gym Girl: Hello? Who is this? W-what?! You're Glaciferno?! T-this wouldn't be about my application, would it?
+[2026-08-12 17:46:29] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] It is?! I can't believe it! I saw the other applications and I got worried. I mean, one of them was an actual Gym Guy. How could I compete?
+[2026-08-12 17:46:32] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] S-sorry, I'm rambling... Meet up tomorrow? Sure! I'll be there. Thank you!
+[2026-08-12 17:46:33] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] Click!\wt[10]\n......\wt[5] ......
+[2026-08-12 17:46:35] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] Registered Gym Girl in the Pokégear.
+[2026-08-12 17:46:36] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] ......\wt[5] ......
+[2026-08-12 17:46:37] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] ???: Hello? Glaciferno, it's me, Mayor Dalton! It seems I finally found where I wrote down your number. Just wanted to check on the application process.
+[2026-08-12 17:46:40] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] You found someone? Great! You'd better rest up, you have a big day tomorrow. Anyhow, I was just checking in. Have a nice day!
+[2026-08-12 17:46:42] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] Click!\wt[10]\n......\wt[5] ......
+[2026-08-12 17:46:44] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] You'd better keep his number in your contacts.
+[2026-08-12 17:46:45] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] Registered Mayor Dalton in the Pokégear.
+[2026-08-12 17:46:46] [MESSAGE] [map=1(Umbal City) pos=12,16 event=54] You've got a big day ahead of you, you should rest up.
+[2026-08-12 17:46:49] [MESSAGE] [map=27(Your House) pos=15,3 event=7] Today's the big day! You need to get to the Gym!
+[2026-08-12 17:46:54] [MESSAGE] [map=27(Your House) pos=15,3] Would you like to save the game?
+[2026-08-12 17:46:56] [CHOICE] [map=27(Your House) pos=15,3] Save to File B / Save to another file / Cancel => Save to another file
+[2026-08-12 17:46:56] [CHOICE] [map=27(Your House) pos=15,3] Save to File B / Save to another file / Cancel => Save to another file
+[2026-08-12 17:46:57] [MESSAGE] [map=27(Your House) pos=15,3] Glaciferno saved the game.\wtnp[30]
+[2026-08-12 17:47:09] [MESSAGE] [map=27(Your House) pos=12,4] You booted up TM112.
+[2026-08-12 17:47:09] [MESSAGE] [map=27(Your House) pos=12,4] Do you want to teach Friction to a Pokémon?
+[2026-08-12 17:47:11] [CHOICE] [map=27(Your House) pos=12,4] Yes / No => Yes
+[2026-08-12 17:47:11] [CHOICE] [map=27(Your House) pos=12,4] Yes / No => Yes
+[2026-08-12 17:47:12] [MESSAGE] [map=27(Your House) pos=12,4] Gastly can't learn Friction.
+[2026-08-12 17:47:31] [MESSAGE] [map=15(Umbal City Gym) pos=7,10 event=6] Dalton: Oh! There you are, Glaciferno! Ready to learn the ropes?
+[2026-08-12 17:47:32] [MESSAGE] [map=15(Umbal City Gym) pos=7,10 event=6] Over here, let me show you something.
+[2026-08-12 17:47:36] [MESSAGE] [map=43(Umbal City Gym_Empty) pos=1,14 event=3] Dalton: This is your Gym's puzzle room. You'll be able to get more rooms as you climb the ranks.
+[2026-08-12 17:51:12] [MESSAGE] [map=43(Umbal City Gym_Empty) pos=2,5 event=3] Dalton: This is your Mechanic.
+[2026-08-12 17:51:13] [MESSAGE] [map=43(Umbal City Gym_Empty) pos=2,5 event=3] Mechanic: Hello, Glaciferno. I'm in charge of this room's puzzle. You give me the word, and I'll change this room to fit your purposes.
+[2026-08-12 17:51:16] [MESSAGE] [map=43(Umbal City Gym_Empty) pos=2,5 event=3] The puzzle you choose influences what Trainers you encounter. Whether they tend to stay on the offensive, or find strength in their item selection.
+[2026-08-12 17:51:22] [MESSAGE] [map=43(Umbal City Gym_Empty) pos=2,5 event=3] Either way, this room will help filter out weak Trainers, only bringing in those fully prepared for your team.
+[2026-08-12 17:51:25] [MESSAGE] [map=43(Umbal City Gym_Empty) pos=2,5 event=3] Dalton: Now, let's keep this tour moving! Follow me, Glaciferno!
+[2026-08-12 17:51:29] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Dalton: This is your room! Here is where many a challenger will face you, but only a few will win!
+[2026-08-12 17:51:31] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] As I said before, there are restrictions on the Pokemon you can bring.
+[2026-08-12 17:51:32] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Since you are a brand-new Gym Leader, you can only have 2 Pokemon in your party when facing Trainers.
+[2026-08-12 17:51:34] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Strict, I know. But, it won't take long for you to get to Rank 1. After that, you can bring an additional Pokemon to your Gym! Something to look forward to.
+[2026-08-12 17:51:38] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Keep rising through the Gym Leader Ranks! Bring more Pokemon, get more rooms! Establish yourself as the strongest Gym Leader in the land!
+[2026-08-12 17:51:41] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] If I were you, I'd recommend having your team around level 10 to 13 or so, but that's just me.
+[2026-08-12 17:51:43] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Oh! By the way, what type of battle do you prefer?
+[2026-08-12 17:51:44] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] [This will determine what type of battle will take place in your Gym.]
+[2026-08-12 17:51:46] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] [Keep in mind, this will only effect your Gym Battles and story important battles.
+[2026-08-12 17:51:48] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] All other battles will be Single Battles by default.] [You can change this at anytime by going to the sign in front of your Gym.]
+[2026-08-12 17:51:51] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Oh! By the way, what type of battle do you prefer?
+[2026-08-12 17:51:57] [CHOICE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Single Battles / Double Battles => Double Battles
+[2026-08-12 17:51:57] [CHOICE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Single Battles / Double Battles => Double Battles
+[2026-08-12 17:51:57] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Alright. I'll make a note of that.
+[2026-08-12 17:51:58] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Oh! One last thing. Supposedly, some Gym Leaders have taken up a special challenge.
+[2026-08-12 17:52:00] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Some Gym Leaders have tried to go through their entire shift without healing between Trainers.
+[2026-08-12 17:52:04] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] If they lose even once, they close the Gym for the day. A real rough challenge.
+[2026-08-12 17:52:06] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] It could be good for your noteriety, if you did it, Glaciferno.
+[2026-08-12 17:52:08] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Will you be doing this, too?\n [You can change this at anytime by going to the sign in front of your Gym.]
+[2026-08-12 17:52:11] [CHOICE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Yes / No => No
+[2026-08-12 17:52:11] [CHOICE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Yes / No => No
+[2026-08-12 17:52:11] [MESSAGE] [map=47(Umbal City Gym_Event) pos=8,8 event=1] Anyhow, we have one last stop...
+[2026-08-12 17:52:13] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Dalton: Hello, you two!
+[2026-08-12 17:52:14] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Lass: Hello, Mayor.
+[2026-08-12 17:52:15] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Dalton: Glaciferno, these two are Sandy and Jimmy! They will be your first Gym Trainers. Train with them and get to know them. They're good Trainers.
+[2026-08-12 17:52:18] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Treat them well and, believe me, word will get out. Anyhow, I will leave you all be to get acquainted. See you around, Glaciferno! I am eager to hear of your exploits!
+[2026-08-12 17:52:22] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Sandy: Finally, he's gone...
+[2026-08-12 17:52:23] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Sandy: Listen here! You'd better pull your weight around here! If you dare leave this city like the old Gym Leader did, we'll run you out of town ourselves!
+[2026-08-12 17:52:27] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Jimmy: We'll be watching you! You'd better be in here often and as ready as can be!
+[2026-08-12 17:52:29] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Sandy: Look... Just... Please do your job... We've been here a while, we can help if anything comes up...
+[2026-08-12 17:52:33] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Registered Lass Sandy in the Pokégear.
+[2026-08-12 17:52:34] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Registered Youngster Jimmy in the Pokégear.
+[2026-08-12 17:52:35] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Sue: Oh! Here's where everyone is! Sorry for the wait!
+[2026-08-12 17:52:38] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] So, you're Glaciferno. I'm glad to meet you!
+[2026-08-12 17:52:39] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Sandy: Well, that killed the mood...
+[2026-08-12 17:52:40] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Jimmy: You're telling me...
+[2026-08-12 17:52:42] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Sue: If you need me, let me know! I'll be there in a heartbeat!
+[2026-08-12 17:52:43] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] I can start anytime. So, let me know when the Gym opens!
+[2026-08-12 17:52:44] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Oh! Can't forget about these!
+[2026-08-12 17:52:45] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Registered Umbal City Police in the Pokégear.
+[2026-08-12 17:52:46] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] Registered Gym Leader Hotline in the Pokégear.
+[2026-08-12 17:52:47] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] (The rest of the day is yours! To start Gym battles, go to the Main Room with a viable team of 2 Pokemon.)
+[2026-08-12 17:52:50] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] (Don't forget to check your mailbox for new Trainers for your Gym,
+[2026-08-12 17:52:52] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] and keep an eye for anyone who might need a hand!)
+[2026-08-12 17:52:53] [MESSAGE] [map=32(Break Room) pos=12,6 event=3] (Otherwise, feel free to explore the town and your Gym!)
+[2026-08-12 17:53:00] [MESSAGE] [map=15(Umbal City Gym) pos=6,2 event=1] This is the challenger entrance.
+[2026-08-12 17:53:04] [MESSAGE] [map=15(Umbal City Gym) pos=0,5 event=3] Where are you going?
+[2026-08-12 17:53:07] [CHOICE] [map=15(Umbal City Gym) pos=0,5 event=3] Break Room / Gym Puzzle / Main Room / Nevermind => Gym Puzzle
+[2026-08-12 17:53:07] [CHOICE] [map=15(Umbal City Gym) pos=0,5 event=3] Break Room / Gym Puzzle / Main Room / Nevermind => Gym Puzzle
+[2026-08-12 17:53:11] [MESSAGE] [map=43(Umbal City Gym_Empty) pos=2,5 event=4] What Gym puzzle would you like, Glaciferno?
+[2026-08-12 17:53:14] [CHOICE] [map=43(Umbal City Gym_Empty) pos=2,5 event=4] Maze / Gauntlet / Course / Nevermind => Maze
+[2026-08-12 17:53:14] [CHOICE] [map=43(Umbal City Gym_Empty) pos=2,5 event=4] Maze / Gauntlet / Course / Nevermind => Maze
+[2026-08-12 17:53:14] [MESSAGE] [map=43(Umbal City Gym_Empty) pos=2,5 event=4] This will slightly favor Item-Heavy Trainers, but will keep Strong Trainers at bay.
+[2026-08-12 17:53:17] [MESSAGE] [map=43(Umbal City Gym_Empty) pos=2,5 event=4] Is this what you want?
+[2026-08-12 17:53:18] [CHOICE] [map=43(Umbal City Gym_Empty) pos=2,5 event=4] Yes / No => Yes
+[2026-08-12 17:53:18] [CHOICE] [map=43(Umbal City Gym_Empty) pos=2,5 event=4] Yes / No => Yes
+[2026-08-12 17:53:20] [MESSAGE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] What Gym puzzle would you like, Glaciferno?
+[2026-08-12 17:53:21] [CHOICE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] None / Gauntlet / Course / Nevermind => Gauntlet
+[2026-08-12 17:53:21] [CHOICE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] None / Gauntlet / Course / Nevermind => Gauntlet
+[2026-08-12 17:53:21] [MESSAGE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] This will slightly favor Strong Trainers, but will keep Smart Trainers at bay.
+[2026-08-12 17:53:23] [MESSAGE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] Is this what you want?
+[2026-08-12 17:53:26] [CHOICE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] Yes / No => No
+[2026-08-12 17:53:26] [CHOICE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] Yes / No => No
+[2026-08-12 17:53:26] [MESSAGE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] What Gym puzzle would you like, Glaciferno?
+[2026-08-12 17:53:27] [CHOICE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] None / Gauntlet / Course / Nevermind => Course
+[2026-08-12 17:53:27] [CHOICE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] None / Gauntlet / Course / Nevermind => Course
+[2026-08-12 17:53:27] [MESSAGE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] This will slightly favor Smart Trainers, but will keep Item-Heavy Trainers at bay.
+[2026-08-12 17:53:34] [MESSAGE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] Is this what you want?
+[2026-08-12 17:53:35] [CHOICE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] Yes / No => Yes
+[2026-08-12 17:53:35] [CHOICE] [map=44(Umbal City Gym_Maze) pos=2,5 event=3] Yes / No => Yes
+[2026-08-12 17:53:41] [MESSAGE] [map=15(Umbal City Gym) pos=0,5 event=3] Where are you going?
+[2026-08-12 17:53:43] [CHOICE] [map=15(Umbal City Gym) pos=0,5 event=3] Break Room / Gym Puzzle / Main Room / Nevermind => Break Room
+[2026-08-12 17:53:43] [CHOICE] [map=15(Umbal City Gym) pos=0,5 event=3] Break Room / Gym Puzzle / Main Room / Nevermind => Break Room
+[2026-08-12 17:53:45] [MESSAGE] [map=32(Break Room) pos=10,4 event=6] Sue: Hey, Glaciferno! Are you doing good out there? Looking for a quick chat?
+[2026-08-12 17:53:47] [MESSAGE] [map=32(Break Room) pos=10,4 event=6] I saw a flock of Starly earlier today. Looked kind of like a face.
+[2026-08-12 17:53:49] [MESSAGE] [map=32(Break Room) pos=10,4 event=6] Sue: Hey, Glaciferno! Are you doing good out there? Looking for a quick chat?
+[2026-08-12 17:53:50] [MESSAGE] [map=32(Break Room) pos=10,4 event=6] I saw a flock of Starly earlier today. Looked kind of like a face.
+[2026-08-12 17:54:19] [MESSAGE] [map=3(Winding Woods) pos=44,7 event=5] Great... Another Gym Leader...
+[2026-08-12 17:54:22] [-----] [map=3(Winding Woods) pos=44,7 event=5] BATTLE START
+[2026-08-12 17:54:22] [OPPONENT] [map=3(Winding Woods) pos=44,7 event=5] Picnicker Liz
+[2026-08-12 17:54:22] [PLAYER_PARTY] [map=3(Winding Woods) pos=44,7 event=5] Growlithe [Growlithe] Lv.7 HP 26/26 | Gastly [Gastly] Lv.3 HP 15/15
+[2026-08-12 17:54:23] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] You are challenged by Picnicker Liz!
+[2026-08-12 17:54:23] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Picnicker Liz sent out Hoppip!
+[2026-08-12 17:54:26] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Go! Growlithe!
+[2026-08-12 17:54:30] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Hoppip's Attack fell!
+[2026-08-12 17:54:31] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The Tailwind blew from behind The opposing Hoppip!
+[2026-08-12 17:54:34] [TURN] [map=3(Winding Woods) pos=44,7 event=5] Turn 1
+[2026-08-12 17:54:34] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Growlithe used Friction!
+[2026-08-12 17:54:35] [HP] [map=3(Winding Woods) pos=44,7 event=5] The opposing Hoppip: 13/13 -> 0/13 (-13)
+[2026-08-12 17:54:36] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] It's super effective!
+[2026-08-12 17:54:38] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Hoppip fainted!
+[2026-08-12 17:54:40] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Growlithe got 14 Exp. Points!
+[2026-08-12 17:54:54] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Growlithe, switch out! Come back!
+[2026-08-12 17:54:57] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] You're in charge, Gastly!
+[2026-08-12 17:55:00] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Picnicker Liz sent out Fletchling!
+[2026-08-12 17:55:12] [TURN] [map=3(Winding Woods) pos=44,7 event=5] Turn 2
+[2026-08-12 17:55:12] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Fletchling used Growl!
+[2026-08-12 17:55:13] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Gastly's Attack fell!
+[2026-08-12 17:55:15] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Gastly used Confuse Ray!
+[2026-08-12 17:55:17] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Fletchling became confused!
+[2026-08-12 17:55:22] [TURN] [map=3(Winding Woods) pos=44,7 event=5] Turn 3
+[2026-08-12 17:55:22] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Gastly, come back!
+[2026-08-12 17:55:24] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] You're in charge, Growlithe!
+[2026-08-12 17:55:28] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Fletchling's Attack fell!
+[2026-08-12 17:55:30] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Fletchling is confused!
+[2026-08-12 17:55:31] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Fletchling used Growl!
+[2026-08-12 17:55:32] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Growlithe's Attack fell!
+[2026-08-12 17:55:35] [TURN] [map=3(Winding Woods) pos=44,7 event=5] Turn 4
+[2026-08-12 17:55:35] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Growlithe used Ember!
+[2026-08-12 17:55:37] [HP] [map=3(Winding Woods) pos=44,7 event=5] The opposing Fletchling: 15/15 -> 3/15 (-12)
+[2026-08-12 17:55:39] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Fletchling is confused!
+[2026-08-12 17:55:39] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Fletchling used Tackle!
+[2026-08-12 17:55:40] [HP] [map=3(Winding Woods) pos=44,7 event=5] Growlithe: 26/26 -> 23/26 (-3)
+[2026-08-12 17:55:41] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing team's Tailwind petered out!
+[2026-08-12 17:55:43] [TURN] [map=3(Winding Woods) pos=44,7 event=5] Turn 5
+[2026-08-12 17:55:43] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Picnicker Liz used a Potion.
+[2026-08-12 17:55:46] [HP] [map=3(Winding Woods) pos=44,7 event=5] The opposing Fletchling: 3/15 -> 15/15 (+12)
+[2026-08-12 17:55:47] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Growlithe used Friction!
+[2026-08-12 17:55:48] [HP] [map=3(Winding Woods) pos=44,7 event=5] The opposing Fletchling: 15/15 -> 0/15 (-15)
+[2026-08-12 17:55:49] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Fletchling fainted!
+[2026-08-12 17:55:52] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Growlithe got 29 Exp. Points!
+[2026-08-12 17:55:53] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Gastly got 51 Exp. Points!
+[2026-08-12 17:55:53] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Gastly grew to Lv. 4!
+[2026-08-12 17:55:54] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Gastly learned Hypnosis!
+[2026-08-12 17:55:59] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Picnicker Liz sent out Poochyena!
+[2026-08-12 17:56:02] [TURN] [map=3(Winding Woods) pos=44,7 event=5] Turn 6
+[2026-08-12 17:56:02] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Growlithe used Friction!
+[2026-08-12 17:56:03] [HP] [map=3(Winding Woods) pos=44,7 event=5] The opposing Poochyena: 18/18 -> 4/18 (-14)
+[2026-08-12 17:56:04] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Poochyena used Howl!
+[2026-08-12 17:56:06] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Poochyena's Attack rose!
+[2026-08-12 17:56:08] [TURN] [map=3(Winding Woods) pos=44,7 event=5] Turn 7
+[2026-08-12 17:56:08] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Growlithe used Friction!
+[2026-08-12 17:56:09] [HP] [map=3(Winding Woods) pos=44,7 event=5] The opposing Poochyena: 4/18 -> 0/18 (-4)
+[2026-08-12 17:56:10] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] The opposing Poochyena fainted!
+[2026-08-12 17:56:13] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] Growlithe got 67 Exp. Points!
+[2026-08-12 17:56:14] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] You defeated Picnicker Liz!
+[2026-08-12 17:56:15] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] What just happened?
+[2026-08-12 17:56:15] [BATTLE] [map=3(Winding Woods) pos=44,7 event=5] You got $80 for winning!
+[2026-08-12 17:56:16] [BATTLE_RESULT] [map=3(Winding Woods) pos=44,7 event=5] WIN
+[2026-08-12 17:56:16] [PLAYER_PARTY_AFTER] [map=3(Winding Woods) pos=44,7 event=5] Growlithe [Growlithe] Lv.7 HP 23/26 | Gastly [Gastly] Lv.4 HP 17/17
+[2026-08-12 17:56:16] [-----] [map=3(Winding Woods) pos=44,7 event=5] BATTLE END
+[2026-08-12 17:56:17] [MESSAGE] [map=3(Winding Woods) pos=44,7 event=5] Your Reputation went up by 15!
+[2026-08-12 17:56:24] [MESSAGE] [map=3(Winding Woods) pos=50,22 event=2] Hmph! I'll show you what a real trainer looks like!
+[2026-08-12 17:56:27] [-----] [map=3(Winding Woods) pos=50,22 event=2] BATTLE START
+[2026-08-12 17:56:27] [OPPONENT] [map=3(Winding Woods) pos=50,22 event=2] Youngster Jeff
+[2026-08-12 17:56:27] [PLAYER_PARTY] [map=3(Winding Woods) pos=50,22 event=2] Growlithe [Growlithe] Lv.7 HP 23/26 | Gastly [Gastly] Lv.4 HP 17/17
+[2026-08-12 17:56:29] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] You are challenged by Youngster Jeff!
+[2026-08-12 17:56:29] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Youngster Jeff sent out Rattata!
+[2026-08-12 17:56:32] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Go! Growlithe!
+[2026-08-12 17:56:36] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata's Attack fell!
+[2026-08-12 17:56:38] [TURN] [map=3(Winding Woods) pos=50,22 event=2] Turn 1
+[2026-08-12 17:56:38] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata used Quick Attack!
+[2026-08-12 17:56:39] [HP] [map=3(Winding Woods) pos=50,22 event=2] Growlithe: 23/26 -> 19/26 (-4)
+[2026-08-12 17:56:40] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Growlithe used Ember!
+[2026-08-12 17:56:41] [HP] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata: 18/18 -> 6/18 (-12)
+[2026-08-12 17:56:44] [TURN] [map=3(Winding Woods) pos=50,22 event=2] Turn 2
+[2026-08-12 17:56:44] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata used Quick Attack!
+[2026-08-12 17:56:45] [HP] [map=3(Winding Woods) pos=50,22 event=2] Growlithe: 19/26 -> 15/26 (-4)
+[2026-08-12 17:56:46] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Growlithe used Friction!
+[2026-08-12 17:56:47] [HP] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata: 6/18 -> 0/18 (-6)
+[2026-08-12 17:56:48] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata fainted!
+[2026-08-12 17:56:49] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Growlithe got 60 Exp. Points!
+[2026-08-12 17:56:50] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Growlithe grew to Lv. 8!
+[2026-08-12 17:56:51] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Growlithe wants to learn Bite, but it already knows four moves.
+[2026-08-12 17:56:55] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] 1, 2, and... ... ... Ta-da!
+[2026-08-12 17:56:55] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Growlithe forgot how to use Leer. And...
+[2026-08-12 17:56:55] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Growlithe learned Bite!
+[2026-08-12 17:57:03] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Growlithe, come back!
+[2026-08-12 17:57:05] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] You're in charge, Gastly!
+[2026-08-12 17:57:08] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Youngster Jeff sent out Rattata!
+[2026-08-12 17:57:11] [TURN] [map=3(Winding Woods) pos=50,22 event=2] Turn 3
+[2026-08-12 17:57:11] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata used Tackle!
+[2026-08-12 17:57:12] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] It doesn't affect Gastly...
+[2026-08-12 17:57:13] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Gastly used Confuse Ray!
+[2026-08-12 17:57:15] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata became confused!
+[2026-08-12 17:57:17] [TURN] [map=3(Winding Woods) pos=50,22 event=2] Turn 4
+[2026-08-12 17:57:17] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Gastly used Lick!
+[2026-08-12 17:57:17] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] It doesn't affect the opposing Rattata...
+[2026-08-12 17:57:20] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata is confused!
+[2026-08-12 17:57:20] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata used Tackle!
+[2026-08-12 17:57:20] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] It doesn't affect Gastly...
+[2026-08-12 17:57:23] [TURN] [map=3(Winding Woods) pos=50,22 event=2] Turn 5
+[2026-08-12 17:57:24] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata is confused!
+[2026-08-12 17:57:24] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata used Tackle!
+[2026-08-12 17:57:25] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] It doesn't affect Gastly...
+[2026-08-12 17:57:26] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Gastly used Hypnosis!
+[2026-08-12 17:57:27] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata fell asleep!
+[2026-08-12 17:57:31] [TURN] [map=3(Winding Woods) pos=50,22 event=2] Turn 6
+[2026-08-12 17:57:31] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Gastly, come back!
+[2026-08-12 17:57:33] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] You're in charge, Growlithe!
+[2026-08-12 17:57:37] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata's Attack fell!
+[2026-08-12 17:57:39] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata is fast asleep.
+[2026-08-12 17:57:42] [TURN] [map=3(Winding Woods) pos=50,22 event=2] Turn 7
+[2026-08-12 17:57:43] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata is fast asleep.
+[2026-08-12 17:57:43] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Growlithe used Friction!
+[2026-08-12 17:57:44] [HP] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata: 18/18 -> 0/18 (-18)
+[2026-08-12 17:57:45] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] The opposing Rattata fainted!
+[2026-08-12 17:57:46] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Growlithe got 54 Exp. Points!
+[2026-08-12 17:57:47] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Gastly got 87 Exp. Points!
+[2026-08-12 17:57:48] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Gastly grew to Lv. 5!
+[2026-08-12 17:57:48] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Gastly grew to Lv. 6!
+[2026-08-12 17:57:49] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] You defeated Youngster Jeff!
+[2026-08-12 17:57:50] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] Rattata, NO!
+[2026-08-12 17:57:50] [BATTLE] [map=3(Winding Woods) pos=50,22 event=2] You got $80 for winning!
+[2026-08-12 17:57:51] [BATTLE_RESULT] [map=3(Winding Woods) pos=50,22 event=2] WIN
+[2026-08-12 17:57:51] [PLAYER_PARTY_AFTER] [map=3(Winding Woods) pos=50,22 event=2] Growlithe [Growlithe] Lv.8 HP 17/28 | Gastly [Gastly] Lv.6 HP 20/20
+[2026-08-12 17:57:51] [-----] [map=3(Winding Woods) pos=50,22 event=2] BATTLE END
+[2026-08-12 17:57:52] [MESSAGE] [map=3(Winding Woods) pos=50,22 event=2] Your Reputation went up by 10!
+[2026-08-12 17:57:58] [MESSAGE] [map=3(Winding Woods) pos=41,27 event=1] ...You better not dissapoint...
+[2026-08-12 17:58:07] [MESSAGE] [map=3(Winding Woods) pos=20,16 event=7] ... For years, I've been trying to understand the riddles in this cave. But i can only wrap my head around 4.
+[2026-08-12 17:58:09] [MESSAGE] [map=3(Winding Woods) pos=20,16 event=7] Listen, Gym Leader. If you can overcome more riddles than I, I will reward you. I wish you luck.
+[2026-08-12 17:58:20] [-----] [map=4(Cave of Knowledge) pos=57,9] BATTLE START
+[2026-08-12 17:58:20] [OPPONENT] [map=4(Cave of Knowledge) pos=57,9] Wild battle
+[2026-08-12 17:58:20] [PLAYER_PARTY] [map=4(Cave of Knowledge) pos=57,9] Growlithe [Growlithe] Lv.8 HP 17/28 | Gastly [Gastly] Lv.6 HP 20/20
+[2026-08-12 17:58:22] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] Oh! A wild Solrock appeared!
+[2026-08-12 17:58:22] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] Go! Growlithe!
+[2026-08-12 17:58:26] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] The wild Solrock's Attack fell!
+[2026-08-12 17:58:32] [TURN] [map=4(Cave of Knowledge) pos=57,9] Turn 1
+[2026-08-12 17:58:32] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] Growlithe, switch out! Come back!
+[2026-08-12 17:58:34] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] You're in charge, Gastly!
+[2026-08-12 17:58:37] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] The wild Solrock used Harden!
+[2026-08-12 17:58:38] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] The wild Solrock's Defense rose!
+[2026-08-12 17:58:43] [TURN] [map=4(Cave of Knowledge) pos=57,9] Turn 2
+[2026-08-12 17:58:43] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] Gastly used Lick!
+[2026-08-12 17:58:44] [HP] [map=4(Cave of Knowledge) pos=57,9] The wild Solrock: 21/21 -> 12/21 (-9)
+[2026-08-12 17:58:45] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] It's super effective!
+[2026-08-12 17:58:45] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] The wild Solrock used Tackle!
+[2026-08-12 17:58:45] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] It doesn't affect Gastly...
+[2026-08-12 17:58:47] [TURN] [map=4(Cave of Knowledge) pos=57,9] Turn 3
+[2026-08-12 17:58:47] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] Gastly used Lick!
+[2026-08-12 17:58:48] [HP] [map=4(Cave of Knowledge) pos=57,9] The wild Solrock: 12/21 -> 4/21 (-8)
+[2026-08-12 17:58:49] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] It's super effective!
+[2026-08-12 17:58:49] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] The wild Solrock used Tackle!
+[2026-08-12 17:58:49] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] It doesn't affect Gastly...
+[2026-08-12 17:58:51] [TURN] [map=4(Cave of Knowledge) pos=57,9] Turn 4
+[2026-08-12 17:58:51] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] Gastly used Lick!
+[2026-08-12 17:58:52] [HP] [map=4(Cave of Knowledge) pos=57,9] The wild Solrock: 4/21 -> 0/21 (-4)
+[2026-08-12 17:58:53] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] It's super effective!
+[2026-08-12 17:58:53] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] The wild Solrock fainted!
+[2026-08-12 17:58:56] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] Growlithe got 78 Exp. Points!
+[2026-08-12 17:58:56] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] Gastly got 99 Exp. Points!
+[2026-08-12 17:58:58] [BATTLE] [map=4(Cave of Knowledge) pos=57,9] Gastly grew to Lv. 7!
+[2026-08-12 17:59:00] [BATTLE_RESULT] [map=4(Cave of Knowledge) pos=57,9] WIN
+[2026-08-12 17:59:00] [PLAYER_PARTY_AFTER] [map=4(Cave of Knowledge) pos=57,9] Growlithe [Growlithe] Lv.8 HP 17/28 | Gastly [Gastly] Lv.7 HP 22/22
+[2026-08-12 17:59:00] [-----] [map=4(Cave of Knowledge) pos=57,9] BATTLE END
+[2026-08-12 17:59:06] [MESSAGE] [map=4(Cave of Knowledge) pos=50,14 event=1] If 5 equals 649 and 1 equals 151, what does 2 equal?
+[2026-08-12 17:59:19] [CHOICE] [map=4(Cave of Knowledge) pos=50,14 event=1] 340 / 251 / 288 / I don't know... => 251
+[2026-08-12 17:59:19] [CHOICE] [map=4(Cave of Knowledge) pos=50,14 event=1] 340 / 251 / 288 / I don't know... => 251
+[2026-08-12 17:59:22] [-----] [map=4(Cave of Knowledge) pos=48,14] BATTLE START
+[2026-08-12 17:59:22] [OPPONENT] [map=4(Cave of Knowledge) pos=48,14] Wild battle
+[2026-08-12 17:59:22] [PLAYER_PARTY] [map=4(Cave of Knowledge) pos=48,14] Growlithe [Growlithe] Lv.8 HP 17/28 | Gastly [Gastly] Lv.7 HP 22/22
+[2026-08-12 17:59:24] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] Oh! A wild Woobat appeared!
+[2026-08-12 17:59:28] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] Go! Growlithe!
+[2026-08-12 17:59:31] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] The wild Woobat's Attack fell!
+[2026-08-12 19:15:24] [TURN] [map=4(Cave of Knowledge) pos=48,14] Turn 1
+[2026-08-12 19:15:24] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] Growlithe used Bite!
+[2026-08-12 19:15:25] [HP] [map=4(Cave of Knowledge) pos=48,14] The wild Woobat: 24/24 -> 3/24 (-21)
+[2026-08-12 19:15:26] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] It's super effective!
+[2026-08-12 19:15:26] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] The wild Woobat used Attract!
+[2026-08-12 19:15:27] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] Growlithe is unaffected!
+[2026-08-12 19:15:31] [TURN] [map=4(Cave of Knowledge) pos=48,14] Turn 2
+[2026-08-12 19:15:31] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] Growlithe, come back!
+[2026-08-12 19:15:34] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] Your opponent's weak! Get 'em, Gastly!
+[2026-08-12 19:15:37] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] The wild Woobat used Gust!
+[2026-08-12 19:15:38] [HP] [map=4(Cave of Knowledge) pos=48,14] Gastly: 22/22 -> 15/22 (-7)
+[2026-08-12 19:15:44] [TURN] [map=4(Cave of Knowledge) pos=48,14] Turn 3
+[2026-08-12 19:15:44] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] Gastly used Lick!
+[2026-08-12 19:15:45] [HP] [map=4(Cave of Knowledge) pos=48,14] The wild Woobat: 3/24 -> 0/24 (-3)
+[2026-08-12 19:15:46] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] It's super effective!
+[2026-08-12 19:15:46] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] The wild Woobat fainted!
+[2026-08-12 19:15:49] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] Growlithe got 63 Exp. Points!
+[2026-08-12 19:15:49] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] Gastly got 70 Exp. Points!
+[2026-08-12 19:15:50] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] Gastly grew to Lv. 8!
+[2026-08-12 19:15:51] [BATTLE] [map=4(Cave of Knowledge) pos=48,14] Gastly learned Mean Look!
+[2026-08-12 19:15:53] [BATTLE_RESULT] [map=4(Cave of Knowledge) pos=48,14] WIN
+[2026-08-12 19:15:53] [PLAYER_PARTY_AFTER] [map=4(Cave of Knowledge) pos=48,14] Growlithe [Growlithe] Lv.8 HP 17/28 | Gastly [Gastly] Lv.8 HP 17/24
+[2026-08-12 19:15:53] [-----] [map=4(Cave of Knowledge) pos=48,14] BATTLE END
+[2026-08-12 19:15:56] [MESSAGE] [map=4(Cave of Knowledge) pos=48,14] Would you like to save the game?
+[2026-08-12 19:15:59] [CHOICE] [map=4(Cave of Knowledge) pos=48,14] Save to File C / Save to another file / Cancel => Save to File C
+[2026-08-12 19:15:59] [CHOICE] [map=4(Cave of Knowledge) pos=48,14] Save to File C / Save to another file / Cancel => Save to File C
+[2026-08-12 19:15:59] [MESSAGE] [map=4(Cave of Knowledge) pos=48,14] Glaciferno saved the game.\wtnp[30]
