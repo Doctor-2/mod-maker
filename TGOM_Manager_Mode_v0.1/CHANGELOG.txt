@@ -15,3 +15,7 @@ v0.1 completion
 - Replaced Reputation tokens with audited shift/rank/area/emergency-loss sources.
 - Moved Gym Staff to Pokégear, added curated unlocked entrances, and supplied a
   scene-compatible Gym-bracket Training path.
+- Matched RPG Maker's highest-index active-page selection, counted Map031 shifts
+  independently, derived complete 14/15-challenger brackets, gated encounters by
+  visits/unlocks, blocked protected travel origins, and explicitly allowlisted
+  emergency-loss battles.

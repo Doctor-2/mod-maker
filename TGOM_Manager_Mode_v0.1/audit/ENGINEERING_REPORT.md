@@ -14,7 +14,10 @@ script line and trainer signature. Its safe command grammar only identifies
 candidates. Human promotion to `SAFE_ROUTINE` is recorded in
 `ROUTINE_ALLOWLIST.md`; unknown content fails closed. Map events are not edited.
 
-The promoted routine regions are Map003, Maps007/008/010, and Map021. Map012
+The promoted routine regions are Map003, Maps007/008/010, and Map021. The audit
+stores every page—not only battle pages—in original index order. Delegation
+reproduces RPG Maker's reverse page selection and proceeds only when the actual
+active page is an allowlisted battle. Map012
 Rough Rider candidates are story-linked and remain excluded. Delegation sets
 the same per-page self-switch only when the exact original page condition passes,
 and grants exact `max party level * trainer type base_money`, the page's
@@ -29,13 +32,18 @@ Gym, story, boss, reward and other scripted battles are not intercepted.
 
 The Gym Staff menu exposes audited clearing, three-candidate scouting,
 recruitment, catch-up training, anchoring/travel, curated story entrances and
-return. Tokens are awarded idempotently from completed three-battle Gym shifts,
+return. A Manager-side Map031/Event4 counter observes each battle-end outcome and
+awards one idempotent token after the third challenger, before the event can reset
+its own counter. Tokens are also awarded from
 Rank Up, official area unlock switches, and the first retained important-event
-loss. Reputation is not a token source.
+loss in the explicit `EMERGENCY_BATTLES` allowlist. Gym challengers are excluded.
+Reputation is not a token source.
 Blacklist permanently suppresses a species; the last two reports apply a soft
 weight reduction. Training derives its target from the current-rank Gym
-challenger bracket. Travel uses only audited Gym/entrance coordinates and rejects
-locked or protected maps.
+challenger bracket: all 14 Map031 Rank0 candidates or all 15 Rank1 candidates.
+Travel uses only audited Gym/entrance coordinates and rejects locked destinations
+and protected current origins. Encounter maps enter scouting only after an
+official unlock switch or legitimate observation by map setup.
 
 Manager actions are written through `TGOMCompanion.write_line("MANAGER", ...)`,
 preserving the production Companion Logger and its passive battle transcript.

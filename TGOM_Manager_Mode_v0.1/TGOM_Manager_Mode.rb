@@ -11,7 +11,7 @@ module TGOMManager
     :recent_scouts => [], :cleared_routine_events => {},
     :claimed_token_sources => {}, :travel_origin => nil, :gym_location => nil,
     :last_routine_map => nil, :active_report => nil, :report_history => [],
-    :observed_unlocks => {}
+    :observed_unlocks => {}, :gym_shift_counts => {}
   }
 
   # Generated from audit/full_event_audit.json. A routine entry is admitted only
@@ -64,6 +64,25 @@ module TGOMManager
       end
     end
   end.freeze
+  # Complete ordered page stacks for promoted events. Values identify a battle
+  # version or nil for a dialogue/override page; selection scans in reverse just
+  # like RPG Maker's Game_Event#refresh.
+  ROUTINE_PAGE_STACKS = SAFE_ROUTINE.each_with_object({}) do |(map_id, events), maps|
+    maps[map_id] = {}
+    events.each do |event_id, specs|
+      versions = specs.map { |spec| spec[2] }
+      stack = [[{}, versions[0]], [{:self_switch => "A"}, nil]]
+      if versions.length > 1
+        stack << [{:switch1 => 104}, versions[1]]
+        ranked_b = [[3, 1], [3, 2], [7, 4], [7, 7]].include?([map_id, event_id])
+        b_condition = {:self_switch => "B"}
+        b_condition[:switch1] = 104 if ranked_b
+        stack << [b_condition, nil]
+      end
+      stack << [{:switch1 => 177}, nil] if map_id == 21
+      maps[map_id][event_id] = stack
+    end
+  end.freeze
   SAFE_GYM_MAPS = [15, 31, 43, 44, 45, 46, 47].freeze
   SAFE_RETURN_MAPS = [1, 2, 3, 7, 8, 9, 10, 11, 18, 19, 21, 26, 27, 28, 29,
                       30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 48, 49,
@@ -80,11 +99,18 @@ module TGOMManager
   SCOUT_ENCOUNTER_MAPS = {2 => nil, 3 => nil, 7 => nil, 8 => nil, 10 => nil,
                           18 => 110, 54 => 111, 58 => 111, 59 => 111}.freeze
   GYM_BRACKETS = {
-    0 => [[:LASS, "Ellen", 0], [:YOUNGSTER, "Jeff", 0], [:BUGCATCHER, "Bill", 0],
-          [:ROCKER, "Ricky", 0], [:BEAUTY, "Missy", 0], [:PICNICKER, "Liz", 0]],
-    1 => [[:LASS, "Ellen", 1], [:YOUNGSTER, "Jeff", 1], [:ROCKER, "Ricky", 1],
-          [:BEAUTY, "Missy", 1], [:PICNICKER, "Liz", 1], [:COOLTRAINER_F, "Linda", 1]]
+    0 => [[:VETERAN_M,"John",0],[:YOUNGSTER,"Dennis",0],[:POKEMONBREEDER,"Jasmine",0],
+          [:SCIENTIST,"Gladstone",0],[:COOLTRAINER_F,"Nat",0],[:COOLTRAINER_F,"Linda",0],
+          [:HIKER,"Burton",0],[:CAMPER,"Jacob",0],[:PICNICKER,"Liz",0],
+          [:BEAUTY,"Missy",0],[:ROCKER,"Ricky",0],[:BUGCATCHER,"Bill",0],
+          [:YOUNGSTER,"Jeff",0],[:LASS,"Ellen",0]],
+    1 => [[:SOCIALITE,"Jannette",0],[:VETERAN_M,"John",1],[:SCIENTIST,"Desmond",0],
+          [:POKEMONBREEDER,"Jasmine",1],[:FISHERMAN,"Levi",0],[:COOLTRAINER_F,"Nat",1],
+          [:COOLTRAINER_F,"Linda",1],[:LADY,"Annabeth",0],[:CAMPER,"Jacob",1],
+          [:PICNICKER,"Liz",1],[:BEAUTY,"Missy",1],[:ROCKER,"Ricky",1],
+          [:AROMALADY,"Pepper",0],[:YOUNGSTER,"Jeff",1],[:LASS,"Ellen",1]]
   }.freeze
+  EMERGENCY_BATTLES = {[1, 24] => :rough_rider_gang_story}.freeze
   SAFE_DESTINATIONS = {
     :new_day_plain => [2, 45, 20, 8, nil],
     :winding_woods => [3, 25, 6, 2, nil],
@@ -134,9 +160,6 @@ module TGOMManager
     return unless defined?($game_switches) && $game_switches
     RANK_UNLOCKS.each { |switch, rank| claim_token("rank_up_#{rank}") if $game_switches[switch] }
     AREA_UNLOCKS.each { |switch, area| claim_token("area_unlock_#{area}") if $game_switches[switch] }
-    if $game_switches[101] && defined?($game_variables) && $game_variables && $game_variables[66].to_i >= 3
-      claim_token("gym_shift_day_#{$game_variables[52].to_i}")
-    end
   end
 
   def blacklist(species)
@@ -174,7 +197,7 @@ module TGOMManager
     return [] if defined?($game_switches) && $game_switches && !$game_switches[76]
     pool = []
     SCOUT_ENCOUNTER_MAPS.each do |map_id, required_switch|
-      next if required_switch && (!defined?($game_switches) || !$game_switches[required_switch])
+      next unless encounter_map_unlocked?(map_id, required_switch)
       encounter = GameData::Encounter.get(map_id, 0) rescue nil
       next unless encounter
       encounter.types.each do |encounter_type, slots|
@@ -197,6 +220,11 @@ module TGOMManager
     pool
   rescue StandardError
     []
+  end
+
+  def encounter_map_unlocked?(map_id, required_switch = SCOUT_ENCOUNTER_MAPS[map_id])
+    officially_unlocked = required_switch && defined?($game_switches) && $game_switches && $game_switches[required_switch]
+    !!(officially_unlocked || state[:observed_unlocks][map_id])
   end
 
   def create_report(random = Random)
@@ -260,8 +288,11 @@ module TGOMManager
     return {:battles => 0, :money => 0, :reputation => 0} unless events
     result = {:battles => 0, :money => 0, :reputation => 0}
     events.each do |event_id, specs|
+      active_version = active_routine_version(map_id.to_i, event_id)
+      next if active_version.nil?
       specs.each do |spec|
         type, name, version, reputation, switch = spec
+        next unless version == active_version
         condition = ROUTINE_CONDITIONS.fetch(map_id.to_i).fetch(event_id).fetch(version)
         next unless page_condition_met?(condition, map_id, event_id)
         key = [map_id.to_i, event_id, switch]
@@ -288,6 +319,12 @@ module TGOMManager
     end
     sync_token_hooks
     result
+  end
+
+  def active_routine_version(map_id, event_id)
+    stack = ROUTINE_PAGE_STACKS.fetch(map_id).fetch(event_id)
+    active = stack.reverse.find { |condition, _version| page_condition_met?(condition, map_id, event_id) }
+    active && active[1]
   end
 
   def page_condition_met?(condition, map_id, event_id)
@@ -367,7 +404,7 @@ module TGOMManager
 
   def travel_to_gym
     location = state[:gym_location]
-    return false unless location && SAFE_GYM_MAPS.include?(location[0]) && travel_idle?
+    return false unless location && SAFE_GYM_MAPS.include?(location[0]) && safe_current_origin? && travel_idle?
     if defined?($game_map) && $game_map && defined?($game_player) && $game_player
       return false unless SAFE_RETURN_MAPS.include?($game_map.map_id)
       state[:travel_origin] = [$game_map.map_id, $game_player.x, $game_player.y, $game_player.direction]
@@ -377,7 +414,7 @@ module TGOMManager
 
   def return_from_gym
     location = state[:travel_origin]
-    return false unless location && SAFE_RETURN_MAPS.include?(location[0]) && travel_idle?
+    return false unless location && SAFE_RETURN_MAPS.include?(location[0]) && safe_current_origin? && travel_idle?
     return false unless transfer(location)
     state[:travel_origin] = nil
     true
@@ -392,8 +429,13 @@ module TGOMManager
 
   def travel_to_destination(name)
     location = available_destinations[name.to_sym]
-    return false unless location && travel_idle?
+    return false unless location && safe_current_origin? && travel_idle?
     transfer(location[0, 4])
+  end
+
+  def safe_current_origin?
+    return false unless defined?($game_map) && $game_map
+    !PROTECTED_MAPS.include?($game_map.map_id)
   end
 
   def important_loss(outcome, can_lose)
@@ -401,8 +443,24 @@ module TGOMManager
     return false unless defined?($game_map) && $game_map && defined?(pbMapInterpreter) && pbMapInterpreterRunning?
     event = pbMapInterpreter.get_self rescue nil
     return false unless event
-    return false if SAFE_ROUTINE.fetch($game_map.map_id, {}).key?(event.id)
-    claim_token("emergency_loss_map_#{$game_map.map_id}_event_#{event.id}")
+    identity = EMERGENCY_BATTLES[[$game_map.map_id, event.id]]
+    return false unless identity
+    claim_token("emergency_loss_#{identity}")
+  end
+
+  def record_gym_shift_battle(outcome)
+    return false unless [1, 2].include?(outcome)
+    return false unless defined?($game_map) && $game_map && $game_map.map_id == 31
+    return false unless defined?(pbMapInterpreter) && pbMapInterpreterRunning?
+    event = pbMapInterpreter.get_self rescue nil
+    return false unless event && event.id == 4
+    day = defined?($game_variables) && $game_variables ? $game_variables[52].to_i : 0
+    source = "gym_shift_day_#{day}"
+    return false if state[:claimed_token_sources][source]
+    state[:gym_shift_counts][day] = state[:gym_shift_counts].fetch(day, 0) + 1
+    log("GYM_SHIFT battle=#{state[:gym_shift_counts][day]}/3 day=#{day}")
+    claim_token(source) if state[:gym_shift_counts][day] >= 3
+    true
   end
 
   def travel_idle?
@@ -476,10 +534,12 @@ def pbTGOMGymStaff; TGOMManager.gym_staff_menu; end
 EventHandlers.add(:on_game_map_setup, :tgom_manager_initialize, proc do |map_id|
   TGOMManager.state
   TGOMManager.state[:last_routine_map] = map_id if !TGOMManager.region_maps(map_id).empty?
+  TGOMManager.state[:observed_unlocks][map_id] = true if TGOMManager::SCOUT_ENCOUNTER_MAPS.key?(map_id)
   TGOMManager.sync_token_hooks
 end)
 EventHandlers.add(:on_end_battle, :tgom_manager_token_sync, proc do |outcome, can_lose|
   TGOMManager.sync_token_hooks
+  TGOMManager.record_gym_shift_battle(outcome)
   TGOMManager.important_loss(outcome, can_lose)
 end)
 

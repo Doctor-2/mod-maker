@@ -37,9 +37,9 @@ $game_switches[101] = true
 $game_variables[52] = 7
 $game_variables[66] = 3
 TGOMManager.sync_token_hooks
-assert(TGOMManager.state[:scout_tokens] == 3, 'rank, area and completed shift tokens')
+assert(TGOMManager.state[:scout_tokens] == 2, 'rank and area tokens')
 TGOMManager.sync_token_hooks
-assert(TGOMManager.state[:scout_tokens] == 3, 'approved hooks idempotent')
+assert(TGOMManager.state[:scout_tokens] == 2, 'approved hooks idempotent')
 
 # Unit: page conditions and exact post-win state.
 $game_switches[104] = false
@@ -53,6 +53,56 @@ assert(!$game_self_switches[[3, 1, 'B']], 'Rank 1 B page not prematurely cleared
 $game_switches[104] = true
 assert(TGOMManager.clear_region(3)[:battles] == 3, 'Rank 1 pages become eligible once')
 assert(TGOMManager.clear_region(3)[:battles] == 0, 'Rank 1 pages remain idempotent')
+
+# Unit regression: RPG Maker selects the highest condition-valid page.
+$PokemonGlobal = PokemonGlobalMetadata.new
+$game_self_switches = {}; $game_switches[104] = true
+$game_variables[29] = 0; $game_variables[34] = 0
+result = TGOMManager.clear_region(3)
+assert(result[:battles] == 3 && result[:reputation] == 50, 'Rank 1 active pages clear directly')
+assert(!$game_self_switches[[3, 1, 'A']] && $game_self_switches[[3, 1, 'B']], 'v1/B selected, never v0/A')
+
+# Unit: exactly three Map031/Event4 outcomes complete one shift; Gym losses do
+# not enter the explicit emergency allowlist.
+MapStub = Struct.new(:map_id)
+EventStub = Struct.new(:id)
+InterpreterStub = Struct.new(:event) do
+  def get_self; event; end
+end
+$game_map = MapStub.new(31)
+$interpreter = InterpreterStub.new(EventStub.new(4))
+def pbMapInterpreter; $interpreter; end
+def pbMapInterpreterRunning?; true; end
+$game_variables[52] = 9
+before_tokens = TGOMManager.state[:scout_tokens]
+assert(TGOMManager.record_gym_shift_battle(1), 'first Gym challenger win counted')
+assert(TGOMManager.record_gym_shift_battle(2), 'second Gym challenger loss counted')
+assert(TGOMManager.state[:scout_tokens] == before_tokens, 'no early shift token')
+assert(TGOMManager.record_gym_shift_battle(1), 'third challenger counted')
+assert(TGOMManager.state[:scout_tokens] == before_tokens + 1, 'one token after third challenger')
+assert(!TGOMManager.record_gym_shift_battle(2), 'completed shift source idempotent')
+assert(!TGOMManager.important_loss(2, true), 'ordinary Gym challenger has no emergency token')
+$game_map = MapStub.new(1); $interpreter.event = EventStub.new(24)
+emergency_before = TGOMManager.state[:scout_tokens]
+assert(TGOMManager.important_loss(2, true), 'explicit Rough Rider story loss grants emergency token')
+assert(TGOMManager.state[:scout_tokens] == emergency_before + 1, 'emergency token added once')
+assert(!TGOMManager.important_loss(2, true), 'stable emergency battle ID idempotent')
+$game_map = MapStub.new(4)
+TGOMManager.state[:gym_location] = [31, 1, 1, 2]
+assert(!TGOMManager.travel_to_gym, 'protected Cave origin cannot travel to Gym')
+assert(!TGOMManager.travel_to_destination(:new_day_plain), 'protected Cave origin cannot use story travel')
+TGOMManager.state[:travel_origin] = [2, 1, 1, 2]
+assert(!TGOMManager.return_from_gym, 'protected Cave origin cannot Return')
+
+# Unit: encounter areas require an official switch or a legitimate visit.
+TGOMManager.state[:observed_unlocks].clear
+$game_switches[110] = false
+assert(!TGOMManager.encounter_map_unlocked?(7), 'unobserved ordinary area excluded')
+TGOMManager.state[:observed_unlocks][7] = true
+assert(TGOMManager.encounter_map_unlocked?(7), 'visited ordinary area included')
+assert(!TGOMManager.encounter_map_unlocked?(18, 110), 'future official area excluded')
+$game_switches[110] = true
+assert(TGOMManager.encounter_map_unlocked?(18, 110), 'officially unlocked area included')
 
 # Unit: report consumes once, persists, resolves once, and applies soft recency.
 class << TGOMManager
@@ -89,6 +139,14 @@ TGOMManager::SAFE_ROUTINE.each do |map_id, events|
   audited_map = audit['maps'].find { |map| map['map_id'] == map_id }
   events.each do |event_id, specs|
     audited_event = audited_map['events'].find { |event| event['event_id'] == event_id }
+    audited_stack = audited_event['pages'].map do |page|
+      condition = page['condition'].each_with_object({}) do |(key, value), hash|
+        hash[key.to_sym] = value if value
+      end
+      version = page['trainer_battle'] && page['trainer_battle']['version']
+      [condition, version]
+    end
+    assert(audited_stack == TGOMManager::ROUTINE_PAGE_STACKS[map_id][event_id], 'complete ordered page stack audited')
     specs.each do |type, name, version, reputation, switch|
       page = audited_event['pages'].find do |candidate|
         trainer = candidate['trainer_battle']
