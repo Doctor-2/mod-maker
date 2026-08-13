@@ -34,18 +34,32 @@ Dir.glob(File.join(root, "Map[0-9][0-9][0-9].rxdata")).sort.each do |path|
       commands = (page.instance_variable_get(:@list) || []).map do |command|
         {"code" => command.instance_variable_get(:@code), "parameters" => command.instance_variable_get(:@parameters)}
       end
+      condition = page.instance_variable_get(:@condition)
+      condition_data = {
+        "switch1" => (condition.instance_variable_get(:@switch1_valid) ? condition.instance_variable_get(:@switch1_id) : nil),
+        "switch2" => (condition.instance_variable_get(:@switch2_valid) ? condition.instance_variable_get(:@switch2_id) : nil),
+        "variable" => (condition.instance_variable_get(:@variable_valid) ? {"id" => condition.instance_variable_get(:@variable_id), "minimum" => condition.instance_variable_get(:@variable_value)} : nil),
+        "self_switch" => (condition.instance_variable_get(:@self_switch_valid) ? condition.instance_variable_get(:@self_switch_ch) : nil)
+      }
       script_lines = commands.select { |c| [355, 655].include?(c["code"]) }.map { |c| c["parameters"][0].to_s }
       script_lines.concat(commands.select { |c| c["code"] == 111 && c["parameters"][0] == 12 }.map { |c| c["parameters"][1].to_s })
       scripts = script_lines.join("\n")
       trainer = scripts.match(/TrainerBattle\.start\(:(\w+),\s*["']([^"']+)["'](?:,\s*(\d+))?\)/)
       rep = commands.select { |c| c["code"] == 122 && c["parameters"][0] == 29 }.map { |c| c["parameters"][4].to_i }.max
       switches = commands.select { |c| c["code"] == 123 }.map { |c| c["parameters"][0] }
+      variable_operations = commands.select { |c| c["code"] == 122 }.map do |c|
+        {"first" => c["parameters"][0], "last" => c["parameters"][1],
+         "operation" => c["parameters"][2], "operand_type" => c["parameters"][3],
+         "operand" => c["parameters"][4]}
+      end
       safe_scripts = script_lines.all? do |line|
         line =~ /\A(?:pbTrainerIntro\(:\w+\)|pbNoticePlayer\(get_self\)|pbTrainerEnd|TrainerBattle\.start\(:\w+,\s*["'][^"']+["'](?:,\s*\d+)?\))\z/
       end
       safe = !!trainer && name =~ /Trainer/i && commands.all? { |c| allowed_codes.include?(c["code"]) } && safe_scripts && rep && switches.length == 1
       {
-        "page" => index, "command_codes" => commands.map { |c| c["code"] },
+        "page" => index, "condition" => condition_data,
+        "variable_operations" => variable_operations,
+        "command_codes" => commands.map { |c| c["code"] },
         "scripts" => script_lines.map(&:strip).reject(&:empty?),
         "trainer_battle" => (trainer ? {"type" => trainer[1], "name" => trainer[2], "version" => (trainer[3] || 0).to_i, "reputation" => rep, "self_switch" => switches[0]} : nil),
         "safe_scripts" => !!safe_scripts, "routine_allowlisted" => !!safe

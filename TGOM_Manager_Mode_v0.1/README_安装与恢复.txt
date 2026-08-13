@@ -7,10 +7,15 @@ TGOM Manager Mode v0.1
 安装：关闭游戏并备份 Data/PluginScripts.rxdata，然后用 dist 包内同名文件替换。
 恢复：关闭游戏，将包内 PluginScripts.pre-manager.rxdata 改名并复制回 Data。
 
-暂停菜单中的 Gym Staff 提供：安全清理已审计的普通训练家、三选一招募、追赶训练、
-设置 Gym 锚点、前往 Gym 和返回。Scout Token 来自 Reputation 每 100 点里程碑；
-来源永久去重。招募会过滤黑名单和最近候选。清理只覆盖 audit/ROUTINE_ALLOWLIST.md
-列出的 Map003 事件，精确给予训练家奖金与事件 Reputation，并设置原页面自开关。
+Pokégear 中的 Gym Staff 提供：安全清理已审计的普通训练家、三选一招募、追赶训练、
+设置 Gym 锚点、前往 Gym、已解锁安全入口和返回。Token 只来自完成 Gym shift、Rank Up、正式区域解锁以及每个重要剧情战
+首次失败；不会按 Reputation 数值发放。报告生成时消耗一个 Token，报告会保存到解决，
+可招募一只或全部拒绝，并可永久屏蔽一只被拒绝候选。候选只取当前已解锁区域的真实
+遭遇表 Fire 属性宝可梦并保留稀有度权重。
+
+清理覆盖 audit/ROUTINE_ALLOWLIST.md 列出的 Maps 3/7/8/10/21 区域普通训练家，
+逐页检查原 RPG 页面条件，精确给予训练家奖金、Reputation、Highest Reputation 与
+奖金统计，并设置原页面自开关。Training 使用当前 Rank 的 Gym challenger 等级组。
 
 所有 Gym/剧情/Boss/奖励战保持原样。Map004–006 被整体保护，以保留 Cave of
 Knowledge 谜题、Ken、Lillith 和 Charmander/御三家奖励链。Manager 日志写入现有

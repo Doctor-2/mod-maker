@@ -8,3 +8,10 @@ v0.1 completion
 - Changed production builds to require the active Companion Logger base and reject
   PluginScripts.before_companion.rxdata.
 - Expanded regression and helper tests; generated RXDATA/ZIP remains untracked.
+- Enforced exact audited event-page conditions and preserved Highest Reputation
+  and battle-money statistics during delegation.
+- Replaced all-species scouting with unlocked encounter rarity, persistent
+  one-token reports, rejected-species recency decay, and Fire eligibility.
+- Replaced Reputation tokens with audited shift/rank/area/emergency-loss sources.
+- Moved Gym Staff to Pokégear, added curated unlocked entrances, and supplied a
+  scene-compatible Gym-bracket Training path.

@@ -16,8 +16,10 @@ candidates. Human promotion to `SAFE_ROUTINE` is recorded in
 
 The promoted routine regions are Map003, Maps007/008/010, and Map021. Map012
 Rough Rider candidates are story-linked and remain excluded. Delegation sets
-the same per-page self-switch and grants exact `max party level * trainer type
-base_money` plus the page's Reputation. Items and every unlisted page remain.
+the same per-page self-switch only when the exact original page condition passes,
+and grants exact `max party level * trainer type base_money`, the page's
+Reputation, Highest Reputation, and the normal battle-money statistic. Battle-only
+multipliers remain excluded. Items and every unlisted page remain.
 
 Maps004–006 are protected wholesale. This preserves all ten Cave of Knowledge
 riddles, variable 37, Ken, Lillith, and all starter/Charmander gift branches.
@@ -26,12 +28,25 @@ Gym, story, boss, reward and other scripted battles are not intercepted.
 ## Manager systems
 
 The Gym Staff menu exposes audited clearing, three-candidate scouting,
-recruitment, catch-up training, anchoring/travel and return. Tokens are awarded
-idempotently from observed Reputation milestones, including Reputation earned by
-delegated Gym work.
-Blacklist and recent history suppress candidates. Training derives its target
-from the currently audited opponents, and travel only uses a player-recorded
-anchor/origin while rejecting protected maps.
+recruitment, catch-up training, anchoring/travel, curated story entrances and
+return. Tokens are awarded idempotently from completed three-battle Gym shifts,
+Rank Up, official area unlock switches, and the first retained important-event
+loss. Reputation is not a token source.
+Blacklist permanently suppresses a species; the last two reports apply a soft
+weight reduction. Training derives its target from the current-rank Gym
+challenger bracket. Travel uses only audited Gym/entrance coordinates and rejects
+locked or protected maps.
 
 Manager actions are written through `TGOMCompanion.write_line("MANAGER", ...)`,
 preserving the production Companion Logger and its passive battle transcript.
+
+## Verification boundary
+
+`tests/test_manager.rb` is a pure Ruby unit harness plus contracts against the
+committed extracted map audit. `tests/test_extracted_source.rb` inspects the
+actual Essentials 20.1 `Scripts.rxdata` and TGOM `System.rxdata` for the level UI,
+evolution, battle-end hook, and named switch/variable contracts. The package
+round-trip verifies the Companion plugin remains before Manager. These tests do
+not load a live save, render Pokégear, play a three-challenger shift, choose a
+move/evolution interactively, or execute an actual map transfer; those remain
+live-runtime acceptance checks.

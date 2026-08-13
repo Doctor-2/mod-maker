@@ -13,7 +13,10 @@ page is reviewed and the exact tuple is copied into `SAFE_ROUTINE`.
 | Miser Marsh | 21 | 23 Davy, 24 Rob, 25 Anna, 27 Chris, all v0 (20, A) |
 
 Each tuple was checked for a single ordinary `TrainerBattle.start`, its matching
-Reputation variable operation, and its terminal self-switch. Delegation applies
+Reputation variable operation, conditional variable 34 (Highest Reputation)
+update from variable 29, and its terminal self-switch. Each page's exact RPG
+page condition is stored in `full_event_audit.json` and mirrored by
+`ROUTINE_CONDITIONS`. Delegation applies
 only the currently reachable A/B page. It never runs an event command list.
 
 Map012's Rough Rider battles are excluded because they participate in the

@@ -10,7 +10,8 @@ module TGOMManager
     :version => VERSION, :scout_tokens => 0, :blacklist => [],
     :recent_scouts => [], :cleared_routine_events => {},
     :claimed_token_sources => {}, :travel_origin => nil, :gym_location => nil,
-    :last_routine_map => nil
+    :last_routine_map => nil, :active_report => nil, :report_history => [],
+    :observed_unlocks => {}
   }
 
   # Generated from audit/full_event_audit.json. A routine entry is admitted only
@@ -50,6 +51,19 @@ module TGOMManager
   ROUTINE_REGIONS = {
     :winding_woods => [3], :steel_caves => [7, 8, 10], :miser_marsh => [21]
   }.freeze
+  # Exact audited RPG::Event::Page::Condition for each promoted battle page.
+  # Empty hashes are unconditional; rematches carry their original Rank switch.
+  ROUTINE_CONDITIONS = SAFE_ROUTINE.each_with_object({}) do |(map_id, events), maps|
+    maps[map_id] = {}
+    events.each do |event_id, specs|
+      maps[map_id][event_id] = {}
+      specs.each do |spec|
+        rematch = [[3, 1], [3, 2], [3, 5], [7, 4], [7, 7], [7, 11],
+                   [8, 3], [10, 4]].include?([map_id, event_id]) && spec[2] == 1
+        maps[map_id][event_id][spec[2]] = rematch ? {:switch1 => 104} : {}
+      end
+    end
+  end.freeze
   SAFE_GYM_MAPS = [15, 31, 43, 44, 45, 46, 47].freeze
   SAFE_RETURN_MAPS = [1, 2, 3, 7, 8, 9, 10, 11, 18, 19, 21, 26, 27, 28, 29,
                       30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 48, 49,
@@ -60,6 +74,23 @@ module TGOMManager
     :TURTWIG, :TEPIG, :OSHAWOTT, :SNIVY, :FENNEKIN, :FROAKIE, :CHESPIN,
     :LITTEN, :POPPLIO, :ROWLET, :SCORBUNNY, :SOBBLE, :GROOKEY, :FUECOCO,
     :QUAXLY, :SPRIGATITO].freeze
+  PAGE_CONDITION = {:switch1 => 104}.freeze
+  AREA_UNLOCKS = {110 => :badlands, 111 => :mirror_oasis}.freeze
+  RANK_UNLOCKS = {104 => 1, 115 => 2}.freeze
+  SCOUT_ENCOUNTER_MAPS = {2 => nil, 3 => nil, 7 => nil, 8 => nil, 10 => nil,
+                          18 => 110, 54 => 111, 58 => 111, 59 => 111}.freeze
+  GYM_BRACKETS = {
+    0 => [[:LASS, "Ellen", 0], [:YOUNGSTER, "Jeff", 0], [:BUGCATCHER, "Bill", 0],
+          [:ROCKER, "Ricky", 0], [:BEAUTY, "Missy", 0], [:PICNICKER, "Liz", 0]],
+    1 => [[:LASS, "Ellen", 1], [:YOUNGSTER, "Jeff", 1], [:ROCKER, "Ricky", 1],
+          [:BEAUTY, "Missy", 1], [:PICNICKER, "Liz", 1], [:COOLTRAINER_F, "Linda", 1]]
+  }.freeze
+  SAFE_DESTINATIONS = {
+    :new_day_plain => [2, 45, 20, 8, nil],
+    :winding_woods => [3, 25, 6, 2, nil],
+    :even_badderlands => [18, 54, 15, 4, 110],
+    :mirror_oasis => [54, 22, 20, 8, 111]
+  }.freeze
 
   module_function
 
@@ -99,12 +130,13 @@ module TGOMManager
     true
   end
 
-  # Observable, idempotent hook: Reputation milestones award tokens without
-  # changing any of the game's progression variables.
   def sync_token_hooks
-    return unless defined?($game_variables) && $game_variables
-    reputation = $game_variables[REP_VARIABLE].to_i
-    (100..reputation).step(100) { |n| claim_token("reputation_#{n}") }
+    return unless defined?($game_switches) && $game_switches
+    RANK_UNLOCKS.each { |switch, rank| claim_token("rank_up_#{rank}") if $game_switches[switch] }
+    AREA_UNLOCKS.each { |switch, area| claim_token("area_unlock_#{area}") if $game_switches[switch] }
+    if $game_switches[101] && defined?($game_variables) && $game_variables && $game_variables[66].to_i >= 3
+      claim_token("gym_shift_day_#{$game_variables[52].to_i}")
+    end
   end
 
   def blacklist(species)
@@ -117,13 +149,15 @@ module TGOMManager
 
   def scout_candidates(weighted_pool, count = 3, random = Random)
     return [] unless weighted_pool.is_a?(Array)
-    blocked = state[:blacklist] + state[:recent_scouts] + PROTECTED_SCOUTS
+    blocked = state[:blacklist] + PROTECTED_SCOUTS
     unique = {}
     weighted_pool.each do |entry|
       next unless entry.is_a?(Array) && entry.length == 2 && entry[1].to_f > 0
       species = entry[0].to_sym
       next if blocked.include?(species)
-      unique[species] = unique.fetch(species, 0.0) + entry[1].to_f
+      reports_ago = state[:report_history].reverse.index { |report| report.include?(species) }
+      decay = reports_ago && reports_ago < 2 ? 0.25 : 1.0
+      unique[species] = unique.fetch(species, 0.0) + entry[1].to_f * decay
     end
     chosen = []
     [count.to_i, unique.length].min.times do
@@ -136,16 +170,58 @@ module TGOMManager
   end
 
   def available_scout_pool
-    return [] unless defined?(GameData::Species)
+    return [] unless defined?(GameData::Encounter) && defined?(GameData::Species)
+    return [] if defined?($game_switches) && $game_switches && !$game_switches[76]
     pool = []
-    GameData::Species.each do |species|
-      next if species.form != 0 || species.pseudo_species != species.species
-      next if species.respond_to?(:legendary?) && species.legendary?
-      pool << [species.species, 1]
+    SCOUT_ENCOUNTER_MAPS.each do |map_id, required_switch|
+      next if required_switch && (!defined?($game_switches) || !$game_switches[required_switch])
+      encounter = GameData::Encounter.get(map_id, 0) rescue nil
+      next unless encounter
+      encounter.types.each do |encounter_type, slots|
+        tier = if defined?($player) && $player && $player.respond_to?(:badge_count) && $player.badge_count >= 5
+                 5
+               elsif defined?($player) && $player && $player.respond_to?(:badge_count) && $player.badge_count >= 3
+                 3
+               end
+        suffix = encounter_type.to_s[/_(3|5)\z/, 1]
+        next if tier && suffix && suffix.to_i != tier
+        next if tier && !suffix && encounter.types.key?((encounter_type.to_s + "_#{tier}").to_sym)
+        next if !tier && suffix
+        slots.each do |weight, species, _min_level, _max_level|
+          data = GameData::Species.get(species) rescue nil
+          next unless data && data.types.include?(:FIRE)
+          pool << [species, weight]
+        end
+      end
     end
     pool
   rescue StandardError
     []
+  end
+
+  def create_report(random = Random)
+    return state[:active_report] if state[:active_report]
+    return nil if state[:scout_tokens] < 1
+    candidates = scout_candidates(available_scout_pool, 3, random)
+    return nil if candidates.empty?
+    state[:scout_tokens] -= 1
+    state[:active_report] = candidates
+    state[:report_history] << candidates
+    state[:report_history] = state[:report_history].last(2)
+    log("SCOUT_REPORT candidates=#{candidates.join(',')} tokens=#{state[:scout_tokens]}")
+    candidates
+  end
+
+  def resolve_report(recruit_species = nil, blacklist_species = nil)
+    report = state[:active_report]
+    return false unless report
+    return false if recruit_species && !report.include?(recruit_species.to_sym)
+    return false if blacklist_species && (!report.include?(blacklist_species.to_sym) || (recruit_species && blacklist_species.to_sym == recruit_species.to_sym))
+    return false if recruit_species && !recruit(recruit_species, nil, false)
+    blacklist(blacklist_species) if blacklist_species
+    state[:active_report] = nil
+    log("SCOUT_RESOLVE recruit=#{recruit_species || 'none'} blacklist=#{blacklist_species || 'none'}")
+    true
   end
 
   def region_maps(map_id)
@@ -186,6 +262,8 @@ module TGOMManager
     events.each do |event_id, specs|
       specs.each do |spec|
         type, name, version, reputation, switch = spec
+        condition = ROUTINE_CONDITIONS.fetch(map_id.to_i).fetch(event_id).fetch(version)
+        next unless page_condition_met?(condition, map_id, event_id)
         key = [map_id.to_i, event_id, switch]
         next if state[:cleared_routine_events][key]
         next if defined?($game_self_switches) && $game_self_switches && $game_self_switches[[map_id.to_i, event_id, switch]]
@@ -193,8 +271,16 @@ module TGOMManager
         next unless money
         $game_self_switches[[map_id.to_i, event_id, switch]] = true if defined?($game_self_switches) && $game_self_switches
         state[:cleared_routine_events][key] = true
-        $player.money += money if defined?($player) && $player
-        $game_variables[REP_VARIABLE] += reputation if defined?($game_variables) && $game_variables
+        if defined?($player) && $player
+          old_money = $player.money
+          $player.money += money
+          gained = $player.money - old_money
+          $stats.battle_money_gained += gained if gained > 0 && defined?($stats) && $stats
+        end
+        if defined?($game_variables) && $game_variables
+          $game_variables[REP_VARIABLE] += reputation
+          $game_variables[34] = $game_variables[REP_VARIABLE] if $game_variables[REP_VARIABLE] > $game_variables[34]
+        end
         result[:battles] += 1; result[:money] += money; result[:reputation] += reputation
         log("ROUTINE_CLEAR map=#{map_id} event=#{event_id} trainer=#{type}/#{name}/#{version} money=#{money} reputation=#{reputation}")
         break # One currently reachable trainer page per event and delegation pass.
@@ -202,6 +288,18 @@ module TGOMManager
     end
     sync_token_hooks
     result
+  end
+
+  def page_condition_met?(condition, map_id, event_id)
+    return false if condition[:switch1] && (!defined?($game_switches) || !$game_switches[condition[:switch1]])
+    return false if condition[:switch2] && (!defined?($game_switches) || !$game_switches[condition[:switch2]])
+    if condition[:variable]
+      return false if !defined?($game_variables) || $game_variables[condition[:variable][0]].to_i < condition[:variable][1]
+    end
+    if condition[:self_switch]
+      return false if !defined?($game_self_switches) || !$game_self_switches[[map_id, event_id, condition[:self_switch]]]
+    end
+    true
   end
 
   def clear_region(map_id = nil)
@@ -214,26 +312,45 @@ module TGOMManager
     total
   end
 
-  def recruit(species, level = nil)
-    return false if state[:scout_tokens] < 1 || !defined?(Pokemon)
-    level ||= opponent_central_level || 5
+  def recruit(species, level = nil, consume_token = true)
+    return false if (consume_token && state[:scout_tokens] < 1) || !defined?(Pokemon)
+    level ||= gym_training_target || 5
     pokemon = Pokemon.new(species, level)
     added = defined?(pbAddPokemonSilent) ? pbAddPokemonSilent(pokemon) : false
     return false unless added
-    state[:scout_tokens] -= 1
-    state[:recent_scouts] << species.to_sym
-    state[:recent_scouts] = state[:recent_scouts].last(RECENT_LIMIT)
+    state[:scout_tokens] -= 1 if consume_token
     log("RECRUIT species=#{species} level=#{level} tokens=#{state[:scout_tokens]}")
     true
   end
 
-  def train_party
-    target = opponent_central_level
+  def gym_rank
+    return 2 if defined?($game_switches) && $game_switches && $game_switches[115]
+    return 1 if defined?($game_switches) && $game_switches && $game_switches[104]
+    0
+  end
+
+  def gym_training_target
+    bracket = GYM_BRACKETS[gym_rank] || GYM_BRACKETS[GYM_BRACKETS.keys.max]
+    levels = bracket.flat_map { |type, name, version| trainer_levels(type, name, version) }
+    return nil if levels.empty?
+    levels.inject(0, :+) / levels.length
+  end
+
+  class TrainingScene
+    def pbRefresh; end
+    def pbUpdate
+      Graphics.update if defined?(Graphics)
+      Input.update if defined?(Input)
+    end
+  end
+
+  def train_party(scene = TrainingScene.new)
+    target = gym_training_target
     return 0 unless target && defined?($player) && $player
     changed = 0
     $player.party.each do |pokemon|
       next if !pokemon || pokemon.level >= target
-      if defined?(pbChangeLevel); pbChangeLevel(pokemon, target, nil); else pokemon.level = target; end
+      if defined?(pbChangeLevel); pbChangeLevel(pokemon, target, scene); else pokemon.level = target; end
       changed += 1
     end
     log("TRAIN target=#{target} pokemon=#{changed}")
@@ -266,6 +383,28 @@ module TGOMManager
     true
   end
 
+  def available_destinations
+    SAFE_DESTINATIONS.select do |_name, location|
+      required_switch = location[4]
+      !required_switch || (defined?($game_switches) && $game_switches && $game_switches[required_switch])
+    end
+  end
+
+  def travel_to_destination(name)
+    location = available_destinations[name.to_sym]
+    return false unless location && travel_idle?
+    transfer(location[0, 4])
+  end
+
+  def important_loss(outcome, can_lose)
+    return false unless outcome == 2 && can_lose
+    return false unless defined?($game_map) && $game_map && defined?(pbMapInterpreter) && pbMapInterpreterRunning?
+    event = pbMapInterpreter.get_self rescue nil
+    return false unless event
+    return false if SAFE_ROUTINE.fetch($game_map.map_id, {}).key?(event.id)
+    claim_token("emergency_loss_map_#{$game_map.map_id}_event_#{event.id}")
+  end
+
   def travel_idle?
     return false if defined?(pbMapInterpreterRunning?) && pbMapInterpreterRunning?
     true
@@ -282,27 +421,38 @@ module TGOMManager
   end
 
   def gym_staff_menu
-    commands = ["Clear routine region", "Scout (#{state[:scout_tokens]} tokens)", "Blacklist", "Training", "Set Gym anchor", "Travel to Gym", "Return", "Cancel"]
+    commands = ["Clear routine region", "Scout (#{state[:scout_tokens]} tokens)", "Training", "Set Gym anchor", "Travel to Gym", "Story destinations", "Return", "Cancel"]
     choice = pbMessage("Gym Staff", commands, commands.length - 1)
     case choice
     when 0
       result = clear_region
       pbMessage("Cleared #{result[:battles]} routine battles. Earned $#{result[:money]} and #{result[:reputation]} Reputation.")
     when 1
-      candidates = scout_candidates(available_scout_pool)
-      return pbMessage("No eligible candidates are available.") if candidates.empty?
-      labels = candidates.map { |species| GameData::Species.get(species).name } + ["Cancel"]
-      pick = pbMessage("Choose one recruit.", labels, labels.length - 1)
-      recruit(candidates[pick]) if pick >= 0 && pick < candidates.length
+      candidates = create_report
+      return pbMessage("No eligible candidates are available.") if !candidates || candidates.empty?
+      labels = candidates.map { |species| GameData::Species.get(species).name } + ["Reject all", "Keep report"]
+      pick = pbMessage("Choose one recruit or reject this report.", labels, labels.length - 1)
+      if pick >= 0 && pick < candidates.length
+        rejected = candidates.reject { |species| species == candidates[pick] }
+        black_labels = rejected.map { |species| GameData::Species.get(species).name } + ["No blacklist"]
+        black_pick = pbMessage("Optionally blacklist one rejected species.", black_labels, black_labels.length - 1)
+        blacklisted = rejected[black_pick] if black_pick >= 0 && black_pick < rejected.length
+        resolve_report(candidates[pick], blacklisted)
+      elsif pick == candidates.length
+        black_labels = candidates.map { |species| GameData::Species.get(species).name } + ["No blacklist"]
+        black_pick = pbMessage("Optionally blacklist one rejected species.", black_labels, black_labels.length - 1)
+        resolve_report(nil, candidates[black_pick]) if black_pick >= 0 && black_pick < candidates.length
+        resolve_report unless state[:active_report].nil?
+      end
     when 2
-      candidates = scout_candidates(available_scout_pool)
-      return pbMessage("No eligible candidates are available.") if candidates.empty?
-      labels = candidates.map { |species| GameData::Species.get(species).name } + ["Cancel"]
-      pick = pbMessage("Blacklist which candidate?", labels, labels.length - 1)
-      blacklist(candidates[pick]) if pick >= 0 && pick < candidates.length
-    when 3 then pbMessage("Trained #{train_party} Pokemon to the current opponent level.")
-    when 4 then remember_gym
-    when 5 then return :travel if travel_to_gym
+      pbMessage("Trained #{train_party} Pokemon to the current Gym challenger bracket.")
+    when 3 then remember_gym
+    when 4 then return :travel if travel_to_gym
+    when 5
+      destinations = available_destinations.keys
+      labels = destinations.map { |name| name.to_s.split('_').map(&:capitalize).join(' ') } + ["Cancel"]
+      pick = pbMessage("Choose an unlocked safe entrance.", labels, labels.length - 1)
+      return :travel if pick >= 0 && pick < destinations.length && travel_to_destination(destinations[pick])
     when 6 then return :travel if return_from_gym
     end
     :stay
@@ -328,23 +478,22 @@ EventHandlers.add(:on_game_map_setup, :tgom_manager_initialize, proc do |map_id|
   TGOMManager.state[:last_routine_map] = map_id if !TGOMManager.region_maps(map_id).empty?
   TGOMManager.sync_token_hooks
 end)
-EventHandlers.add(:on_end_battle, :tgom_manager_token_sync, proc { |*_| TGOMManager.sync_token_hooks })
+EventHandlers.add(:on_end_battle, :tgom_manager_token_sync, proc do |outcome, can_lose|
+  TGOMManager.sync_token_hooks
+  TGOMManager.important_loss(outcome, can_lose)
+end)
 
 if defined?(MenuHandlers)
-  MenuHandlers.add(:pause_menu, :tgom_gym_staff, {
+  MenuHandlers.add(:pokegear_menu, :tgom_gym_staff, {
     "name" => _INTL("Gym Staff"),
-    "order" => 65,
+    "icon_name" => "phone",
+    "order" => 25,
     "condition" => proc { next true },
     "effect" => proc do |menu|
-      pbPlayDecisionSE
-      menu.pbHideMenu
       if pbTGOMGymStaff == :travel
-        menu.pbEndScene
-        $game_temp.in_menu = false
-        next true
+        menu.dispose
+        next 99999
       end
-      menu.pbRefresh
-      menu.pbShowMenu
       next false
     end
   })
