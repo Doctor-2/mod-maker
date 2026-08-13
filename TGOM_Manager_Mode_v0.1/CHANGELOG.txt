@@ -1,7 +1,24 @@
-v0.1
-- Added old-save-safe, lazily initialized manager state.
-- Suppressed only step-triggered encounter rolls at PokemonEncounters#encounter_triggered?.
-- Added idempotent token, blacklist, weighted unique scouting, and exact base payout helpers.
-- Shipped an all-map fail-closed classification and Cave of Knowledge fixture audit.
-- Deliberately left unsafe/unverifiable automation and travel disabled.
-- Kept generated RXDATA/ZIP outputs out of Git; added a reproducible source-only package build.
+v0.1 completion
+- Added a complete 59-map/557-event audit generator and explicit routine allowlist.
+- Added idempotent region routine clearing with exact trainer prize and Reputation.
+- Added Gym Staff menu, Reputation Scout Token hooks, three-candidate recruitment,
+  blacklist/recent-repeat controls, and dynamic opponent-level catch-up training.
+- Added anchored Gym travel/return with protected Cave map rejection.
+- Routed Manager activity into the existing Companion Logger.
+- Changed production builds to require the active Companion Logger base and reject
+  PluginScripts.before_companion.rxdata.
+- Expanded regression and helper tests; generated RXDATA/ZIP remains untracked.
+- Enforced exact audited event-page conditions and preserved Highest Reputation
+  and battle-money statistics during delegation.
+- Replaced all-species scouting with unlocked encounter rarity, persistent
+  one-token reports, rejected-species recency decay, and Fire eligibility.
+- Replaced Reputation tokens with audited shift/rank/area/emergency-loss sources.
+- Moved Gym Staff to Pokégear, added curated unlocked entrances, and supplied a
+  scene-compatible Gym-bracket Training path.
+- Matched RPG Maker's highest-index active-page selection, counted Map031 shifts
+  independently, derived complete 14/15-challenger brackets, gated encounters by
+  visits/unlocks, blocked protected travel origins, and explicitly allowlisted
+  emergency-loss battles.
+- Made routine regions selectable from the Gym, restricted every travel action
+  to audited origins, and persisted wild encounter levels through scouting and
+  recruitment so Training remains the only catch-up path.
