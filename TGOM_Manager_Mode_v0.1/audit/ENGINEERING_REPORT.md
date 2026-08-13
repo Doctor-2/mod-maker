@@ -1,20 +1,36 @@
 # TGOM Manager Mode v0.1 engineering report
 
-## Input identity
-The uploaded `gym.zip` active `Data/PluginScripts.rxdata` and root `PluginScripts.before_companion.rxdata` are byte-identical. SHA-256: `9704aab5b907f1d8bdcfc1b1c38a3e7c81c0bb829f77f6f1a8bfb6833ddead44`. It contains eight plugins and no Companion Logger code. `TGOM_Companion_Log.txt` is an output log, not injectable logger source.
+## Production base
 
-## Implemented safe subset
-- Save state: one lazy `@tgom_manager_state` hash on `PokemonGlobalMetadata`; it never rewrites existing switches, variables, self-switches, map, position, party, or save.
-- Random encounters: returns false only from `PokemonEncounters#encounter_triggered?` when `triggered_by_step` is true. It does not patch `pbWildBattle` or `WildBattle.start`; explicit/non-step calls delegate unchanged.
-- Classification: all 59 maps are `PRESERVE`; both routine and travel allowlists are empty. This intentionally means no potentially unsafe trainer, reward, or location is automated.
-- Money helper: validated `max opponent level * trainer type base_money`; battle-only multipliers are not accepted by the API. No trainer is currently delegated.
-- Scouting helper: accepts only an audited pool supplied by a caller, filters a persistent species blacklist, respects weights, and returns unique species. There is no menu or guessed availability pool, so Charmander cannot be generated.
+Production builds use root `PluginScripts.rxdata` (SHA-256
+`582e7e0e4bae1a5b6631210074727c504480251ebc24d7b563d4a430d8cc1bd4`), which
+contains the TGOM Companion Logger. The injector verifies that plugin is present.
+The pre-Companion backup is rejected by the build script.
 
-## Cave regression fixture
-Map004 source inspection finds ten two-page riddle events. Each successful branch operates variable 37 and self-switch A. Its item and transfers remain original. Maps003–006 are not present in any manager allowlist and Manager initialization contains no map/event mutation. The original Lillith/Ken commands are therefore untouched. These claims are source/Marshal inspection, not an executable game-engine playthrough.
+## Event safety model
 
-## Deliberately blocked
-Region clearing, Pokegear UI, training, fast travel, automatic shift/rank/region/emergency token hooks are disabled. The supplied data has no logger source, no live save, and no executable game runtime. Enabling those systems without complete page-level semantics and end-to-end engine tests would violate the required false-positive safety rule.
+`tools/audit_routine_events.rb` inventories every map, event, page, command code,
+script line and trainer signature. Its safe command grammar only identifies
+candidates. Human promotion to `SAFE_ROUTINE` is recorded in
+`ROUTINE_ALLOWLIST.md`; unknown content fails closed. Map events are not edited.
 
-## Verification scope
-Ruby syntax, helper behavior, Marshal injection/round-trip, plugin preservation, hashes, and map inventory are executable checks. Cave event behavior and scripted battle preservation are source-inspected. No claim is made that an actual saved game was loaded or battles were played.
+Map003 events 1, 2 and 5 are the only promoted routine trainers. Delegation sets
+the same per-page self-switch and grants exact `max party level * trainer type
+base_money` plus the page's Reputation. Items and every unlisted page remain.
+
+Maps004–006 are protected wholesale. This preserves all ten Cave of Knowledge
+riddles, variable 37, Ken, Lillith, and all starter/Charmander gift branches.
+Gym, story, boss, reward and other scripted battles are not intercepted.
+
+## Manager systems
+
+The Gym Staff menu exposes audited clearing, three-candidate scouting,
+recruitment, catch-up training, anchoring/travel and return. Tokens are awarded
+idempotently from observed Reputation milestones, including Reputation earned by
+delegated Gym work.
+Blacklist and recent history suppress candidates. Training derives its target
+from the currently audited opponents, and travel only uses a player-recorded
+anchor/origin while rejecting protected maps.
+
+Manager actions are written through `TGOMCompanion.write_line("MANAGER", ...)`,
+preserving the production Companion Logger and its passive battle transcript.

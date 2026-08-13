@@ -2,12 +2,16 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 PROJECT="$ROOT/TGOM_Manager_Mode_v0.1"
-INPUT="${1:-$ROOT/PluginScripts.before_companion.rxdata}"
+INPUT="${1:-$ROOT/PluginScripts.rxdata}"
 DIST="${2:-$ROOT/dist}"
 STAGE="$DIST/TGOM_Manager_Mode_v0.1"
 
 if [[ ! -f "$INPUT" ]]; then
   echo "Missing input PluginScripts.rxdata: $INPUT" >&2
+  exit 1
+fi
+if [[ "$(cd "$(dirname "$INPUT")" && pwd)/$(basename "$INPUT")" == "$ROOT/PluginScripts.before_companion.rxdata" ]]; then
+  echo "Refusing pre-Companion production base: $INPUT" >&2
   exit 1
 fi
 rm -rf "$STAGE"

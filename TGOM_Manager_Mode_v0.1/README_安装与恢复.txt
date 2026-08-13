@@ -1,19 +1,17 @@
-TGOM Manager Mode v0.1（保守核心）
+TGOM Manager Mode v0.1
 
-构建（仓库维护者）：
-在仓库根目录运行：
-  TGOM_Manager_Mode_v0.1/tools/build_package.sh
-生成文件位于 dist/TGOM_Manager_Mode_v0.1.zip，不加入 Git。
-脚本使用 main 中保持不变的 PluginScripts.before_companion.rxdata，注入 TGOM_Manager_Mode.rb，并将原文件作为恢复备份一起打包。
+构建：在仓库根目录运行 TGOM_Manager_Mode_v0.1/tools/build_package.sh。
+构建脚本只使用根目录当前有效的 PluginScripts.rxdata（包含 Companion Logger），
+并拒绝 PluginScripts.before_companion.rxdata。生成的 .rxdata/.zip 位于 dist，不提交 Git。
 
-安装：
-1. 先在游戏中保存，然后关闭游戏。
-2. 备份游戏 Data/PluginScripts.rxdata。
-3. 解压 dist/TGOM_Manager_Mode_v0.1.zip，用包内 Data/PluginScripts.rxdata 替换游戏中的同名文件。
-4. 启动已有存档。不会传送、清谜题或修改地图/存档文件。
+安装：关闭游戏并备份 Data/PluginScripts.rxdata，然后用 dist 包内同名文件替换。
+恢复：关闭游戏，将包内 PluginScripts.pre-manager.rxdata 改名并复制回 Data。
 
-恢复：
-关闭游戏，把包内 Data/PluginScripts.pre-manager.rxdata 复制回游戏 Data 目录并改名为 PluginScripts.rxdata。
+暂停菜单中的 Gym Staff 提供：安全清理已审计的普通训练家、三选一招募、追赶训练、
+设置 Gym 锚点、前往 Gym 和返回。Scout Token 来自 Reputation 每 100 点里程碑；
+来源永久去重。招募会过滤黑名单和最近候选。清理只覆盖 audit/ROUTINE_ALLOWLIST.md
+列出的 Map003 事件，精确给予训练家奖金与事件 Reputation，并设置原页面自开关。
 
-本版只启用可证明安全的功能：关闭步行随机遭遇；保留脚本遭遇；惰性 namespaced 状态及经过调用方审计的 token/scouting helper。
-因为上传的活动 PluginScripts 与 before_companion 完全相同，且其中没有 Companion Logger 插件，本包不会伪造或覆盖 logger。区域清理、菜单、训练、快速旅行、Gym shift/战败 token 均保持关闭（fail closed），避免破坏剧情奖励。
+所有 Gym/剧情/Boss/奖励战保持原样。Map004–006 被整体保护，以保留 Cave of
+Knowledge 谜题、Ken、Lillith 和 Charmander/御三家奖励链。Manager 日志写入现有
+Companion Logger，不替换或禁用它。
