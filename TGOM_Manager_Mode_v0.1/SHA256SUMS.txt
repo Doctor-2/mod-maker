@@ -1,0 +1,5 @@
+# Reference hash for the unchanged input binary on main:
+9704aab5b907f1d8bdcfc1b1c38a3e7c81c0bb829f77f6f1a8bfb6833ddead44  PluginScripts.before_companion.rxdata
+
+# Generated PluginScripts.rxdata and ZIP hashes are printed by:
+#   TGOM_Manager_Mode_v0.1/tools/build_package.sh

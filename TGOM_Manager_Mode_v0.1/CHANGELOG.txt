@@ -1,0 +1,7 @@
+v0.1
+- Added old-save-safe, lazily initialized manager state.
+- Suppressed only step-triggered encounter rolls at PokemonEncounters#encounter_triggered?.
+- Added idempotent token, blacklist, weighted unique scouting, and exact base payout helpers.
+- Shipped an all-map fail-closed classification and Cave of Knowledge fixture audit.
+- Deliberately left unsafe/unverifiable automation and travel disabled.
+- Kept generated RXDATA/ZIP outputs out of Git; added a reproducible source-only package build.
