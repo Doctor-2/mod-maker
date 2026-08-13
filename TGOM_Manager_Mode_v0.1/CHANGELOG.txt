@@ -19,3 +19,6 @@ v0.1 completion
   independently, derived complete 14/15-challenger brackets, gated encounters by
   visits/unlocks, blocked protected travel origins, and explicitly allowlisted
   emergency-loss battles.
+- Made routine regions selectable from the Gym, restricted every travel action
+  to audited origins, and persisted wild encounter levels through scouting and
+  recruitment so Training remains the only catch-up path.

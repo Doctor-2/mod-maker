@@ -51,6 +51,10 @@ module TGOMManager
   ROUTINE_REGIONS = {
     :winding_woods => [3], :steel_caves => [7, 8, 10], :miser_marsh => [21]
   }.freeze
+  ROUTINE_REGION_NAMES = {
+    :winding_woods => "Winding Woods", :steel_caves => "Steel Caves",
+    :miser_marsh => "Miser Marsh"
+  }.freeze
   # Exact audited RPG::Event::Page::Condition for each promoted battle page.
   # Empty hashes are unconditional; rematches carry their original Rank switch.
   ROUTINE_CONDITIONS = SAFE_ROUTINE.each_with_object({}) do |(map_id, events), maps|
@@ -84,9 +88,11 @@ module TGOMManager
     end
   end.freeze
   SAFE_GYM_MAPS = [15, 31, 43, 44, 45, 46, 47].freeze
-  SAFE_RETURN_MAPS = [1, 2, 3, 7, 8, 9, 10, 11, 18, 19, 21, 26, 27, 28, 29,
-                      30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 48, 49,
-                      50, 51, 52, 54, 55, 56, 57, 58, 59].freeze
+  # Audited ordinary field/town/Gym origins only. Story dungeons, quest maps,
+  # boss rooms and unknown maps fail closed (notably Maps004–006 and Map012).
+  SAFE_TRAVEL_ORIGINS = [1, 2, 3, 7, 8, 9, 10, 11, 15, 21, 27, 28, 29, 30, 31,
+                         32, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
+                         46, 47].freeze
   PROTECTED_MAPS = [4, 5, 6].freeze
   PROTECTED_SCOUTS = [:CHARMANDER, :SQUIRTLE, :BULBASAUR, :CYNDAQUIL,
     :TOTODILE, :CHIKORITA, :TORCHIC, :MUDKIP, :TREECKO, :CHIMCHAR, :PIPLUP,
@@ -175,18 +181,27 @@ module TGOMManager
     blocked = state[:blacklist] + PROTECTED_SCOUTS
     unique = {}
     weighted_pool.each do |entry|
-      next unless entry.is_a?(Array) && entry.length == 2 && entry[1].to_f > 0
+      next unless entry.is_a?(Array) && entry.length >= 2 && entry[1].to_f > 0
       species = entry[0].to_sym
       next if blocked.include?(species)
-      reports_ago = state[:report_history].reverse.index { |report| report.include?(species) }
+      reports_ago = state[:report_history].reverse.index do |report|
+        report.any? { |candidate| (candidate.is_a?(Hash) ? candidate[:species] : candidate) == species }
+      end
       decay = reports_ago && reports_ago < 2 ? 0.25 : 1.0
-      unique[species] = unique.fetch(species, 0.0) + entry[1].to_f * decay
+      unique[species] ||= {:weight => 0.0, :slots => []}
+      unique[species][:weight] += entry[1].to_f * decay
+      min_level = (entry[2] || 1).to_i
+      max_level = (entry[3] || min_level).to_i
+      unique[species][:slots] << [entry[1].to_f * decay, min_level, max_level]
     end
     chosen = []
     [count.to_i, unique.length].min.times do
-      pick = random.rand * unique.values.inject(0.0, :+)
-      selected = unique.keys.find { |species| (pick -= unique[species]) < 0 }
-      chosen << selected
+      pick = random.rand * unique.values.inject(0.0) { |sum, data| sum + data[:weight] }
+      selected = unique.keys.find { |species| (pick -= unique[species][:weight]) < 0 }
+      slot_pick = random.rand * unique[selected][:slots].inject(0.0) { |sum, slot| sum + slot[0] }
+      slot = unique[selected][:slots].find { |candidate| (slot_pick -= candidate[0]) < 0 }
+      level = slot[1] + random.rand(slot[2] - slot[1] + 1)
+      chosen << {:species => selected, :level => level}
       unique.delete(selected)
     end
     chosen
@@ -213,7 +228,7 @@ module TGOMManager
         slots.each do |weight, species, _min_level, _max_level|
           data = GameData::Species.get(species) rescue nil
           next unless data && data.types.include?(:FIRE)
-          pool << [species, weight]
+          pool << [species, weight, _min_level, _max_level]
         end
       end
     end
@@ -236,16 +251,18 @@ module TGOMManager
     state[:active_report] = candidates
     state[:report_history] << candidates
     state[:report_history] = state[:report_history].last(2)
-    log("SCOUT_REPORT candidates=#{candidates.join(',')} tokens=#{state[:scout_tokens]}")
+    log("SCOUT_REPORT candidates=#{candidates.map { |candidate| "#{candidate[:species]}@#{candidate[:level]}" }.join(',')} tokens=#{state[:scout_tokens]}")
     candidates
   end
 
   def resolve_report(recruit_species = nil, blacklist_species = nil)
     report = state[:active_report]
     return false unless report
-    return false if recruit_species && !report.include?(recruit_species.to_sym)
-    return false if blacklist_species && (!report.include?(blacklist_species.to_sym) || (recruit_species && blacklist_species.to_sym == recruit_species.to_sym))
-    return false if recruit_species && !recruit(recruit_species, nil, false)
+    recruit_candidate = report.find { |candidate| candidate[:species] == recruit_species.to_sym } if recruit_species
+    blacklist_candidate = report.find { |candidate| candidate[:species] == blacklist_species.to_sym } if blacklist_species
+    return false if recruit_species && !recruit_candidate
+    return false if blacklist_species && (!blacklist_candidate || (recruit_species && blacklist_species.to_sym == recruit_species.to_sym))
+    return false if recruit_candidate && !recruit(recruit_candidate[:species], recruit_candidate[:level], false)
     blacklist(blacklist_species) if blacklist_species
     state[:active_report] = nil
     log("SCOUT_RESOLVE recruit=#{recruit_species || 'none'} blacklist=#{blacklist_species || 'none'}")
@@ -254,6 +271,23 @@ module TGOMManager
 
   def region_maps(map_id)
     ROUTINE_REGIONS.values.find { |entries| entries.include?(map_id.to_i) } || []
+  end
+
+  def available_routine_regions
+    ROUTINE_REGIONS.select do |_region, maps|
+      maps.any? { |map_id| state[:observed_unlocks][map_id] }
+    end
+  end
+
+  def clear_routine_region(region)
+    maps = available_routine_regions[region.to_sym]
+    total = {:battles => 0, :money => 0, :reputation => 0}
+    return total unless maps
+    maps.select { |map_id| state[:observed_unlocks][map_id] }.each do |map_id|
+      result = clear_map(map_id)
+      total.keys.each { |key| total[key] += result[key] }
+    end
+    total
   end
 
   def opponent_central_level(map_id = nil)
@@ -351,7 +385,7 @@ module TGOMManager
 
   def recruit(species, level = nil, consume_token = true)
     return false if (consume_token && state[:scout_tokens] < 1) || !defined?(Pokemon)
-    level ||= gym_training_target || 5
+    level ||= 5
     pokemon = Pokemon.new(species, level)
     added = defined?(pbAddPokemonSilent) ? pbAddPokemonSilent(pokemon) : false
     return false unless added
@@ -406,7 +440,7 @@ module TGOMManager
     location = state[:gym_location]
     return false unless location && SAFE_GYM_MAPS.include?(location[0]) && safe_current_origin? && travel_idle?
     if defined?($game_map) && $game_map && defined?($game_player) && $game_player
-      return false unless SAFE_RETURN_MAPS.include?($game_map.map_id)
+      return false unless SAFE_TRAVEL_ORIGINS.include?($game_map.map_id)
       state[:travel_origin] = [$game_map.map_id, $game_player.x, $game_player.y, $game_player.direction]
     end
     transfer(location)
@@ -414,7 +448,7 @@ module TGOMManager
 
   def return_from_gym
     location = state[:travel_origin]
-    return false unless location && SAFE_RETURN_MAPS.include?(location[0]) && safe_current_origin? && travel_idle?
+    return false unless location && SAFE_TRAVEL_ORIGINS.include?(location[0]) && safe_current_origin? && travel_idle?
     return false unless transfer(location)
     state[:travel_origin] = nil
     true
@@ -435,7 +469,7 @@ module TGOMManager
 
   def safe_current_origin?
     return false unless defined?($game_map) && $game_map
-    !PROTECTED_MAPS.include?($game_map.map_id)
+    SAFE_TRAVEL_ORIGINS.include?($game_map.map_id)
   end
 
   def important_loss(outcome, can_lose)
@@ -483,23 +517,27 @@ module TGOMManager
     choice = pbMessage("Gym Staff", commands, commands.length - 1)
     case choice
     when 0
-      result = clear_region
+      regions = available_routine_regions.keys
+      labels = regions.map { |region| ROUTINE_REGION_NAMES[region] } + ["Cancel"]
+      pick = pbMessage("Choose an accessible routine region.", labels, labels.length - 1)
+      return :stay unless pick >= 0 && pick < regions.length
+      result = clear_routine_region(regions[pick])
       pbMessage("Cleared #{result[:battles]} routine battles. Earned $#{result[:money]} and #{result[:reputation]} Reputation.")
     when 1
       candidates = create_report
       return pbMessage("No eligible candidates are available.") if !candidates || candidates.empty?
-      labels = candidates.map { |species| GameData::Species.get(species).name } + ["Reject all", "Keep report"]
+      labels = candidates.map { |candidate| GameData::Species.get(candidate[:species]).name } + ["Reject all", "Keep report"]
       pick = pbMessage("Choose one recruit or reject this report.", labels, labels.length - 1)
       if pick >= 0 && pick < candidates.length
-        rejected = candidates.reject { |species| species == candidates[pick] }
-        black_labels = rejected.map { |species| GameData::Species.get(species).name } + ["No blacklist"]
+        rejected = candidates.reject { |candidate| candidate == candidates[pick] }
+        black_labels = rejected.map { |candidate| GameData::Species.get(candidate[:species]).name } + ["No blacklist"]
         black_pick = pbMessage("Optionally blacklist one rejected species.", black_labels, black_labels.length - 1)
-        blacklisted = rejected[black_pick] if black_pick >= 0 && black_pick < rejected.length
-        resolve_report(candidates[pick], blacklisted)
+        blacklisted = rejected[black_pick][:species] if black_pick >= 0 && black_pick < rejected.length
+        resolve_report(candidates[pick][:species], blacklisted)
       elsif pick == candidates.length
-        black_labels = candidates.map { |species| GameData::Species.get(species).name } + ["No blacklist"]
+        black_labels = candidates.map { |candidate| GameData::Species.get(candidate[:species]).name } + ["No blacklist"]
         black_pick = pbMessage("Optionally blacklist one rejected species.", black_labels, black_labels.length - 1)
-        resolve_report(nil, candidates[black_pick]) if black_pick >= 0 && black_pick < candidates.length
+        resolve_report(nil, candidates[black_pick][:species]) if black_pick >= 0 && black_pick < candidates.length
         resolve_report unless state[:active_report].nil?
       end
     when 2

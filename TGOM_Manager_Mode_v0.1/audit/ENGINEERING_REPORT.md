@@ -42,8 +42,14 @@ Blacklist permanently suppresses a species; the last two reports apply a soft
 weight reduction. Training derives its target from the current-rank Gym
 challenger bracket: all 14 Map031 Rank0 candidates or all 15 Rank1 candidates.
 Travel uses only audited Gym/entrance coordinates and rejects locked destinations
-and protected current origins. Encounter maps enter scouting only after an
+and an explicit allowlist of ordinary current origins; unknown, Cave, story and
+quest origins fail closed. Encounter maps enter scouting only after an
 official unlock switch or legitimate observation by map setup.
+
+Gym Staff lists accessible routine regions independently of the player's current
+map, allowing field operations from Map031. Scout reports persist both species
+and a level rolled from the selected unlocked encounter slot; recruitment creates
+the normal Pokémon at that wild-equivalent level and leaves catch-up to Training.
 
 Manager actions are written through `TGOMCompanion.write_line("MANAGER", ...)`,
 preserving the production Companion Logger and its passive battle transcript.

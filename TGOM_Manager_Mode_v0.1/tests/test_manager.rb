@@ -62,9 +62,17 @@ result = TGOMManager.clear_region(3)
 assert(result[:battles] == 3 && result[:reputation] == 50, 'Rank 1 active pages clear directly')
 assert(!$game_self_switches[[3, 1, 'A']] && $game_self_switches[[3, 1, 'B']], 'v1/B selected, never v0/A')
 
+# Unit: field operations select an observed region while physically in the Gym.
+MapStub = Struct.new(:map_id)
+$game_map = MapStub.new(31)
+$PokemonGlobal = PokemonGlobalMetadata.new
+$game_self_switches = {}; $game_switches[104] = false
+TGOMManager.state[:observed_unlocks][3] = true
+assert(TGOMManager.available_routine_regions.key?(:winding_woods), 'observed region offered from Gym')
+assert(TGOMManager.clear_routine_region(:winding_woods)[:battles] == 3, 'region operation clears trainers independently of current Gym map')
+
 # Unit: exactly three Map031/Event4 outcomes complete one shift; Gym losses do
 # not enter the explicit emergency allowlist.
-MapStub = Struct.new(:map_id)
 EventStub = Struct.new(:id)
 InterpreterStub = Struct.new(:event) do
   def get_self; event; end
@@ -93,6 +101,20 @@ assert(!TGOMManager.travel_to_gym, 'protected Cave origin cannot travel to Gym')
 assert(!TGOMManager.travel_to_destination(:new_day_plain), 'protected Cave origin cannot use story travel')
 TGOMManager.state[:travel_origin] = [2, 1, 1, 2]
 assert(!TGOMManager.return_from_gym, 'protected Cave origin cannot Return')
+$game_map = MapStub.new(12)
+assert(!TGOMManager.safe_current_origin?, 'story-sensitive non-Cave origin rejected')
+$game_map = MapStub.new(2)
+assert(TGOMManager.safe_current_origin?, 'audited safe origin accepted')
+PlayerMapStub = Struct.new(:x, :y, :direction) do
+  def cancel_vehicles; end
+end
+TempStub = Struct.new(:player_new_map_id, :player_new_x, :player_new_y,
+                      :player_new_direction, :player_transferring)
+$game_player = PlayerMapStub.new(4, 5, 2)
+$game_temp = TempStub.new
+def pbMapInterpreterRunning?; false; end
+assert(TGOMManager.travel_to_destination(:new_day_plain), 'safe origin can travel')
+assert($game_temp.player_new_map_id == 2 && $game_temp.player_transferring, 'safe entrance transfer scheduled')
 
 # Unit: encounter areas require an official switch or a legitimate visit.
 TGOMManager.state[:observed_unlocks].clear
@@ -107,22 +129,35 @@ assert(TGOMManager.encounter_map_unlocked?(18, 110), 'officially unlocked area i
 # Unit: report consumes once, persists, resolves once, and applies soft recency.
 class << TGOMManager
   alias test_original_available_scout_pool available_scout_pool
-  def available_scout_pool; [[:A, 10], [:B, 8], [:C, 6], [:D, 4]]; end
+  def available_scout_pool; [[:A, 10, 3, 5], [:B, 8, 6, 6], [:C, 6, 7, 9], [:D, 4, 10, 12]]; end
 end
 TGOMManager.state[:scout_tokens] = 1
 report = TGOMManager.create_report(Random.new(4))
 assert(report.length == 3 && report.uniq.length == 3, 'three unique report candidates')
+assert(report.all? { |candidate| candidate[:level].between?(*({:A=>[3,5],:B=>[6,6],:C=>[7,9],:D=>[10,12]}[candidate[:species]])) }, 'report preserves legal encounter level')
 assert(TGOMManager.state[:scout_tokens] == 0, 'token consumed on report creation')
 assert(TGOMManager.create_report(Random.new(99)) == report, 'unresolved report cannot reroll')
-assert(TGOMManager.resolve_report(nil, report[0]), 'reject report and blacklist one')
-assert(TGOMManager.state[:blacklist].include?(report[0]), 'rejected species blacklisted')
+assert(TGOMManager.resolve_report(nil, report[0][:species]), 'reject report and blacklist one')
+assert(TGOMManager.state[:blacklist].include?(report[0][:species]), 'rejected species blacklisted')
 assert(!TGOMManager.resolve_report, 'report resolves only once')
-assert(TGOMManager.scout_candidates([[:A, 1], [:B, 1], [:C, 1]], 3).include?(:B), 'recent species soft-weighted, not blocked')
+assert(TGOMManager.scout_candidates([[:A, 1, 1, 1], [:B, 1, 1, 1], [:C, 1, 1, 1]], 3).any? { |candidate| candidate[:species] == :B }, 'recent species soft-weighted, not blocked')
 assert(TGOMManager.scout_candidates([[:CHARMANDER, 99]]).empty?, 'protected gift cannot be scouted')
 
+# Unit: recruited report candidate uses its rolled wild level, then Training is
+# the only operation which raises it to the Gym target.
+class Pokemon
+  attr_accessor :level
+  attr_reader :species
+  def initialize(species, level); @species = species; @level = level; end
+end
+def pbAddPokemonSilent(pokemon); $player.party << pokemon; true; end
+TGOMManager.state[:active_report] = [{:species => :B, :level => 6}, {:species => :C, :level => 8}]
+$player.party = []
+assert(TGOMManager.resolve_report(:B), 'wild-level candidate recruited')
+assert($player.party[0].level == 6, 'recruit uses persisted encounter level, not Gym target')
+
 # Unit: Training passes a live scene-compatible context to Essentials pbChangeLevel.
-PokemonStub = Struct.new(:level)
-$player.party = [PokemonStub.new(5)]
+$player.party = [$player.party[0]]
 $training_scene_ok = false
 def pbChangeLevel(pokemon, target, scene)
   scene.pbRefresh
@@ -131,7 +166,7 @@ def pbChangeLevel(pokemon, target, scene)
   pokemon.level = target
 end
 assert(TGOMManager.train_party == 1, 'party member trained')
-assert($training_scene_ok && $player.party[0].level == 15, 'scene-compatible level change path')
+assert($training_scene_ok && $player.party[0].level == 15, 'subsequent Training raises recruit normally')
 
 # Extracted TGOM data contract: every runtime tuple and condition matches audit.
 audit = JSON.parse(File.read(File.expand_path('../audit/full_event_audit.json', __dir__)))
