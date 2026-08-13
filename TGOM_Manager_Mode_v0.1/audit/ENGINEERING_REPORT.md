@@ -14,7 +14,8 @@ script line and trainer signature. Its safe command grammar only identifies
 candidates. Human promotion to `SAFE_ROUTINE` is recorded in
 `ROUTINE_ALLOWLIST.md`; unknown content fails closed. Map events are not edited.
 
-Map003 events 1, 2 and 5 are the only promoted routine trainers. Delegation sets
+The promoted routine regions are Map003, Maps007/008/010, and Map021. Map012
+Rough Rider candidates are story-linked and remain excluded. Delegation sets
 the same per-page self-switch and grants exact `max party level * trainer type
 base_money` plus the page's Reputation. Items and every unlisted page remain.
 

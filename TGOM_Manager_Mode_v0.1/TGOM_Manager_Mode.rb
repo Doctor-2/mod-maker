@@ -9,7 +9,8 @@ module TGOMManager
   DEFAULT_STATE = {
     :version => VERSION, :scout_tokens => 0, :blacklist => [],
     :recent_scouts => [], :cleared_routine_events => {},
-    :claimed_token_sources => {}, :travel_origin => nil, :gym_location => nil
+    :claimed_token_sources => {}, :travel_origin => nil, :gym_location => nil,
+    :last_routine_map => nil
   }
 
   # Generated from audit/full_event_audit.json. A routine entry is admitted only
@@ -20,9 +21,45 @@ module TGOMManager
       1 => [[:LASS, "Ellen", 0, 10, "A"], [:LASS, "Ellen", 1, 15, "B"]],
       2 => [[:YOUNGSTER, "Jeff", 0, 10, "A"], [:YOUNGSTER, "Jeff", 1, 15, "B"]],
       5 => [[:PICNICKER, "Liz", 0, 15, "A"], [:PICNICKER, "Liz", 1, 20, "B"]]
+    },
+    7 => {
+      3 => [[:BUGCATCHER, "Bill", 0, 10, "A"]],
+      4 => [[:ROCKER, "Ricky", 0, 20, "A"], [:ROCKER, "Ricky", 1, 25, "B"]],
+      7 => [[:BEAUTY, "Missy", 0, 15, "A"], [:BEAUTY, "Missy", 1, 20, "B"]],
+      11 => [[:CAMPER, "Jacob", 0, 20, "A"], [:CAMPER, "Jacob", 1, 25, "B"]]
+    },
+    8 => {
+      2 => [[:HIKER, "Burton", 0, 15, "A"]],
+      3 => [[:COOLTRAINER_F, "Linda", 0, 20, "A"], [:COOLTRAINER_F, "Linda", 1, 25, "B"]],
+      4 => [[:SCIENTIST, "Gladstone", 0, 15, "A"]],
+      5 => [[:CAMPER, "Timothy", 0, 20, "A"]]
+    },
+    10 => {
+      4 => [[:COOLTRAINER_F, "Nat", 0, 30, "A"], [:COOLTRAINER_F, "Nat", 1, 35, "B"]],
+      5 => [[:SUPERNERD, "Kevin", 0, 20, "A"]],
+      6 => [[:BLACKBELT, "Dennis", 0, 20, "A"]],
+      7 => [[:ROUGHRIDER_M, "Racer", 1, 20, "A"]]
+    },
+    21 => {
+      23 => [[:CAMPER, "Davy", 0, 20, "A"]],
+      24 => [[:BUGCATCHER, "Rob", 0, 20, "A"]],
+      25 => [[:LASS, "Anna", 0, 20, "A"]],
+      27 => [[:GENTLEMAN, "Chris", 0, 20, "A"]]
     }
   }.freeze
+  ROUTINE_REGIONS = {
+    :winding_woods => [3], :steel_caves => [7, 8, 10], :miser_marsh => [21]
+  }.freeze
+  SAFE_GYM_MAPS = [15, 31, 43, 44, 45, 46, 47].freeze
+  SAFE_RETURN_MAPS = [1, 2, 3, 7, 8, 9, 10, 11, 18, 19, 21, 26, 27, 28, 29,
+                      30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 48, 49,
+                      50, 51, 52, 54, 55, 56, 57, 58, 59].freeze
   PROTECTED_MAPS = [4, 5, 6].freeze
+  PROTECTED_SCOUTS = [:CHARMANDER, :SQUIRTLE, :BULBASAUR, :CYNDAQUIL,
+    :TOTODILE, :CHIKORITA, :TORCHIC, :MUDKIP, :TREECKO, :CHIMCHAR, :PIPLUP,
+    :TURTWIG, :TEPIG, :OSHAWOTT, :SNIVY, :FENNEKIN, :FROAKIE, :CHESPIN,
+    :LITTEN, :POPPLIO, :ROWLET, :SCORBUNNY, :SOBBLE, :GROOKEY, :FUECOCO,
+    :QUAXLY, :SPRIGATITO].freeze
 
   module_function
 
@@ -80,7 +117,7 @@ module TGOMManager
 
   def scout_candidates(weighted_pool, count = 3, random = Random)
     return [] unless weighted_pool.is_a?(Array)
-    blocked = state[:blacklist] + state[:recent_scouts]
+    blocked = state[:blacklist] + state[:recent_scouts] + PROTECTED_SCOUTS
     unique = {}
     weighted_pool.each do |entry|
       next unless entry.is_a?(Array) && entry.length == 2 && entry[1].to_f > 0
@@ -111,9 +148,15 @@ module TGOMManager
     []
   end
 
+  def region_maps(map_id)
+    ROUTINE_REGIONS.values.find { |entries| entries.include?(map_id.to_i) } || []
+  end
+
   def opponent_central_level(map_id = nil)
     map_id ||= (defined?($game_map) && $game_map ? $game_map.map_id : nil)
-    specs = SAFE_ROUTINE.fetch(map_id.to_i, {}).values.flatten(1)
+    maps = region_maps(map_id)
+    maps = region_maps(state[:last_routine_map]) if maps.empty?
+    specs = maps.map { |id| SAFE_ROUTINE.fetch(id, {}).values.flatten(1) }.flatten(1)
     levels = specs.map { |spec| trainer_levels(spec[0], spec[1], spec[2]) }.flatten.sort
     return nil if levels.empty?
     levels.inject(0, :+) / levels.length
@@ -135,7 +178,7 @@ module TGOMManager
     nil
   end
 
-  def clear_region(map_id = nil)
+  def clear_map(map_id)
     map_id ||= (defined?($game_map) && $game_map ? $game_map.map_id : nil)
     events = SAFE_ROUTINE[map_id.to_i]
     return {:battles => 0, :money => 0, :reputation => 0} unless events
@@ -145,6 +188,7 @@ module TGOMManager
         type, name, version, reputation, switch = spec
         key = [map_id.to_i, event_id, switch]
         next if state[:cleared_routine_events][key]
+        next if defined?($game_self_switches) && $game_self_switches && $game_self_switches[[map_id.to_i, event_id, switch]]
         money = delegated_money(type, name, version)
         next unless money
         $game_self_switches[[map_id.to_i, event_id, switch]] = true if defined?($game_self_switches) && $game_self_switches
@@ -158,6 +202,16 @@ module TGOMManager
     end
     sync_token_hooks
     result
+  end
+
+  def clear_region(map_id = nil)
+    map_id ||= (defined?($game_map) && $game_map ? $game_map.map_id : nil)
+    total = {:battles => 0, :money => 0, :reputation => 0}
+    region_maps(map_id).each do |id|
+      result = clear_map(id)
+      total.keys.each { |key| total[key] += result[key] }
+    end
+    total
   end
 
   def recruit(species, level = nil)
@@ -188,6 +242,7 @@ module TGOMManager
 
   def remember_gym
     return false unless defined?($game_map) && $game_map && defined?($game_player) && $game_player
+    return false unless SAFE_GYM_MAPS.include?($game_map.map_id)
     state[:gym_location] = [$game_map.map_id, $game_player.x, $game_player.y, $game_player.direction]
     log("GYM_ANCHOR #{state[:gym_location].join(',')}")
     true
@@ -195,8 +250,9 @@ module TGOMManager
 
   def travel_to_gym
     location = state[:gym_location]
-    return false unless location && !PROTECTED_MAPS.include?(location[0])
+    return false unless location && SAFE_GYM_MAPS.include?(location[0]) && travel_idle?
     if defined?($game_map) && $game_map && defined?($game_player) && $game_player
+      return false unless SAFE_RETURN_MAPS.include?($game_map.map_id)
       state[:travel_origin] = [$game_map.map_id, $game_player.x, $game_player.y, $game_player.direction]
     end
     transfer(location)
@@ -204,9 +260,14 @@ module TGOMManager
 
   def return_from_gym
     location = state[:travel_origin]
-    return false unless location && !PROTECTED_MAPS.include?(location[0])
+    return false unless location && SAFE_RETURN_MAPS.include?(location[0]) && travel_idle?
     return false unless transfer(location)
     state[:travel_origin] = nil
+    true
+  end
+
+  def travel_idle?
+    return false if defined?(pbMapInterpreterRunning?) && pbMapInterpreterRunning?
     true
   end
 
@@ -221,7 +282,7 @@ module TGOMManager
   end
 
   def gym_staff_menu
-    commands = ["Clear routine trainers", "Scout (1 token)", "Training", "Set Gym anchor", "Travel to Gym", "Return", "Cancel"]
+    commands = ["Clear routine region", "Scout (#{state[:scout_tokens]} tokens)", "Blacklist", "Training", "Set Gym anchor", "Travel to Gym", "Return", "Cancel"]
     choice = pbMessage("Gym Staff", commands, commands.length - 1)
     case choice
     when 0
@@ -233,11 +294,18 @@ module TGOMManager
       labels = candidates.map { |species| GameData::Species.get(species).name } + ["Cancel"]
       pick = pbMessage("Choose one recruit.", labels, labels.length - 1)
       recruit(candidates[pick]) if pick >= 0 && pick < candidates.length
-    when 2 then pbMessage("Trained #{train_party} Pokemon to the current opponent level.")
-    when 3 then remember_gym
-    when 4 then travel_to_gym
-    when 5 then return_from_gym
+    when 2
+      candidates = scout_candidates(available_scout_pool)
+      return pbMessage("No eligible candidates are available.") if candidates.empty?
+      labels = candidates.map { |species| GameData::Species.get(species).name } + ["Cancel"]
+      pick = pbMessage("Blacklist which candidate?", labels, labels.length - 1)
+      blacklist(candidates[pick]) if pick >= 0 && pick < candidates.length
+    when 3 then pbMessage("Trained #{train_party} Pokemon to the current opponent level.")
+    when 4 then remember_gym
+    when 5 then return :travel if travel_to_gym
+    when 6 then return :travel if return_from_gym
     end
+    :stay
   end
 end
 
@@ -255,13 +323,29 @@ end
 
 def pbTGOMGymStaff; TGOMManager.gym_staff_menu; end
 
-EventHandlers.add(:on_game_map_setup, :tgom_manager_initialize, proc { |_map_id| TGOMManager.state; TGOMManager.sync_token_hooks })
+EventHandlers.add(:on_game_map_setup, :tgom_manager_initialize, proc do |map_id|
+  TGOMManager.state
+  TGOMManager.state[:last_routine_map] = map_id if !TGOMManager.region_maps(map_id).empty?
+  TGOMManager.sync_token_hooks
+end)
+EventHandlers.add(:on_end_battle, :tgom_manager_token_sync, proc { |*_| TGOMManager.sync_token_hooks })
 
 if defined?(MenuHandlers)
   MenuHandlers.add(:pause_menu, :tgom_gym_staff, {
     "name" => _INTL("Gym Staff"),
     "order" => 65,
     "condition" => proc { next true },
-    "effect" => proc { |menu| menu.pbHideMenu; pbTGOMGymStaff; menu.pbRefresh }
+    "effect" => proc do |menu|
+      pbPlayDecisionSE
+      menu.pbHideMenu
+      if pbTGOMGymStaff == :travel
+        menu.pbEndScene
+        $game_temp.in_menu = false
+        next true
+      end
+      menu.pbRefresh
+      menu.pbShowMenu
+      next false
+    end
   })
 end

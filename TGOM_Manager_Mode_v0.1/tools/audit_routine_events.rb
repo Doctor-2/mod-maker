@@ -40,12 +40,15 @@ Dir.glob(File.join(root, "Map[0-9][0-9][0-9].rxdata")).sort.each do |path|
       trainer = scripts.match(/TrainerBattle\.start\(:(\w+),\s*["']([^"']+)["'](?:,\s*(\d+))?\)/)
       rep = commands.select { |c| c["code"] == 122 && c["parameters"][0] == 29 }.map { |c| c["parameters"][4].to_i }.max
       switches = commands.select { |c| c["code"] == 123 }.map { |c| c["parameters"][0] }
-      safe = !!trainer && name =~ /Trainer/i && commands.all? { |c| allowed_codes.include?(c["code"]) } && rep && switches.length == 1
+      safe_scripts = script_lines.all? do |line|
+        line =~ /\A(?:pbTrainerIntro\(:\w+\)|pbNoticePlayer\(get_self\)|pbTrainerEnd|TrainerBattle\.start\(:\w+,\s*["'][^"']+["'](?:,\s*\d+)?\))\z/
+      end
+      safe = !!trainer && name =~ /Trainer/i && commands.all? { |c| allowed_codes.include?(c["code"]) } && safe_scripts && rep && switches.length == 1
       {
         "page" => index, "command_codes" => commands.map { |c| c["code"] },
         "scripts" => script_lines.map(&:strip).reject(&:empty?),
         "trainer_battle" => (trainer ? {"type" => trainer[1], "name" => trainer[2], "version" => (trainer[3] || 0).to_i, "reputation" => rep, "self_switch" => switches[0]} : nil),
-        "routine_allowlisted" => !!safe
+        "safe_scripts" => !!safe_scripts, "routine_allowlisted" => !!safe
       }
     end
     classification = if [4, 5, 6].include?(map_id)

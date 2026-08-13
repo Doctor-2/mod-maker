@@ -7,8 +7,14 @@
       "1": ["LASS/Ellen/0/A", "LASS/Ellen/1/B"],
       "2": ["YOUNGSTER/Jeff/0/A", "YOUNGSTER/Jeff/1/B"],
       "5": ["PICNICKER/Liz/0/A", "PICNICKER/Liz/1/B"]
-    }
+    },
+    "7": {"3": ["BUGCATCHER/Bill/0/A"], "4": ["ROCKER/Ricky/0/A", "ROCKER/Ricky/1/B"], "7": ["BEAUTY/Missy/0/A", "BEAUTY/Missy/1/B"], "11": ["CAMPER/Jacob/0/A", "CAMPER/Jacob/1/B"]},
+    "8": {"2": ["HIKER/Burton/0/A"], "3": ["COOLTRAINER_F/Linda/0/A", "COOLTRAINER_F/Linda/1/B"], "4": ["SCIENTIST/Gladstone/0/A"], "5": ["CAMPER/Timothy/0/A"]},
+    "10": {"4": ["COOLTRAINER_F/Nat/0/A", "COOLTRAINER_F/Nat/1/B"], "5": ["SUPERNERD/Kevin/0/A"], "6": ["BLACKBELT/Dennis/0/A"], "7": ["ROUGHRIDER_M/Racer/1/A"]},
+    "21": {"23": ["CAMPER/Davy/0/A"], "24": ["BUGCATCHER/Rob/0/A"], "25": ["LASS/Anna/0/A"], "27": ["GENTLEMAN/Chris/0/A"]}
   },
+  "routine_regions": {"winding_woods": [3], "steel_caves": [7, 8, 10], "miser_marsh": [21]},
+  "excluded_candidate_map": {"12": "Badlands/Rider story sequence"},
   "protected_maps": {
     "4": "Cave of Knowledge riddles and rewards",
     "5": "Cave of Knowledge chain",
