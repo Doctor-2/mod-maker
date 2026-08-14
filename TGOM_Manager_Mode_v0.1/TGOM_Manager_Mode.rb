@@ -90,7 +90,7 @@ module TGOMManager
   SAFE_GYM_MAPS = [15, 31, 43, 44, 45, 46, 47].freeze
   # Audited ordinary field/town/Gym origins only. Story dungeons, quest maps,
   # boss rooms and unknown maps fail closed (notably Maps004–006 and Map012).
-  SAFE_TRAVEL_ORIGINS = [1, 2, 3, 7, 8, 9, 10, 11, 15, 21, 27, 28, 29, 30, 31,
+  SAFE_TRAVEL_ORIGINS = [2, 3, 7, 8, 9, 10, 11, 15, 21, 27, 28, 29, 30, 31,
                          32, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
                          46, 47].freeze
   PROTECTED_MAPS = [4, 5, 6].freeze
