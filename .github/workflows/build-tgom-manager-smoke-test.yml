@@ -1,0 +1,50 @@
+name: Build TGOM Manager smoke test
+
+on:
+  push:
+    branches:
+      - codex/finalize-smoke-test-packaging-task
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Restore and verify production plugin bundle
+        run: |
+          git fetch origin main
+          git show origin/main:PluginScripts.rxdata > PluginScripts.rxdata
+          echo "582e7e0e4bae1a5b6631210074727c504480251ebc24d7b563d4a430d8cc1bd4  PluginScripts.rxdata" | sha256sum --check --strict
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Test and build
+        run: |
+          ruby TGOM_Manager_Mode_v0.1/tests/test_manager.rb
+          ruby -c TGOM_Manager_Mode_v0.1/TGOM_Manager_Mode.rb
+          TGOM_Manager_Mode_v0.1/tools/build_package.sh
+
+      - name: Verify generated plugin bundle
+        run: |
+          ruby -rzlib <<'RUBY'
+          path = "dist/TGOM_Manager_Mode_v0.1/Data/PluginScripts.rxdata"
+          plugins = Marshal.load(File.binread(path))
+          names = plugins.map { |plugin| plugin[0] }
+          abort "TGOM Companion Logger missing" unless names.include?("TGOM Companion Logger")
+          abort "TGOM Manager Mode missing" unless names.include?("TGOM Manager Mode")
+          abort "Marshal round-trip failed" unless Marshal.load(Marshal.dump(plugins)) == plugins
+          RUBY
+
+      - name: Upload smoke-test package
+        uses: actions/upload-artifact@v4
+        with:
+          name: TGOM_Manager_Mode_v0.1_smoke_test
+          path: dist/TGOM_Manager_Mode_v0.1.zip
+          if-no-files-found: error
