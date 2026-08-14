@@ -2,6 +2,11 @@
 class PokemonGlobalMetadata; end
 class PokemonEncounters; def encounter_triggered?(*); :original; end; end
 module EventHandlers; def self.add(*); end; end
+module TrainerBattle
+  def self.start(*); :battle_started; end
+end
+$exp_gain = true
+def setBattleRule(rule); $exp_gain = false if rule == "noexp"; end
 require 'json'
 load File.expand_path('../TGOM_Manager_Mode.rb', __dir__)
 
@@ -90,6 +95,13 @@ assert(TGOMManager.record_gym_shift_battle(1), 'third challenger counted')
 assert(TGOMManager.state[:scout_tokens] == before_tokens + 1, 'one token after third challenger')
 assert(!TGOMManager.record_gym_shift_battle(2), 'completed shift source idempotent')
 assert(!TGOMManager.important_loss(2, true), 'ordinary Gym challenger has no emergency token')
+$exp_gain = true
+TrainerBattle.start(:YOUNGSTER, "Dennis", 0)
+assert(!$exp_gain, 'Map31 Event4 challenger disables Exp and EV gain')
+$game_map = MapStub.new(3); $interpreter.event = EventStub.new(1)
+$exp_gain = true
+TrainerBattle.start(:LASS, "Ellen", 0)
+assert($exp_gain, 'ordinary field TrainerBattle keeps normal Exp and EV gain')
 $game_map = MapStub.new(1); $interpreter.event = EventStub.new(24)
 emergency_before = TGOMManager.state[:scout_tokens]
 assert(TGOMManager.important_loss(2, true), 'explicit Rough Rider story loss grants emergency token')
@@ -115,6 +127,30 @@ $game_temp = TempStub.new
 def pbMapInterpreterRunning?; false; end
 assert(TGOMManager.travel_to_destination(:new_day_plain), 'safe origin can travel')
 assert($game_temp.player_new_map_id == 2 && $game_temp.player_transferring, 'safe entrance transfer scheduled')
+
+# Unit regressions: old saves use the canonical Gym entrance, and the Cave only
+# becomes an approved origin after Lillith's starter reward completes.
+$game_map = MapStub.new(2)
+TGOMManager.state[:gym_location] = nil
+assert(TGOMManager.travel_to_gym, 'old save without Gym observation can travel')
+assert([$game_temp.player_new_map_id, $game_temp.player_new_x, $game_temp.player_new_y, $game_temp.player_new_direction] == [15, 7, 10, 8], 'old save uses canonical Map15 Gym entrance')
+$game_map = MapStub.new(15)
+assert(TGOMManager.return_from_gym, 'Return from Gym restores previous safe location')
+assert([$game_temp.player_new_map_id, $game_temp.player_new_x, $game_temp.player_new_y, $game_temp.player_new_direction] == [2, 4, 5, 2], 'Return restores exact previous coordinates')
+$game_self_switches[[6, 3, "A"]] = false
+[5, 6].each do |map_id|
+  $game_map = MapStub.new(map_id)
+  assert(!TGOMManager.travel_to_gym, "pre-reward Map#{map_id} blocked")
+end
+$game_self_switches[[6, 3, "A"]] = true
+[5, 6].each do |map_id|
+  $game_map = MapStub.new(map_id)
+  assert(TGOMManager.travel_to_gym, "post-reward Map#{map_id} can travel to Gym")
+end
+[5, 6].each do |map_id|
+  $game_map = MapStub.new(map_id)
+  assert(TGOMManager.travel_to_destination(:new_day_plain), "post-reward Map#{map_id} can use Story Destination")
+end
 
 # Unit: encounter areas require an official switch or a legitimate visit.
 TGOMManager.state[:observed_unlocks].clear
@@ -156,8 +192,19 @@ $player.party = []
 assert(TGOMManager.resolve_report(:B), 'wild-level candidate recruited')
 assert($player.party[0].level == 6, 'recruit uses persisted encounter level, not Gym target')
 
-# Unit: Training passes a live scene-compatible context to Essentials pbChangeLevel.
-$player.party = [$player.party[0]]
+# Unit: Rank0 Training defaults to 12, persists the player's selected 9–13
+# target, passes a live scene, and never lowers a Pokemon above the target.
+$game_switches[104] = false
+$game_switches[115] = false
+assert(TGOMManager.gym_training_target == 12, 'Rank0 Training target defaults to level 12')
+(9..13).each { |level| assert(TGOMManager.set_training_target(level), "Rank0 Training target accepts level #{level}") }
+assert(!TGOMManager.set_training_target(14), 'Rank0 Training target rejects levels outside 9 through 13')
+TGOMManager.state
+assert(TGOMManager.gym_training_target == 13, 'chosen Rank0 Training target persists')
+$game_switches[104] = true
+assert(TGOMManager.gym_training_target == 15, 'Rank1 retains its automatic training target')
+$game_switches[104] = false
+$player.party = [$player.party[0], Pokemon.new(:A, 14)]
 $training_scene_ok = false
 def pbChangeLevel(pokemon, target, scene)
   scene.pbRefresh
@@ -166,7 +213,8 @@ def pbChangeLevel(pokemon, target, scene)
   pokemon.level = target
 end
 assert(TGOMManager.train_party == 1, 'party member trained')
-assert($training_scene_ok && $player.party[0].level == 15, 'subsequent Training raises recruit normally')
+assert($training_scene_ok && $player.party[0].level == 13, 'Rank0 Training raises recruit to chosen target')
+assert($player.party[1].level == 14, 'Rank0 Training never lowers a Pokemon above target')
 
 # Extracted TGOM data contract: every runtime tuple and condition matches audit.
 audit = JSON.parse(File.read(File.expand_path('../audit/full_event_audit.json', __dir__)))

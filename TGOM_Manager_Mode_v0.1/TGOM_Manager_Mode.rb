@@ -11,7 +11,7 @@ module TGOMManager
     :recent_scouts => [], :cleared_routine_events => {},
     :claimed_token_sources => {}, :travel_origin => nil, :gym_location => nil,
     :last_routine_map => nil, :active_report => nil, :report_history => [],
-    :observed_unlocks => {}, :gym_shift_counts => {}
+    :observed_unlocks => {}, :gym_shift_counts => {}, :training_target => 12
   }
 
   # Generated from audit/full_event_audit.json. A routine entry is admitted only
@@ -88,9 +88,11 @@ module TGOMManager
     end
   end.freeze
   SAFE_GYM_MAPS = [15, 31, 43, 44, 45, 46, 47].freeze
+  DEFAULT_GYM_LOCATION = [15, 7, 10, 8].freeze
   # Audited ordinary field/town/Gym origins only. Story dungeons, quest maps,
-  # boss rooms and unknown maps fail closed (notably Maps004–006 and Map012).
-  SAFE_TRAVEL_ORIGINS = [1, 2, 3, 7, 8, 9, 10, 11, 15, 21, 27, 28, 29, 30, 31,
+  # boss rooms and unknown maps fail closed. Maps004–006 are admitted separately
+  # only after the audited Lillith starter-chain completion switch is set.
+  SAFE_TRAVEL_ORIGINS = [2, 3, 7, 8, 9, 10, 11, 15, 21, 27, 28, 29, 30, 31,
                          32, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
                          46, 47].freeze
   PROTECTED_MAPS = [4, 5, 6].freeze
@@ -401,10 +403,19 @@ module TGOMManager
   end
 
   def gym_training_target
+    return state[:training_target] if gym_rank == 0
     bracket = GYM_BRACKETS[gym_rank] || GYM_BRACKETS[GYM_BRACKETS.keys.max]
     levels = bracket.flat_map { |type, name, version| trainer_levels(type, name, version) }
     return nil if levels.empty?
     levels.inject(0, :+) / levels.length
+  end
+
+  def set_training_target(level)
+    level = level.to_i
+    return false unless (9..13).include?(level)
+    state[:training_target] = level
+    log("TRAIN_TARGET level=#{level}")
+    true
   end
 
   class TrainingScene
@@ -437,19 +448,23 @@ module TGOMManager
   end
 
   def travel_to_gym
-    location = state[:gym_location]
-    return false unless location && SAFE_GYM_MAPS.include?(location[0]) && safe_current_origin? && travel_idle?
-    if defined?($game_map) && $game_map && defined?($game_player) && $game_player
-      return false unless SAFE_TRAVEL_ORIGINS.include?($game_map.map_id)
-      state[:travel_origin] = [$game_map.map_id, $game_player.x, $game_player.y, $game_player.direction]
-    end
-    transfer(location)
+    location = state[:gym_location] || DEFAULT_GYM_LOCATION
+    return travel_failure(:destination_unavailable, "The Gym destination is unavailable.") unless location && SAFE_GYM_MAPS.include?(location[0])
+    return travel_origin_failure unless safe_current_origin?
+    return travel_failure(:busy, "Travel is unavailable while a battle or event is active.") unless travel_idle?
+    return travel_failure(:destination_unavailable, "The Gym destination is unavailable.") unless defined?($game_player) && $game_player
+    origin = [$game_map.map_id, $game_player.x, $game_player.y, $game_player.direction]
+    return travel_failure(:destination_unavailable, "The Gym destination is unavailable.") unless transfer(location)
+    state[:travel_origin] = origin
+    true
   end
 
   def return_from_gym
     location = state[:travel_origin]
-    return false unless location && SAFE_TRAVEL_ORIGINS.include?(location[0]) && safe_current_origin? && travel_idle?
-    return false unless transfer(location)
+    return travel_failure(:destination_unavailable, "The return destination is unavailable.") unless location && safe_travel_map?(location[0])
+    return travel_origin_failure unless safe_current_origin?
+    return travel_failure(:busy, "Travel is unavailable while a battle or event is active.") unless travel_idle?
+    return travel_failure(:destination_unavailable, "The return destination is unavailable.") unless transfer(location)
     state[:travel_origin] = nil
     true
   end
@@ -463,13 +478,38 @@ module TGOMManager
 
   def travel_to_destination(name)
     location = available_destinations[name.to_sym]
-    return false unless location && safe_current_origin? && travel_idle?
-    transfer(location[0, 4])
+    return travel_failure(:destination_unavailable, "That destination is unavailable.") unless location
+    return travel_origin_failure unless safe_current_origin?
+    return travel_failure(:busy, "Travel is unavailable while a battle or event is active.") unless travel_idle?
+    return true if transfer(location[0, 4])
+    travel_failure(:destination_unavailable, "That destination is unavailable.")
   end
 
   def safe_current_origin?
     return false unless defined?($game_map) && $game_map
-    SAFE_TRAVEL_ORIGINS.include?($game_map.map_id)
+    safe_travel_map?($game_map.map_id)
+  end
+
+  def safe_travel_map?(map_id)
+    SAFE_TRAVEL_ORIGINS.include?(map_id) || (PROTECTED_MAPS.include?(map_id) && cave_chain_complete?)
+  end
+
+  def cave_chain_complete?
+    defined?($game_self_switches) && $game_self_switches && !!$game_self_switches[[6, 3, "A"]]
+  end
+
+  def travel_origin_failure
+    if defined?($game_map) && $game_map && PROTECTED_MAPS.include?($game_map.map_id) && !cave_chain_complete?
+      travel_failure(:cave_chain_active, "Travel is unavailable while the Cave and Lillith story is still active.")
+    else
+      travel_failure(:origin_not_approved, "Travel is unavailable from the current location.")
+    end
+  end
+
+  def travel_failure(reason, message)
+    log("TRAVEL_BLOCKED reason=#{reason}")
+    pbMessage(message) if defined?(pbMessage)
+    false
   end
 
   def important_loss(outcome, can_lose)
@@ -497,7 +537,15 @@ module TGOMManager
     true
   end
 
+  def gym_daily_battle?
+    return false unless defined?($game_map) && $game_map && $game_map.map_id == 31
+    return false unless defined?(pbMapInterpreter) && pbMapInterpreterRunning?
+    event = pbMapInterpreter.get_self rescue nil
+    event && event.id == 4
+  end
+
   def travel_idle?
+    return false if defined?($game_temp) && $game_temp && $game_temp.respond_to?(:in_battle) && $game_temp.in_battle
     return false if defined?(pbMapInterpreterRunning?) && pbMapInterpreterRunning?
     true
   end
@@ -513,7 +561,7 @@ module TGOMManager
   end
 
   def gym_staff_menu
-    commands = ["Clear routine region", "Scout (#{state[:scout_tokens]} tokens)", "Training", "Set Gym anchor", "Travel to Gym", "Story destinations", "Return", "Cancel"]
+    commands = ["Clear routine region", "Scout (#{state[:scout_tokens]} tokens)", "Training", "Travel to Gym", "Story destinations", "Return", "Cancel"]
     choice = pbMessage("Gym Staff", commands, commands.length - 1)
     case choice
     when 0
@@ -541,18 +589,44 @@ module TGOMManager
         resolve_report unless state[:active_report].nil?
       end
     when 2
-      pbMessage("Trained #{train_party} Pokemon to the current Gym challenger bracket.")
-    when 3 then remember_gym
-    when 4 then return :travel if travel_to_gym
-    when 5
+      target = gym_training_target
+      commands = ["Train party to Lv.#{target}", "Change training target", "Cancel"]
+      pick = pbMessage("Training", commands, commands.length - 1)
+      if pick == 0
+        pbMessage("Trained #{train_party} Pokemon to Lv.#{target}.")
+      elsif pick == 1
+        if gym_rank == 0
+          levels = (9..13).to_a
+          labels = levels.map { |level| "Lv.#{level}" } + ["Cancel"]
+          level_pick = pbMessage("Choose the Rank 0 training target.", labels, labels.length - 1)
+          set_training_target(levels[level_pick]) if level_pick >= 0 && level_pick < levels.length
+        else
+          pbMessage("The training target is automatic at this Gym Rank.")
+        end
+      end
+    when 3 then return :travel if travel_to_gym
+    when 4
       destinations = available_destinations.keys
       labels = destinations.map { |name| name.to_s.split('_').map(&:capitalize).join(' ') } + ["Cancel"]
       pick = pbMessage("Choose an unlocked safe entrance.", labels, labels.length - 1)
       return :travel if pick >= 0 && pick < destinations.length && travel_to_destination(destinations[pick])
-    when 6 then return :travel if return_from_gym
+    when 5 then return :travel if return_from_gym
     end
     :stay
   end
+end
+
+if defined?(TrainerBattle)
+  module TGOMManagerGymDailyNoExp
+    def start(*args, &block)
+      if TGOMManager.gym_daily_battle?
+        setBattleRule("noexp")
+        TGOMManager.log("GYM_DAILY_NOEXP trainer=#{args[0]}/#{args[1]}/#{args[2] || 0}")
+      end
+      super
+    end
+  end
+  TrainerBattle.singleton_class.prepend(TGOMManagerGymDailyNoExp)
 end
 
 class PokemonGlobalMetadata
