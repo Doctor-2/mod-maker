@@ -11,7 +11,7 @@ module TGOMManager
     :recent_scouts => [], :cleared_routine_events => {},
     :claimed_token_sources => {}, :travel_origin => nil, :gym_location => nil,
     :last_routine_map => nil, :active_report => nil, :report_history => [],
-    :observed_unlocks => {}, :gym_shift_counts => {}
+    :observed_unlocks => {}, :gym_shift_counts => {}, :training_target => 12
   }
 
   # Generated from audit/full_event_audit.json. A routine entry is admitted only
@@ -403,11 +403,19 @@ module TGOMManager
   end
 
   def gym_training_target
-    return 11 if gym_rank == 0
+    return state[:training_target] if gym_rank == 0
     bracket = GYM_BRACKETS[gym_rank] || GYM_BRACKETS[GYM_BRACKETS.keys.max]
     levels = bracket.flat_map { |type, name, version| trainer_levels(type, name, version) }
     return nil if levels.empty?
     levels.inject(0, :+) / levels.length
+  end
+
+  def set_training_target(level)
+    level = level.to_i
+    return false unless (9..13).include?(level)
+    state[:training_target] = level
+    log("TRAIN_TARGET level=#{level}")
+    true
   end
 
   class TrainingScene
@@ -581,7 +589,21 @@ module TGOMManager
         resolve_report unless state[:active_report].nil?
       end
     when 2
-      pbMessage("Trained #{train_party} Pokemon to the current Gym challenger bracket.")
+      target = gym_training_target
+      commands = ["Train party to Lv.#{target}", "Change training target", "Cancel"]
+      pick = pbMessage("Training", commands, commands.length - 1)
+      if pick == 0
+        pbMessage("Trained #{train_party} Pokemon to Lv.#{target}.")
+      elsif pick == 1
+        if gym_rank == 0
+          levels = (9..13).to_a
+          labels = levels.map { |level| "Lv.#{level}" } + ["Cancel"]
+          level_pick = pbMessage("Choose the Rank 0 training target.", labels, labels.length - 1)
+          set_training_target(levels[level_pick]) if level_pick >= 0 && level_pick < levels.length
+        else
+          pbMessage("The training target is automatic at this Gym Rank.")
+        end
+      end
     when 3 then return :travel if travel_to_gym
     when 4
       destinations = available_destinations.keys

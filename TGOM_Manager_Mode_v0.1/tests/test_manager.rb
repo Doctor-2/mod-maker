@@ -192,10 +192,19 @@ $player.party = []
 assert(TGOMManager.resolve_report(:B), 'wild-level candidate recruited')
 assert($player.party[0].level == 6, 'recruit uses persisted encounter level, not Gym target')
 
-# Unit: Training passes a live scene-compatible context to Essentials pbChangeLevel.
+# Unit: Rank0 Training defaults to 12, persists the player's selected 9–13
+# target, passes a live scene, and never lowers a Pokemon above the target.
 $game_switches[104] = false
 $game_switches[115] = false
-$player.party = [$player.party[0]]
+assert(TGOMManager.gym_training_target == 12, 'Rank0 Training target defaults to level 12')
+(9..13).each { |level| assert(TGOMManager.set_training_target(level), "Rank0 Training target accepts level #{level}") }
+assert(!TGOMManager.set_training_target(14), 'Rank0 Training target rejects levels outside 9 through 13')
+TGOMManager.state
+assert(TGOMManager.gym_training_target == 13, 'chosen Rank0 Training target persists')
+$game_switches[104] = true
+assert(TGOMManager.gym_training_target == 15, 'Rank1 retains its automatic training target')
+$game_switches[104] = false
+$player.party = [$player.party[0], Pokemon.new(:A, 14)]
 $training_scene_ok = false
 def pbChangeLevel(pokemon, target, scene)
   scene.pbRefresh
@@ -204,8 +213,8 @@ def pbChangeLevel(pokemon, target, scene)
   pokemon.level = target
 end
 assert(TGOMManager.train_party == 1, 'party member trained')
-assert(TGOMManager.gym_training_target == 11, 'Rank0 Training target is explicitly level 11')
-assert($training_scene_ok && $player.party[0].level == 11, 'subsequent Rank0 Training raises recruit to level 11')
+assert($training_scene_ok && $player.party[0].level == 13, 'Rank0 Training raises recruit to chosen target')
+assert($player.party[1].level == 14, 'Rank0 Training never lowers a Pokemon above target')
 
 # Extracted TGOM data contract: every runtime tuple and condition matches audit.
 audit = JSON.parse(File.read(File.expand_path('../audit/full_event_audit.json', __dir__)))
