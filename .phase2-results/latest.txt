@@ -1,0 +1,50 @@
+
+
+  Custom Mega Pidgeot phase 2 probes
+    H10: U-turn has a field-duration cost
+      1) early U-turn should remove the wind accuracy guarantee before a slower ally moves
+      ✔ staying in should keep the wind accuracy guarantee for a slower ally
+      ✔ early U-turn should restore a later Flying weakness on an ally
+      ✔ staying in should keep the later Flying weakness suppressed on an ally
+      2) a slower U-turn should preserve the field rule for actions that already resolved
+    paired role probes
+      3) custom Pidgeot should flip a Pelipper Electric survival threshold that Mega Dragonite does not
+      ✔ custom Pidgeot should also protect an opposing Charizard Y from one layer of Rock weakness
+
+
+  4 passing (147ms)
+  3 failing
+
+  1) Custom Mega Pidgeot phase 2 probes
+       H10: U-turn has a field-duration cost
+         early U-turn should remove the wind accuracy guarantee before a slower ally moves:
+     Error: [Invalid choice] Incomplete choice: switch 3 - missing other pokemon
+      at Side.emitChoiceError (dist/sim/side.js:328:42)
+      at Battle.choose (dist/sim/battle.js:2450:12)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:35:11)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  2) Custom Mega Pidgeot phase 2 probes
+       H10: U-turn has a field-duration cost
+         a slower U-turn should preserve the field rule for actions that already resolved:
+     Error: [Invalid choice] Incomplete choice: switch 3 - missing other pokemon
+      at Side.emitChoiceError (dist/sim/side.js:328:42)
+      at Battle.choose (dist/sim/battle.js:2450:12)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:91:11)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  3) Custom Mega Pidgeot phase 2 probes
+       paired role probes
+         custom Pidgeot should flip a Pelipper Electric survival threshold that Mega Dragonite does not:
+
+      AssertionError [ERR_ASSERTION]: without Wingtip Vortex the same Pelipper should be KOed by the x4 Electric hit
+      + expected - actual
+
+      -false
+      +true
+      
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:121:4)
+      at process.processImmediate (node:internal/timers:484:21)
+
+
+
