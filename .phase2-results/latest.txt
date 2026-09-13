@@ -2,9 +2,9 @@
 
   Custom Mega Pidgeot phase 2 v2
 PELIPPER_THRESHOLD {"vortex":{"fainted":false,"damage":67,"hp":167,"pelipperSpD":122,"rotomSpA":125,"effectiveness":["p1b: Pelipper|1"]},"control":{"fainted":true,"damage":167,"hp":167,"pelipperSpD":122,"rotomSpA":125,"effectiveness":["p1b: Pelipper|2"]}}
-    ✔ flips an explicit level-50 Pelipper Thunderbolt threshold (85ms)
+    ✔ flips an explicit level-50 Pelipper Thunderbolt threshold (60ms)
 TWO_TURN_PAIRED_CONTROL {"pidgeot":{"kind":"pidgeot","t1":{"anchorSpecies":"Pidgeot-Mega","anchorHp":166,"anchorMax":190,"pelipperFainted":false,"pelipperHp":88,"sneaslerHp":7,"sneaslerMax":157,"pelipperHurricane":true},"t2":{"anchorHp":48,"anchorMax":190,"kingambitHp":137,"kingambitMax":207,"kingambitIronHead":false,"sneaslerHp":7,"sneaslerMax":157,"pelipperAliveInTeam":true,"pelipperHpInTeam":88,"tailwind":true}},"dragonite":{"kind":"dragonite","t1":{"anchorSpecies":"Dragonite-Mega","anchorHp":188,"anchorMax":198,"pelipperFainted":true,"pelipperHp":0,"sneaslerHp":157,"sneaslerMax":157,"pelipperHurricane":false},"t2":{"anchorHp":136,"anchorMax":198,"kingambitHp":143,"kingambitMax":207,"kingambitIronHead":true,"sneaslerHp":30,"sneaslerMax":157,"pelipperAliveInTeam":false,"pelipperHpInTeam":0,"tailwind":true}}}
-    ✔ produces the preregistered resource-vs-tempo divergence against Sneasler + Rotom-W (44ms)
+    ✔ produces the preregistered resource-vs-tempo divergence against Sneasler + Rotom-W
 
   Custom Mega Pidgeot phase 2 v4 — speed-investment tempo
 SAME_TURN_TAILWIND_TEMPO {"mid":{"order":["p1a: Pidgeot:Tailwind","p1b: Pelipper:Hurricane","p2a: Garchomp:Swords Dance","p2b: Magikarp:Splash"],"pidgeotSpeed":155,"pelipperSpeed":85,"garchompSpeed":154,"tailwind":true},"bulky":{"order":["p2a: Garchomp:Swords Dance","p1a: Pidgeot:Tailwind","p1b: Pelipper:Hurricane","p2b: Magikarp:Splash"],"pidgeotSpeed":124,"pelipperSpeed":85,"garchompSpeed":154,"tailwind":true}}
@@ -21,25 +21,25 @@ SECONDARY_MEGA_SPEED_TAX {"aero":{"order":["p1b: Aerodactyl:Tailwind","p1a: Char
     2) shows the redesign giving up the official form exact max-Speed Tailwind edge over Jolly Unburden Sneasler
 
 
-  5 passing (196ms)
+  5 passing (142ms)
   2 failing
 
   1) Custom Mega Pidgeot phase 2 v6 — official-vs-redesign isolation
        changes Pidgeot from self-contained No Guard attacker into a field anchor that flips an ally survival threshold:
-     Error: Unidentified format: [championsregma] Doubles Custom Game@@@^!Obtainable,^!Team Preview,!Cancel Mod,^!Endless Battle Clause
-      at TestTools.getFormat (test/common.js:81:45)
-      at TestTools.createBattle (test/common.js:100:23)
-      at pelipperBranch (test/sim/misc/pidgeot-phase2-v6.js:21:16)
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2-v6.js:38:20)
+     TypeError: Cannot read properties of null (reading 'hp')
+      at pelipperBranch (test/sim/misc/pidgeot-phase2-v6.js:41:27)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2-v6.js:48:20)
       at process.processImmediate (node:internal/timers:484:21)
 
   2) Custom Mega Pidgeot phase 2 v6 — official-vs-redesign isolation
        shows the redesign giving up the official form exact max-Speed Tailwind edge over Jolly Unburden Sneasler:
-     Error: Unidentified format: [championsregma] Custom Game@@@^!Obtainable,^!Team Preview,!Cancel Mod,^!Endless Battle Clause
-      at TestTools.getFormat (test/common.js:81:45)
-      at TestTools.createBattle (test/common.js:100:23)
-      at unburdenBranch (test/sim/misc/pidgeot-phase2-v6.js:46:16)
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2-v6.js:76:20)
+     Error: [Invalid choice] Can't move: You need a teampreview response
+      at Side.emitChoiceError (dist/sim/side.js:328:42)
+      at Side.chooseMove (dist/sim/side.js:342:19)
+      at Side.choose (dist/sim/side.js:961:21)
+      at Battle.makeChoices (dist/sim/battle.js:2462:34)
+      at unburdenBranch (test/sim/misc/pidgeot-phase2-v6.js:69:10)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2-v6.js:89:20)
       at process.processImmediate (node:internal/timers:484:21)
 
 
