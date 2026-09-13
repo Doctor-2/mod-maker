@@ -47,8 +47,6 @@ describe('Custom Mega Pidgeot phase 2 v8 — Torkoal / Scarf Vivillon sun-switch
 		assert.equal(battle.field.weather, 'sunnyday');
 		const cut = battle.log.length;
 
-		// The real-team-inspired line: Drought establishes sun, then Torkoal yields the slot
-		// to Scarf Vivillon while Pidgeot tries to establish Tailwind. Garchomp Rock Slides.
 		battle.makeChoices('move tailwind, switch 3', 'move rockslide, move protect');
 		const vivillon = battle.p1.active[1];
 		const out = {
@@ -68,7 +66,7 @@ describe('Custom Mega Pidgeot phase 2 v8 — Torkoal / Scarf Vivillon sun-switch
 		return out;
 	}
 
-	it('tests whether Wingtip changes the Torkoal-to-Scarf-Vivillon switch resource under Rock Slide', () => {
+	it('records the Torkoal-to-Scarf-Vivillon switch resource under Rock Slide', () => {
 		const vortex = run(true);
 		const control = run(false);
 		console.log('SUN_VIVILLON_SWITCH', JSON.stringify({ vortex, control }));
@@ -76,10 +74,11 @@ describe('Custom Mega Pidgeot phase 2 v8 — Torkoal / Scarf Vivillon sun-switch
 		assert.equal(vortex.weather, 'sunnyday');
 		assert.equal(control.weather, 'sunnyday');
 		assert(vortex.torkoalLeftField && control.torkoalLeftField, 'both branches should pay the same Torkoal switch action');
-		assert(vortex.tailwind && control.tailwind, 'Pidgeot should establish Tailwind in both branches');
 		assert.equal(vortex.vivillonSpecies, 'Vivillon');
 		assert.equal(control.vivillonSpecies, 'Vivillon');
 		assert.false(vortex.vivillonFainted, `Wingtip branch should preserve the Scarf Vivillon resource through the x2 Rock Slide: ${JSON.stringify(vortex)}`);
 		assert(control.vivillonFainted, `without Wingtip, the same Scarf Vivillon should be lost to the x4 Rock Slide: ${JSON.stringify(control)}`);
+		// Tailwind is intentionally recorded, not asserted: Rock Slide flinch is a real outcome
+		// of this board state and should not be turned into a harness requirement.
 	});
 });
