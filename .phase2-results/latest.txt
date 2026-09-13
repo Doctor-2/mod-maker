@@ -2,10 +2,29 @@
 
   Custom Mega Pidgeot phase 2 v2
 PELIPPER_THRESHOLD {"vortex":{"fainted":false,"damage":67,"hp":167,"pelipperSpD":122,"rotomSpA":125,"effectiveness":["p1b: Pelipper|1"]},"control":{"fainted":true,"damage":167,"hp":167,"pelipperSpD":122,"rotomSpA":125,"effectiveness":["p1b: Pelipper|2"]}}
-    ✔ flips an explicit level-50 Pelipper Thunderbolt threshold (83ms)
+    ✔ flips an explicit level-50 Pelipper Thunderbolt threshold (82ms)
 TWO_TURN_PAIRED_CONTROL {"pidgeot":{"kind":"pidgeot","t1":{"anchorSpecies":"Pidgeot-Mega","anchorHp":166,"anchorMax":190,"pelipperFainted":false,"pelipperHp":88,"sneaslerHp":7,"sneaslerMax":157,"pelipperHurricane":true},"t2":{"anchorHp":48,"anchorMax":190,"kingambitHp":137,"kingambitMax":207,"kingambitIronHead":false,"sneaslerHp":7,"sneaslerMax":157,"pelipperAliveInTeam":true,"pelipperHpInTeam":88,"tailwind":true}},"dragonite":{"kind":"dragonite","t1":{"anchorSpecies":"Dragonite-Mega","anchorHp":188,"anchorMax":198,"pelipperFainted":true,"pelipperHp":0,"sneaslerHp":157,"sneaslerMax":157,"pelipperHurricane":false},"t2":{"anchorHp":136,"anchorMax":198,"kingambitHp":143,"kingambitMax":207,"kingambitIronHead":true,"sneaslerHp":30,"sneaslerMax":157,"pelipperAliveInTeam":false,"pelipperHpInTeam":0,"tailwind":true}}}
-    ✔ produces the preregistered resource-vs-tempo divergence against Sneasler + Rotom-W (50ms)
+    ✔ produces the preregistered resource-vs-tempo divergence against Sneasler + Rotom-W (45ms)
+
+  Custom Mega Pidgeot phase 2 v3 — three-turn resource conversion
+THREE_TURN_RESOURCE_CONVERSION {"pidgeot":{"kind":"pidgeot","t1":{"anchor":"166/190","pelipper":"88/167","pelipperFainted":false,"sneasler":"7/157","pelipperHurricane":true},"t2":{"anchor":"48/190","kingambit":"137/207","sneasler":"7/157","rotom":"157/157","pelipperReserve":"88/167","pelipperAlive":true,"kingambitIronHead":false,"tailwind":true},"t3":{"anchor":"0/190","anchorFainted":true,"kingambit":"74/207","sneasler":"7/157","sneaslerFainted":false,"rotom":"88/157","pelipper":"88/167","pelipperAlive":true,"p1Alive":["Kingambit:74/207","Pelipper:88/167","Basculegion:197/197"],"p2Alive":["Sneasler:7/157","Rotom:88/157","Tyranitar:177/177","Sinistcha:178/178"]}},"dragonite":{"kind":"dragonite","t1":{"anchor":"188/198","pelipper":"0/167","pelipperFainted":true,"sneasler":"157/157","pelipperHurricane":false},"t2":{"anchor":"136/198","kingambit":"143/207","sneasler":"30/157","rotom":"157/157","pelipperReserve":"0/167","pelipperAlive":false,"kingambitIronHead":true,"tailwind":true},"t3":{"anchor":"38/198","anchorFainted":false,"kingambit":"143/207","sneasler":"0/157","sneaslerFainted":true,"rotom":"157/157","pelipper":"0/167","pelipperAlive":false,"p1Alive":["Dragonite:38/198","Kingambit:143/207","Basculegion:197/197"],"p2Alive":["Rotom:157/157","Tyranitar:177/177","Sinistcha:178/178"]}}}
+    1) tests whether preserved Pelipper converts into a different resource shape rather than a free extra Pokemon
 
 
-  2 passing (140ms)
+  2 passing (175ms)
+  1 failing
+
+  1) Custom Mega Pidgeot phase 2 v3 — three-turn resource conversion
+       tests whether preserved Pelipper converts into a different resource shape rather than a free extra Pokemon:
+
+      AssertionError [ERR_ASSERTION]: Tailwind anchors should remove Sneasler before its queued Close Combat on T3
+      + expected - actual
+
+      -false
+      +true
+      
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2-v3.js:92:3)
+      at process.processImmediate (node:internal/timers:484:21)
+
+
 
