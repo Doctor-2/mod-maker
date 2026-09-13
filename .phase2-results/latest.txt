@@ -2,27 +2,38 @@
 
   Custom Mega Pidgeot phase 2 probes
     H10: U-turn has a field-duration cost
-      ✔ early U-turn should remove the wind accuracy guarantee before a slower ally moves (72ms)
+      1) early U-turn should remove the wind accuracy guarantee before a slower ally moves
       ✔ staying in should keep the wind accuracy guarantee for a slower ally
       ✔ early U-turn should restore a later Flying weakness on an ally
       ✔ staying in should keep the later Flying weakness suppressed on an ally
-      1) a slower U-turn should preserve the field rule for actions that already resolved
+      2) a slower U-turn should preserve the field rule for actions that already resolved
     paired role probes
-      2) custom Pidgeot should flip a Pelipper Electric survival threshold that Mega Dragonite does not
+      3) custom Pidgeot should flip a Pelipper Electric survival threshold that Mega Dragonite does not
       ✔ custom Pidgeot should also protect an opposing Charizard Y from one layer of Rock weakness
 
 
-  5 passing (149ms)
-  2 failing
+  4 passing (141ms)
+  3 failing
 
   1) Custom Mega Pidgeot phase 2 probes
        H10: U-turn has a field-duration cost
-         a slower U-turn should preserve the field rule for actions that already resolved:
-     AssertionError [ERR_ASSERTION]: the faster ally should get the accuracy guarantee before the slower Pidgeot pivots out
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:100:16)
+         early U-turn should remove the wind accuracy guarantee before a slower ally moves:
+     Error: [Invalid choice] Incomplete choice: switch 3 - missing other pokemon
+      at Side.emitChoiceError (dist/sim/side.js:328:42)
+      at Battle.choose (dist/sim/battle.js:2450:12)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:41:11)
       at process.processImmediate (node:internal/timers:484:21)
 
   2) Custom Mega Pidgeot phase 2 probes
+       H10: U-turn has a field-duration cost
+         a slower U-turn should preserve the field rule for actions that already resolved:
+     Error: [Invalid choice] Incomplete choice: switch 3 - missing other pokemon
+      at Side.emitChoiceError (dist/sim/side.js:328:42)
+      at Battle.choose (dist/sim/battle.js:2450:12)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:98:11)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  3) Custom Mega Pidgeot phase 2 probes
        paired role probes
          custom Pidgeot should flip a Pelipper Electric survival threshold that Mega Dragonite does not:
 
@@ -32,7 +43,7 @@
       -false
       +true
       
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:138:4)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:137:4)
       at process.processImmediate (node:internal/timers:484:21)
 
 
