@@ -89,19 +89,23 @@ describe('Custom Mega Pidgeot phase 2 v6 — official-vs-redesign isolation', ()
 		battle.destroy(); battle = null; return out;
 	}
 
-	it('shows the redesign giving up the official form exact max-Speed Tailwind edge over Jolly Unburden Sneasler', () => {
+	it('shows the redesign giving up the official form Tailwind edge over Jolly Unburden Sneasler', () => {
 		const official = unburdenBranch(false);
 		const redesign = unburdenBranch(true);
 		console.log('OFFICIAL_VS_CUSTOM_UNBURDEN_SPEED', JSON.stringify({ official, redesign }));
 
-		assert.equal(official.afterT1.pidgeotSpeed, 380, 'official max Timid Pidgeot should be 190 x2 under Tailwind');
-		assert.equal(redesign.afterT1.pidgeotSpeed, 342, 'custom max Timid Pidgeot should be 171 x2 under Tailwind');
-		assert.equal(official.afterT1.sneaslerSpeed, 378);
-		assert.equal(redesign.afterT1.sneaslerSpeed, 378);
+		// getStat reports the underlying current stat; Tailwind and Unburden affect action order
+		// through their separate speed modifiers rather than changing this displayed number.
+		assert.equal(official.afterT1.pidgeotSpeed, 190);
+		assert.equal(redesign.afterT1.pidgeotSpeed, 171);
+		assert.equal(official.afterT1.sneaslerSpeed, 189);
+		assert.equal(redesign.afterT1.sneaslerSpeed, 189);
 		assert.equal(official.afterT1.sneaslerItem, '', 'White Herb should have been consumed, activating Unburden');
 		assert.equal(redesign.afterT1.sneaslerItem, '', 'White Herb should have been consumed, activating Unburden');
 
-		assert(official.t2Order[0]?.includes('Pidgeot:Hurricane'), `official 380 should move before Sneasler 378: ${JSON.stringify(official)}`);
-		assert(redesign.t2Order[0]?.includes('Sneasler:Close Combat'), `custom 342 should move after Sneasler 378: ${JSON.stringify(redesign)}`);
+		assert(official.t2Order[0]?.includes('Pidgeot:Hurricane'), `official Pidgeot should move before activated Jolly Unburden Sneasler under Tailwind: ${JSON.stringify(official)}`);
+		assert(redesign.t2Order[0]?.includes('Sneasler:Close Combat'), `custom Pidgeot should move after activated Jolly Unburden Sneasler under Tailwind: ${JSON.stringify(redesign)}`);
+		assert(official.sneaslerFainted && !official.pidgeotFainted, `official branch should remove Sneasler before its T2 Close Combat: ${JSON.stringify(official)}`);
+		assert(redesign.pidgeotFainted && !redesign.sneaslerFainted, `custom branch should be hit first on T2: ${JSON.stringify(redesign)}`);
 	});
 });
