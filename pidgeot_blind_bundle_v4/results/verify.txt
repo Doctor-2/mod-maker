@@ -1,0 +1,72 @@
+
+=== format ===
+name:     [Gen 9 Champions] VGC 2026 Reg M-A + Mega Pidgeot (49 chars, engine limit is 50)
+mod:      championsregmapidgeot
+gameType: doubles
+ruleset:  Flat Rules, VGC Timer, Open Team Sheets
+
+=== step 8: team validation ===
+Pidgeot @ pidgeotite  
+Ability: keeneye  
+Modest Nature  
+- workup  
+- hyperbeam  
+- hurricane  
+- roost  
+
+Snorlax @ leftovers  
+Ability: immunity  
+Adamant Nature  
+- bodyslam  
+- crunch  
+- protect  
+- curse  
+
+Tyranitar @ focussash  
+Ability: sandstream  
+Jolly Nature  
+- rockslide  
+- crunch  
+- protect  
+- dragondance  
+
+Gardevoir @ sitrusberry  
+Ability: synchronize  
+Modest Nature  
+- psychic  
+- moonblast  
+- protect  
+- trickroom  
+
+Skarmory @ choicescarf  
+Ability: keeneye  
+Jolly Nature  
+- bravebird  
+- ironhead  
+- protect  
+- tailwind  
+
+Azumarill @ lumberry  
+Ability: thickfat  
+Adamant Nature  
+- aquajet  
+- playrough  
+- protect  
+- bellydrum  
+
+
+VALID: no problems reported
+
+=== Mega Pidgeot, this format vs. stock Reg M-A ===
+championsregmapidgeot    Normal/Flying 83/93/99/112/88/104  ability: Wingtip Vortex
+championsregma           Normal/Flying 83/80/80/135/80/121  ability: No Guard
+
+=== Hyper Beam accuracy ===
+championsregmapidgeot    100
+championsregma           90
+champions                90
+gen9                     90
+
+=== Work Up ===
+championsregmapidgeot    isNonstandard: null  legal learners: Pidgeot
+championsregma           isNonstandard: "Past"  legal learners: (none)

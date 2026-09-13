@@ -1,0 +1,30 @@
+
+
+  Wingtip Vortex
+    ✔ should be the ability of a Normal/Flying Mega Pidgeot with 83/93/99/112/88/104 base stats (54ms)
+    ✔ should not set any weather of its own
+    ✔ should coexist with normal weather
+    Flying-component weakness reduction
+      ✔ should neutralize a super effective hit on the holder
+      ✔ should be the reason that hit was neutral
+      ✔ should apply to Pokemon other than the ability holder
+      ✔ should stop applying as soon as the holder is no longer active
+      ✔ should only reduce the Flying-type component of the matchup
+      ✔ should not touch weaknesses with no Flying component
+    wind-flagged move accuracy
+      ✔ should give Hurricane its normal accuracy check in rain
+      ✔ should give Hurricane its normal accuracy check in sun
+      ✔ should give Blizzard its normal accuracy check in snow
+      ✔ should leave moves without the wind flag alone
+      ✔ should apply to wind moves between two Pokemon that are not the holder
+      ✔ should stop normalizing wind moves once the holder leaves the field
+
+  Custom Mega Pidgeot mod data
+    ✔ should give Hyper Beam 100 accuracy
+    ✔ should check Hyper Beam at 100 accuracy for any Pokemon
+    ✔ should give Pidgeot Work Up
+    ✔ should validate a team with Pidgeot + Pidgeotite + Work Up
+
+
+  19 passing (146ms)
+
