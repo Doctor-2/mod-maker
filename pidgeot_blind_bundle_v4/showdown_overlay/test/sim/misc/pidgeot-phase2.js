@@ -17,7 +17,7 @@ function superEffective(b) {
 
 describe('Custom Mega Pidgeot phase 2 probes', () => {
 	afterEach(() => {
-		battle.destroy();
+		if (battle) battle.destroy();
 	});
 
 	describe('H10: U-turn has a field-duration cost', () => {
@@ -32,7 +32,7 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move hurricane 1', 'move splash, move splash');
-			battle.makeChoices('switch 3', '');
+			battle.choose('p1', 'switch 3');
 			assert(hasMiss(battle), 'after the faster Pidgeot U-turns out, the slower allied Hurricane should roll accuracy and miss in sun');
 		});
 
@@ -60,7 +60,7 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move splash', 'move thundershock 2, move splash');
-			battle.makeChoices('switch 3', '');
+			battle.choose('p1', 'switch 3');
 			assert.deepEqual(superEffective(battle), ['p1b: Tornadus|1'], 'the later Electric attack should regain the Flying weakness after Pidgeot leaves');
 		});
 
@@ -88,7 +88,7 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move hurricane 1', 'move splash, move splash');
-			battle.makeChoices('switch 3', '');
+			battle.choose('p1', 'switch 3');
 			assert.false(hasMiss(battle), 'the faster ally should get the accuracy guarantee before the slower Pidgeot pivots out');
 		});
 	});
@@ -100,14 +100,14 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 					anchor,
 					{
 						species: 'Pelipper', ability: 'drizzle', item: 'sitrusberry', nature: 'Bold',
-						evs: { hp: 32, spd: 32 }, moves: ['protect'],
+						evs: { hp: 32, spd: 32 }, moves: ['sleeptalk'],
 					},
 				], [
 					{ species: 'Rotom-Wash', ability: 'levitate', nature: 'Serious', moves: ['thunderbolt'] },
 					{ species: 'Magikarp', moves: ['splash'] },
 				]]);
 				const pelipper = battle.p1.active[1];
-				battle.makeChoices('move protect, move protect', 'move thunderbolt 2, move splash');
+				battle.makeChoices('move protect, move sleeptalk', 'move thunderbolt 2, move splash');
 				const result = { fainted: pelipper.fainted, hp: pelipper.hp, maxhp: pelipper.maxhp };
 				battle.destroy();
 				battle = null;
