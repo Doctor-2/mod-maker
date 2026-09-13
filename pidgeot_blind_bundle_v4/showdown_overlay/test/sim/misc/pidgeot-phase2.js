@@ -36,9 +36,9 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move hurricane 1', 'move splash, move splash');
-			// Mid-turn pivot: the slower ally has not acted yet, so the replacement choice and
-			// that ally's still-pending move are submitted together.
-			battle.choose('p1', 'switch 3, move hurricane 1');
+			// U-turn interrupts the turn with a one-sided switch request. The slower ally's
+			// Hurricane is already queued, so only choose the replacement here.
+			battle.choose('p1', 'switch 3');
 			assert(hasMiss(battle), 'after the faster Pidgeot U-turns out, the slower allied Hurricane should roll accuracy and miss in sun');
 		});
 
@@ -66,7 +66,7 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move splash', 'move thundershock 2, move splash');
-			battle.choose('p1', 'switch 3, pass');
+			battle.choose('p1', 'switch 3');
 			assert.deepEqual(superEffective(battle), ['p1b: Tornadus|1'], 'the later Electric attack should regain the Flying weakness after Pidgeot leaves');
 		});
 
@@ -94,9 +94,8 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move hurricane 1', 'move splash, move splash');
-			// The parser still asks for a complete side choice at the pivot boundary. Re-submit
-			// Hurricane and separately assert it did not execute twice.
-			battle.choose('p1', 'switch 3, move hurricane 1');
+			// Hurricane has already resolved before the slower U-turn opens the switch request.
+			battle.choose('p1', 'switch 3');
 			assert.false(hasMiss(battle), 'the faster ally should get the accuracy guarantee before the slower Pidgeot pivots out');
 			assert.equal(moveCount(battle, 'Hurricane'), 1, 'the already-resolved allied Hurricane must not execute twice');
 		});
