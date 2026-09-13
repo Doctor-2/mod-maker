@@ -2,9 +2,9 @@
 
   Custom Mega Pidgeot phase 2 v2
 PELIPPER_THRESHOLD {"vortex":{"fainted":false,"damage":67,"hp":167,"pelipperSpD":122,"rotomSpA":125,"effectiveness":["p1b: Pelipper|1"]},"control":{"fainted":true,"damage":167,"hp":167,"pelipperSpD":122,"rotomSpA":125,"effectiveness":["p1b: Pelipper|2"]}}
-    ✔ flips an explicit level-50 Pelipper Thunderbolt threshold (63ms)
+    ✔ flips an explicit level-50 Pelipper Thunderbolt threshold (85ms)
 TWO_TURN_PAIRED_CONTROL {"pidgeot":{"kind":"pidgeot","t1":{"anchorSpecies":"Pidgeot-Mega","anchorHp":166,"anchorMax":190,"pelipperFainted":false,"pelipperHp":88,"sneaslerHp":7,"sneaslerMax":157,"pelipperHurricane":true},"t2":{"anchorHp":48,"anchorMax":190,"kingambitHp":137,"kingambitMax":207,"kingambitIronHead":false,"sneaslerHp":7,"sneaslerMax":157,"pelipperAliveInTeam":true,"pelipperHpInTeam":88,"tailwind":true}},"dragonite":{"kind":"dragonite","t1":{"anchorSpecies":"Dragonite-Mega","anchorHp":188,"anchorMax":198,"pelipperFainted":true,"pelipperHp":0,"sneaslerHp":157,"sneaslerMax":157,"pelipperHurricane":false},"t2":{"anchorHp":136,"anchorMax":198,"kingambitHp":143,"kingambitMax":207,"kingambitIronHead":true,"sneaslerHp":30,"sneaslerMax":157,"pelipperAliveInTeam":false,"pelipperHpInTeam":0,"tailwind":true}}}
-    ✔ produces the preregistered resource-vs-tempo divergence against Sneasler + Rotom-W
+    ✔ produces the preregistered resource-vs-tempo divergence against Sneasler + Rotom-W (44ms)
 
   Custom Mega Pidgeot phase 2 v4 — speed-investment tempo
 SAME_TURN_TAILWIND_TEMPO {"mid":{"order":["p1a: Pidgeot:Tailwind","p1b: Pelipper:Hurricane","p2a: Garchomp:Swords Dance","p2b: Magikarp:Splash"],"pidgeotSpeed":155,"pelipperSpeed":85,"garchompSpeed":154,"tailwind":true},"bulky":{"order":["p2a: Garchomp:Swords Dance","p1a: Pidgeot:Tailwind","p1b: Pelipper:Hurricane","p2b: Magikarp:Splash"],"pidgeotSpeed":124,"pelipperSpeed":85,"garchompSpeed":154,"tailwind":true}}
@@ -16,6 +16,31 @@ SECONDARY_MEGA_WIDE_GUARD_TAX {"aero":{"charizardDamage":0,"supportDamage":0,"su
 SECONDARY_MEGA_SPEED_TAX {"aero":{"order":["p1b: Aerodactyl:Tailwind","p1a: Charizard:Heat Wave","p2a: Sneasler:Close Combat"],"supportSpeed":200,"charizardSpeed":152,"sneaslerSpeed":189,"sneaslerCloseCombat":true},"pidgeot":{"order":["p2a: Sneasler:Close Combat","p1a: Charizard:Heat Wave","p1b: Pidgeot:Tailwind","p2b: Magikarp:Splash"],"supportSpeed":152,"charizardSpeed":152,"sneaslerSpeed":189,"sneaslerCloseCombat":true}}
     ✔ shows fast base Aerodactyl creating same-turn Charizard tempo that un-Mega Pidgeot cannot
 
+  Custom Mega Pidgeot phase 2 v6 — official-vs-redesign isolation
+    1) changes Pidgeot from self-contained No Guard attacker into a field anchor that flips an ally survival threshold
+    2) shows the redesign giving up the official form exact max-Speed Tailwind edge over Jolly Unburden Sneasler
 
-  5 passing (143ms)
+
+  5 passing (196ms)
+  2 failing
+
+  1) Custom Mega Pidgeot phase 2 v6 — official-vs-redesign isolation
+       changes Pidgeot from self-contained No Guard attacker into a field anchor that flips an ally survival threshold:
+     Error: Unidentified format: [championsregma] Doubles Custom Game@@@^!Obtainable,^!Team Preview,!Cancel Mod,^!Endless Battle Clause
+      at TestTools.getFormat (test/common.js:81:45)
+      at TestTools.createBattle (test/common.js:100:23)
+      at pelipperBranch (test/sim/misc/pidgeot-phase2-v6.js:21:16)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2-v6.js:38:20)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  2) Custom Mega Pidgeot phase 2 v6 — official-vs-redesign isolation
+       shows the redesign giving up the official form exact max-Speed Tailwind edge over Jolly Unburden Sneasler:
+     Error: Unidentified format: [championsregma] Custom Game@@@^!Obtainable,^!Team Preview,!Cancel Mod,^!Endless Battle Clause
+      at TestTools.getFormat (test/common.js:81:45)
+      at TestTools.createBattle (test/common.js:100:23)
+      at unburdenBranch (test/sim/misc/pidgeot-phase2-v6.js:46:16)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2-v6.js:76:20)
+      at process.processImmediate (node:internal/timers:484:21)
+
+
 
