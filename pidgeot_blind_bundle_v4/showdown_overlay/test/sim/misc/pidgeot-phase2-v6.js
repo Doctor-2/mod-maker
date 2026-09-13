@@ -2,10 +2,10 @@
 
 const assert = require('./../../assert');
 const common = require('./../../common');
-const stock = common.mod('championsregma');
 const custom = common.mod('championsregmapidgeot');
 let battle;
 const L50 = set => ({ level: 50, ...set });
+const STOCK_FORMAT = '[Gen 9 Champions] VGC 2026 Reg M-A';
 
 function turnMoves(log) {
 	return log.filter(line => line.startsWith('|move|')).map(line => {
@@ -14,11 +14,18 @@ function turnMoves(log) {
 	});
 }
 
+function createStockBattle(options, teams) {
+	return common.createBattle({ formatid: STOCK_FORMAT, ...options }, teams);
+}
+function createCustomBattle(options, teams) {
+	return custom.createBattle(options, teams);
+}
+
 describe('Custom Mega Pidgeot phase 2 v6 — official-vs-redesign isolation', () => {
 	afterEach(() => { if (battle) battle.destroy(); });
 
-	function pelipperBranch(mod, customForm) {
-		battle = mod.createBattle({ gameType: 'doubles', seed: [4, 3, 2, 1] }, [[
+	function pelipperBranch(customForm) {
+		const teams = [[
 			L50(customForm ?
 				{ species: 'Pidgeot-Mega', ability: 'wingtipvortex', moves: ['protect'] } :
 				{ species: 'Pidgeot-Mega', ability: 'noguard', moves: ['protect'] }),
@@ -26,7 +33,10 @@ describe('Custom Mega Pidgeot phase 2 v6 — official-vs-redesign isolation', ()
 		], [
 			L50({ species: 'Rotom-Wash', ability: 'levitate', nature: 'Bold', evs: { hp: 32, def: 32, spd: 2 }, moves: ['thunderbolt'] }),
 			L50({ species: 'Magikarp', moves: ['splash'] }),
-		]]);
+		]];
+		battle = customForm ?
+			createCustomBattle({ gameType: 'doubles', seed: [4, 3, 2, 1] }, teams) :
+			createStockBattle({ seed: [4, 3, 2, 1] }, teams);
 		const pelipper = battle.p1.active[1];
 		const before = pelipper.hp;
 		battle.makeChoices('move protect, move sleeptalk', 'move thunderbolt 2, move splash');
@@ -35,21 +45,24 @@ describe('Custom Mega Pidgeot phase 2 v6 — official-vs-redesign isolation', ()
 	}
 
 	it('changes Pidgeot from self-contained No Guard attacker into a field anchor that flips an ally survival threshold', () => {
-		const official = pelipperBranch(stock, false);
-		const redesign = pelipperBranch(custom, true);
+		const official = pelipperBranch(false);
+		const redesign = pelipperBranch(true);
 		console.log('OFFICIAL_VS_CUSTOM_ALLY_EXTERNALITY', JSON.stringify({ official, redesign }));
 		assert(official.fainted, `official No Guard Pidgeot should not protect Pelipper: ${JSON.stringify(official)}`);
 		assert.false(redesign.fainted, `redesign should protect Pelipper via Wingtip Vortex: ${JSON.stringify(redesign)}`);
 	});
 
-	function unburdenBranch(mod, customForm) {
-		battle = mod.createBattle({ seed: [7, 7, 7, 7] }, [[
+	function unburdenBranch(customForm) {
+		const teams = [[
 			L50(customForm ?
 				{ species: 'Pidgeot-Mega', ability: 'wingtipvortex', nature: 'Timid', evs: { hp: 2, spa: 32, spe: 32 }, moves: ['tailwind', 'hurricane'] } :
 				{ species: 'Pidgeot-Mega', ability: 'noguard', nature: 'Timid', evs: { hp: 2, spa: 32, spe: 32 }, moves: ['tailwind', 'hurricane'] }),
 		], [
 			L50({ species: 'Sneasler', ability: 'unburden', item: 'whiteherb', nature: 'Jolly', evs: { hp: 2, atk: 32, spe: 32 }, moves: ['closecombat'] }),
-		]]);
+		]];
+		battle = customForm ?
+			createCustomBattle({ seed: [7, 7, 7, 7] }, teams) :
+			createStockBattle({ seed: [7, 7, 7, 7], gameType: 'singles' }, teams);
 		const pidgeot = battle.p1.active[0];
 		const sneasler = battle.p2.active[0];
 
@@ -73,8 +86,8 @@ describe('Custom Mega Pidgeot phase 2 v6 — official-vs-redesign isolation', ()
 	}
 
 	it('shows the redesign giving up the official form exact max-Speed Tailwind edge over Jolly Unburden Sneasler', () => {
-		const official = unburdenBranch(stock, false);
-		const redesign = unburdenBranch(custom, true);
+		const official = unburdenBranch(false);
+		const redesign = unburdenBranch(true);
 		console.log('OFFICIAL_VS_CUSTOM_UNBURDEN_SPEED', JSON.stringify({ official, redesign }));
 
 		assert.equal(official.afterT1.pidgeotSpeed, 380, 'official max Timid Pidgeot should be 190 x2 under Tailwind');
