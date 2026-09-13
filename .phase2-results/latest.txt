@@ -2,14 +2,20 @@
 
   Custom Mega Pidgeot phase 2 v2
 PELIPPER_THRESHOLD {"vortex":{"fainted":false,"damage":67,"hp":167,"pelipperSpD":122,"rotomSpA":125,"effectiveness":["p1b: Pelipper|1"]},"control":{"fainted":true,"damage":167,"hp":167,"pelipperSpD":122,"rotomSpA":125,"effectiveness":["p1b: Pelipper|2"]}}
-    ✔ flips an explicit level-50 Pelipper Thunderbolt threshold (68ms)
+    ✔ flips an explicit level-50 Pelipper Thunderbolt threshold (63ms)
 TWO_TURN_PAIRED_CONTROL {"pidgeot":{"kind":"pidgeot","t1":{"anchorSpecies":"Pidgeot-Mega","anchorHp":166,"anchorMax":190,"pelipperFainted":false,"pelipperHp":88,"sneaslerHp":7,"sneaslerMax":157,"pelipperHurricane":true},"t2":{"anchorHp":48,"anchorMax":190,"kingambitHp":137,"kingambitMax":207,"kingambitIronHead":false,"sneaslerHp":7,"sneaslerMax":157,"pelipperAliveInTeam":true,"pelipperHpInTeam":88,"tailwind":true}},"dragonite":{"kind":"dragonite","t1":{"anchorSpecies":"Dragonite-Mega","anchorHp":188,"anchorMax":198,"pelipperFainted":true,"pelipperHp":0,"sneaslerHp":157,"sneaslerMax":157,"pelipperHurricane":false},"t2":{"anchorHp":136,"anchorMax":198,"kingambitHp":143,"kingambitMax":207,"kingambitIronHead":true,"sneaslerHp":30,"sneaslerMax":157,"pelipperAliveInTeam":false,"pelipperHpInTeam":0,"tailwind":true}}}
-    ✔ produces the preregistered resource-vs-tempo divergence against Sneasler + Rotom-W (42ms)
+    ✔ produces the preregistered resource-vs-tempo divergence against Sneasler + Rotom-W
 
   Custom Mega Pidgeot phase 2 v4 — speed-investment tempo
 SAME_TURN_TAILWIND_TEMPO {"mid":{"order":["p1a: Pidgeot:Tailwind","p1b: Pelipper:Hurricane","p2a: Garchomp:Swords Dance","p2b: Magikarp:Splash"],"pidgeotSpeed":155,"pelipperSpeed":85,"garchompSpeed":154,"tailwind":true},"bulky":{"order":["p2a: Garchomp:Swords Dance","p1a: Pidgeot:Tailwind","p1b: Pelipper:Hurricane","p2b: Magikarp:Splash"],"pidgeotSpeed":124,"pelipperSpeed":85,"garchompSpeed":154,"tailwind":true}}
     ✔ 155-Speed Modest Pidgeot should create same-turn partner tempo that the 124-Speed bulky spread cannot
 
+  Custom Mega Pidgeot phase 2 v5 — secondary-Mega base-form tax
+SECONDARY_MEGA_WIDE_GUARD_TAX {"aero":{"charizardDamage":0,"supportDamage":0,"supportSpecies":"Aerodactyl","order":["p1b: Aerodactyl:Wide Guard","p1a: Charizard:Heat Wave","p2a: Tyranitar:Rock Slide"]},"pidgeot":{"charizardDamage":155,"supportDamage":161,"supportSpecies":"Pidgeot","order":["p1b: Pidgeot:Tailwind","p1a: Charizard:Heat Wave","p2a: Tyranitar:Rock Slide"]}}
+    ✔ shows the Wide Guard role compression lost when Pidgeot replaces Aerodactyl beside Mega Charizard Y
+SECONDARY_MEGA_SPEED_TAX {"aero":{"order":["p1b: Aerodactyl:Tailwind","p1a: Charizard:Heat Wave","p2a: Sneasler:Close Combat"],"supportSpeed":200,"charizardSpeed":152,"sneaslerSpeed":189,"sneaslerCloseCombat":true},"pidgeot":{"order":["p2a: Sneasler:Close Combat","p1a: Charizard:Heat Wave","p1b: Pidgeot:Tailwind","p2b: Magikarp:Splash"],"supportSpeed":152,"charizardSpeed":152,"sneaslerSpeed":189,"sneaslerCloseCombat":true}}
+    ✔ shows fast base Aerodactyl creating same-turn Charizard tempo that un-Mega Pidgeot cannot
 
-  3 passing (131ms)
+
+  5 passing (143ms)
 
