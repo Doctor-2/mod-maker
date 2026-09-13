@@ -1,4 +1,4 @@
-# Custom Mega Pidgeot — complete bundle (single file)
+# Custom Mega Pidgeot v4.1 — complete bundle (single file)
 
 Everything needed to reproduce this work, inlined so it can be pasted or uploaded in one
 go. Target: Pokémon Showdown at tag `v0.11.11`. Every file under `showdown_overlay/` is
@@ -13,7 +13,8 @@ Canonical copy: https://github.com/Doctor-2/mod-maker/tree/claude/gallant-euler-
 - Wingtip Vortex is active only while the ability holder is active.
 - It globally reproduces Delta Stream's Flying-component weakness reduction.
 - It coexists with normal weather.
-- It globally guarantees the normal accuracy check for wind-flagged moves.
+- Every move with Showdown's built-in `wind` flag always hits while a holder is active,
+  globally, for either side. Accuracy only: it does not bypass Fly/Dig.
 - Hyper Beam accuracy is 100 globally.
 - Pidgeot gains Work Up.
 
@@ -30,10 +31,11 @@ npx mocha test/sim/abilities/wingtipvortex.js
 
 
 
+
 ## `README.md`
 
 ```markdown
-# pidgeot_blind_bundle_v4
+# pidgeot_blind_bundle_v4 — v4.1
 
 Custom Mega Pidgeot for Pokémon Showdown `v0.11.11`, built as a mod overlay on top of
 `[Gen 9 Champions] VGC 2026 Reg M-A`.
@@ -45,43 +47,43 @@ verify.js             format + team validation, and a scope check on the stock f
 results/              exact commands, the overlay diff, and all captured output
 ```
 
+## v4.1 correction
+
+v4 implemented the wind rule as "restore the move's ordinary accuracy", which left
+Hurricane at 70% in rain and in sun and Blizzard at 70% in snow. That was wrong. The
+canonical rule is:
+
+> Wingtip Vortex makes every move with Showdown's built-in `wind` flag **always hit**
+> while a Wingtip Vortex holder is active. It is global — it benefits either side, not
+> only Mega Pidgeot and its allies.
+
+It is now implemented with No Guard's accuracy-event pattern, narrowed to the wind flag:
+
+```ts
+onAnyAccuracy(accuracy, target, source, move) {
+	if (move?.flags['wind']) return true;
+},
+```
+
+It is an accuracy guarantee only. There is deliberately **no** `onAnyInvulnerability`
+counterpart, so it does not carry moves through Fly/Dig/Dive — a wind move that normally
+reaches an airborne target (Gust, Twister, Hurricane) still does, and one that doesn't
+(Blizzard) still doesn't. There is a test for exactly that. Nothing else changed: the
+Flying-component weakness reduction and weather coexistence are untouched.
+
 ## The input bundle was not present
 
 The task named `pidgeot_blind_bundle_v4` as its input, but no such directory existed in
-this session — no overlay sources, and no `test/sim/abilities/wingtipvortex.js`. Rather
-than stop, the overlay and the test file here were **written from the task's own
-"rules that must not be silently changed" list**, which specifies the design completely
-enough to implement. If the original bundle turns up, diff it against
-`showdown_overlay/` before trusting this: two things below could differ from what its
-author wrote.
+the session that produced v4 — no overlay sources, and no
+`test/sim/abilities/wingtipvortex.js`. Both were written from the task's rule list. That
+reconstruction is what produced the wind-rule error above; the remaining known deviation
+from the original request is the format name:
 
-### 1. The wind-accuracy rule has two readings
-
-> It globally guarantees the normal accuracy check for wind-flagged moves.
-
-Implemented as: **wind-flagged moves are held to their ordinary accuracy check**, so
-weather can no longer rewrite it. Hurricane stays at 70 in rain (instead of never
-missing) and at 70 in sun (instead of 50); Blizzard stays at 70 in snow. Everything
-downstream of the move's accuracy still applies normally — accuracy/evasion stages,
-Compound Eyes, Wide Lens, Gravity.
-
-The other reading — wind moves simply always hit — was rejected because it guarantees
-that *no* accuracy check happens, which is the opposite of guaranteeing the normal one.
-It also reads as the more natural partner to "coexists with normal weather": the vortex
-holds wind moves steady against weather interference. Only the sign of the
-`onAnyModifyMove` handler in `abilities.ts` would change if this reading is wrong.
-
-### 2. The format name is 6 characters over the engine limit
-
-`sim/dex-formats.ts:812` throws on any format name longer than 50 characters.
-`[Gen 9 Champions] VGC 2026 Reg M-A + Custom Mega Pidgeot` is 56, so it cannot exist in
-this engine version. The format is registered as:
-
-```
-[Gen 9 Champions] VGC 2026 Reg M-A + Mega Pidgeot     (49 chars)
-```
-
-Only the name changed. Nothing about the metagame or the mechanics was touched.
+**The format name is 6 characters over the engine limit.** `sim/dex-formats.ts:812`
+throws on any format name longer than 50 characters, and
+`[Gen 9 Champions] VGC 2026 Reg M-A + Custom Mega Pidgeot` is 56. The format is
+registered as `[Gen 9 Champions] VGC 2026 Reg M-A + Mega Pidgeot` (49). Name only —
+confirmed harmless.
 
 ## How each rule is implemented
 
@@ -91,7 +93,7 @@ Only the name changed. Nothing about the metagame or the mechanics was touched.
 | Wingtip Vortex only while the holder is active | ability `onAny*` handlers — they stop firing the moment the holder leaves, faints, or is suppressed |
 | Reproduces Delta Stream's Flying-component weakness reduction, globally | `onAnyEffectiveness`, same shape as the `deltastream` weather condition |
 | Coexists with normal weather | the effect lives on the ability, **not** on a weather; there is no `setWeather` and no `onAnySetWeather` block, so rain/sun/sand/snow behave normally |
-| Guarantees the normal accuracy check for wind-flagged moves, globally | `onAnyModifyMove` restores the move's data accuracy after the move's own `onModifyMove` has applied weather |
+| Wind-flagged moves always hit, globally | `onAnyAccuracy` returning `true`, No Guard's pattern narrowed to the wind flag |
 | Hyper Beam accuracy 100, globally | `moves.ts` — a data change, so it applies to every Pokémon in the mod |
 | Pidgeot gains Work Up | `scripts.ts` `init()` |
 
@@ -109,16 +111,44 @@ Two implementation notes:
   data entries merge shallowly: a partial `learnset` object would replace Pidgeot's entire
   movepool.
 
+## Undecided on purpose
+
+Wingtip Vortex is currently an ordinary ability for these interactions, which means
+Neutralizing Gas and Gastro Acid suppress it and Trace / Skill Swap / Role Play / Receiver
+can move it. Neither behaviour has been ruled on; nothing in the code special-cases them
+either way, so deciding later is a local change.
+
 ## Results
 
-* `npx mocha test/sim/abilities/wingtipvortex.js` → **2375 passing, 0 failing**. That
+* `npx mocha test/sim/abilities/wingtipvortex.js` → **2382 passing, 0 failing**. That
   command runs the full suite (see `results/commands.md`), so the overlay demonstrably
-  causes no regressions. The 19 new tests on their own also pass.
+  causes no regressions. The 26 tests in this file on their own also pass.
 * Step 8: the team in `verify.js` — Pidgeot @ Pidgeotite with Work Up, plus five legal
   partners — validates with no problems (`results/verify.txt`).
 * `npx tsc` and `npx eslint` are both clean.
 * The overlay adds 6 files and modifies none (`results/overlay.diff`). Stock
   `championsregma` still has canon Mega Pidgeot, Hyper Beam at 90, and Work Up as Past.
+
+### What the tests cover
+
+Mega stats/type/ability; no custom weather; coexistence with rain/sun/sand/snow;
+the Flying-component reduction (on the holder, on a third party, only the Flying half of
+a 4x matchup, not on unrelated weaknesses, and gone the moment the holder leaves);
+wind moves always hitting in rain, in sun, in snow, through ±6 accuracy/evasion stages,
+between two Pokémon that are neither the holder, and stopping when the holder leaves;
+non-wind moves keeping their own weather and accuracy behaviour; semi-invulnerability
+still blocking a wind move that never bypassed it; Hyper Beam at 100 globally; Work Up
+legality; and team validation in the custom format.
+
+Two timing tests cover the Mega Evolution turn itself:
+
+* **Activation.** Aerodactyl outspeeds Mega Pidgeot and attacks with Rock Slide on the
+  turn Pidgeot Mega Evolves. Mega Evolution resolves ahead of every move in the turn, so
+  the Flying-component reduction is already up — no super effective hit. The paired test
+  without Mega Evolution takes the 2x hit.
+* **Speed.** At level 50 with no investment the Champions stat formula gives Pidgeot 121,
+  Garchomp 122 and Mega Pidgeot 124, so the tier is decided by the Mega forme alone.
+  Pidgeot moves first on the turn it Mega Evolves and second on a turn it doesn't.
 
 ## Reading this from another tool (e.g. ChatGPT)
 
@@ -126,7 +156,7 @@ Two implementation notes:
 credentials. Three ways in, cheapest first:
 
 1. **Hand over one file.** `BUNDLE_FOR_GPT.md` inlines every source file, the commands
-   and the captured output in a single ~32 KB markdown file — paste or upload it.
+   and the captured output in a single markdown file — paste or upload it.
 2. **Give a URL to fetch.** Raw files need no auth:
    `https://raw.githubusercontent.com/Doctor-2/mod-maker/claude/gallant-euler-6mpbzy/pidgeot_blind_bundle_v4/BUNDLE_FOR_GPT.md`
    (swap the trailing path for any other file in this directory). Browse at
@@ -288,25 +318,22 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 			}
 		},
 
-		// The normal accuracy check is guaranteed for wind-flagged moves, globally.
-		// Weather rewrites the accuracy of several wind moves in their own `onModifyMove`
-		// (Hurricane: never misses in rain, 50 in sun; Blizzard: never misses in snow/hail;
-		// Bleakwind/Sandsear/Wildbolt Storm: never miss in rain). That handler runs in the
-		// `singleEvent` at battle-actions.ts:431, before this one at :439, so restoring the
-		// move's data accuracy here puts the move back on its ordinary accuracy check.
-		// Everything downstream of `move.accuracy` still applies normally: accuracy/evasion
-		// stages, Compound Eyes, Wide Lens, Gravity.
-		onAnyModifyMove(move) {
-			if (!move.flags['wind']) return;
-			const baseAccuracy = this.dex.moves.get(move.id).accuracy;
-			if (move.accuracy !== baseAccuracy) move.accuracy = baseAccuracy;
+		// Wind-flagged moves always hit, globally. Same shape as No Guard's accuracy
+		// handler, narrowed to the wind flag: returning true from the Accuracy event makes
+		// battle-actions.ts skip the accuracy roll entirely, so weather, accuracy/evasion
+		// stages and accuracy modifiers all stop mattering for these moves.
+		// Deliberately no onAnyInvulnerability counterpart: this is an accuracy guarantee,
+		// not a way through Fly/Dig/Dive. A wind move that normally hits a semi-invulnerable
+		// target (Gust, Twister) still does; one that doesn't (Blizzard) still doesn't.
+		onAnyAccuracy(accuracy, target, source, move) {
+			if (move?.flags['wind']) return true;
 		},
 
 		flags: {},
 		name: "Wingtip Vortex",
 		rating: 4,
 		num: 1001,
-		shortDesc: "Flying weaknesses are neutralized and wind moves take their normal accuracy check, globally.",
+		shortDesc: "Flying weaknesses are neutralized and wind moves always hit, globally.",
 	},
 };
 ```
@@ -386,6 +413,11 @@ const FORMAT = '[Gen 9 Champions] VGC 2026 Reg M-A + Mega Pidgeot';
 function superEffective(b) {
 	const prefix = '|-supereffective|';
 	return b.log.filter(line => line.startsWith(prefix)).map(line => line.slice(prefix.length));
+}
+
+/** The Pokemon that used each move this battle, in resolution order. */
+function moveOrder(b) {
+	return b.log.filter(line => line.startsWith('|move|')).map(line => line.split('|')[2]);
 }
 
 let battle;
@@ -511,66 +543,138 @@ describe('Wingtip Vortex', () => {
 	});
 
 	describe(`wind-flagged move accuracy`, () => {
-		/** Runs the given turns and reports the accuracy `moveid` was checked at each time. */
-		function accuracyOf(moveid, teams, choices, options) {
-			battle = mod.createBattle(options || {}, teams);
-			const seen = [];
-			battle.onEvent('Accuracy', battle.format, (accuracy, target, source, move) => {
-				if (move.id === moveid) seen.push(accuracy);
-				return false; // force a miss, so the rest of the turn stays quiet
-			});
+		/**
+		 * Runs the given turns with every random chance forced to fail, so any move that
+		 * actually rolls for accuracy misses. A move that still lands did not roll at all,
+		 * which is exactly what "always hits" means.
+		 */
+		function landed(teams, choices, options, setup) {
+			battle = mod.createBattle({ forceRandomChance: false, ...options }, teams);
+			if (setup) setup(battle);
 			for (const choice of choices) battle.makeChoices(...choice);
-			return seen;
+			return !battle.log.some(line => line.startsWith('|-miss|'));
 		}
 
 		const windTeams = () => [[
-			{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['raindance', 'sunnyday', 'snowscape'] },
+			{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['raindance', 'sunnyday', 'snowscape', 'workup'] },
 		], [
-			{ species: 'Smeargle', ability: 'owntempo', moves: ['hurricane', 'blizzard', 'thunder'] },
+			{ species: 'Smeargle', ability: 'owntempo', moves: ['hurricane', 'blizzard', 'thunder', 'aircutter'] },
 		]];
 
-		it('should give Hurricane its normal accuracy check in rain', () => {
-			const seen = accuracyOf('hurricane', windTeams(), [['move raindance mega', 'move hurricane']]);
-			assert.deepEqual(seen, [70], 'rain should not let Hurricane skip its accuracy check');
+		it('should make Hurricane always hit in rain', () => {
+			assert(landed(windTeams(), [['move raindance mega', 'move hurricane']]));
 		});
 
-		it('should give Hurricane its normal accuracy check in sun', () => {
-			const seen = accuracyOf('hurricane', windTeams(), [['move sunnyday mega', 'move hurricane']]);
-			assert.deepEqual(seen, [70], 'sun should not drop Hurricane to 50 accuracy');
+		it('should make Hurricane always hit in sun', () => {
+			// Sun would otherwise drop Hurricane to 50 accuracy
+			assert(landed(windTeams(), [['move sunnyday mega', 'move hurricane']]));
 		});
 
-		it('should give Blizzard its normal accuracy check in snow', () => {
-			const seen = accuracyOf('blizzard', windTeams(), [['move snowscape mega', 'move blizzard']]);
-			assert.deepEqual(seen, [70], 'snow should not let Blizzard skip its accuracy check');
+		it('should make Blizzard always hit in snow', () => {
+			assert(landed(windTeams(), [['move snowscape mega', 'move blizzard']]));
 		});
 
-		it('should leave moves without the wind flag alone', () => {
-			const seen = accuracyOf('thunder', windTeams(), [['move raindance mega', 'move thunder']]);
-			assert.deepEqual(seen, [true], 'Thunder is not wind-flagged, so rain should still make it always hit');
+		it('should be the reason Hurricane hit in sun', () => {
+			// Same turn without the Mega Evolution: 50 accuracy, and the roll is forced to fail
+			assert.false(landed(windTeams(), [['move sunnyday', 'move hurricane']]));
+		});
+
+		it('should make wind moves hit through extreme accuracy and evasion stages', () => {
+			const hit = landed(windTeams(), [['move workup mega', 'move aircutter']], {}, b => {
+				b.boost({ evasion: 6 }, b.p1.active[0]);
+				b.boost({ accuracy: -6 }, b.p2.active[0]);
+			});
+			assert(hit, 'Air Cutter is wind-flagged, so the stages should not matter');
+		});
+
+		it('should not make moves without the wind flag hit through weather or stages', () => {
+			// Thunder keeps its own weather behaviour: always hits in rain...
+			assert(landed(windTeams(), [['move raindance mega', 'move thunder']]));
+			// ...and still rolls its ordinary 70 accuracy outside it
+			assert.false(landed(windTeams(), [['move workup mega', 'move thunder']]));
 		});
 
 		it('should apply to wind moves between two Pokemon that are not the holder', () => {
-			const seen = accuracyOf('hurricane', [[
-				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['raindance'] },
+			const hit = landed([[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['workup'] },
 				{ species: 'Wynaut', ability: 'shadowtag', moves: ['splash'] },
 			], [
 				{ species: 'Smeargle', ability: 'owntempo', moves: ['hurricane'] },
 				{ species: 'Ditto', ability: 'limber', moves: ['splash'] },
-			]], [['move raindance mega, move splash', 'move hurricane 2, move splash']], { gameType: 'doubles' });
-			assert.deepEqual(seen, [70]);
+			]], [['move workup mega, move splash', 'move hurricane 2, move splash']], { gameType: 'doubles' });
+			assert(hit, 'no weather here, so the guarantee is the only reason it can land');
 		});
 
-		it('should stop normalizing wind moves once the holder leaves the field', () => {
-			const seen = accuracyOf('hurricane', [[
-				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['raindance'] },
+		it('should stop guaranteeing wind moves the moment the holder leaves the field', () => {
+			battle = mod.createBattle({ forceRandomChance: false }, [[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['workup'] },
 				{ species: 'Wynaut', ability: 'shadowtag', moves: ['splash'] },
 			], [
 				{ species: 'Smeargle', ability: 'owntempo', moves: ['hurricane'] },
-			]], [
-				['move raindance mega', 'move hurricane'],
-				['switch 2', 'move hurricane'],
-			]);
-			assert.deepEqual(seen, [70, true], 'rain should make Hurricane always hit again');
+			]]);
+			battle.makeChoices('move workup mega', 'move hurricane');
+			assert.false(battle.log.some(line => line.startsWith('|-miss|')), 'should hit while the holder is active');
+
+			battle.makeChoices('switch 2', 'move hurricane');
+			assert(battle.log.some(line => line.startsWith('|-miss|')), 'should roll its ordinary accuracy once the holder is gone');
+		});
+
+		it('should not carry wind moves through semi-invulnerability', () => {
+			// Aerodactyl outspeeds Mega Pidgeot, so it is airborne before the move resolves.
+			// Accuracy is guaranteed, so a miss here can only be the invulnerability check.
+			const teams = () => [[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['blizzard', 'gust'] },
+			], [
+				{ species: 'Aerodactyl', ability: 'pressure', moves: ['fly'] },
+			]];
+			assert.false(landed(teams(), [['move blizzard mega', 'move fly']]), 'Blizzard does not hit a target in the air');
+			assert(landed(teams(), [['move gust mega', 'move fly']]), 'Gust always did hit a target in the air');
+		});
+	});
+
+	describe(`the turn Pidgeot Mega Evolves`, () => {
+		it('should protect Pidgeot before an attack that turn resolves', () => {
+			battle = mod.createBattle([[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['workup'] },
+			], [
+				{ species: 'Aerodactyl', ability: 'pressure', moves: ['rockslide'] },
+			]]);
+			// Aerodactyl is faster, so its Rock Slide resolves before Pidgeot's own move —
+			// but after Mega Evolution, which happens ahead of every move in the turn
+			battle.makeChoices('move workup mega', 'move rockslide');
+			assert.deepEqual(superEffective(battle), [], 'Rock should already be neutral on the Flying component');
+		});
+
+		it('should leave Pidgeot unprotected on a turn it does not Mega Evolve', () => {
+			battle = mod.createBattle([[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['workup'] },
+			], [
+				{ species: 'Aerodactyl', ability: 'pressure', moves: ['rockslide'] },
+			]]);
+			battle.makeChoices('move workup', 'move rockslide');
+			assert.deepEqual(superEffective(battle), ['p1a: Pidgeot|1']);
+		});
+
+		it('should order moves by the Mega forme Speed on the turn it Mega Evolves', () => {
+			// Champions stats at level 50 with no investment: Pidgeot 121, Garchomp 122,
+			// Mega Pidgeot 124 — so the Mega Evolution is what flips the order
+			battle = mod.createBattle([[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['workup'], nature: 'Serious' },
+			], [
+				{ species: 'Garchomp', ability: 'roughskin', moves: ['swordsdance'], nature: 'Serious' },
+			]]);
+			battle.makeChoices('move workup mega', 'move swordsdance');
+			assert.equal(moveOrder(battle)[0], 'p1a: Pidgeot');
+		});
+
+		it('should order moves by the base forme Speed when it does not Mega Evolve', () => {
+			battle = mod.createBattle([[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['workup'], nature: 'Serious' },
+			], [
+				{ species: 'Garchomp', ability: 'roughskin', moves: ['swordsdance'], nature: 'Serious' },
+			]]);
+			battle.makeChoices('move workup', 'move swordsdance');
+			assert.equal(moveOrder(battle)[0], 'p2a: Garchomp');
 		});
 	});
 });
@@ -691,6 +795,36 @@ checkout, `npm ci`, overlay, build, test, validate — and finished with exit 0:
 * `node verify.js` → team `VALID: no problems reported`
 * `git status` in the fresh checkout shows the six overlay files added and nothing else
   changed against the `v0.11.11` tree.
+
+## v4.1 — wind rule corrected
+
+v4 read "guarantees the normal accuracy check" as *restoring* a wind move's ordinary
+accuracy. The canonical rule is that wind-flagged moves **always hit**. The
+`onAnyModifyMove` handler was replaced with No Guard's accuracy-event pattern narrowed to
+the wind flag, and the wind tests were rewritten around it.
+
+The rewritten tests drive `createBattle({ forceRandomChance: false, … })`, which forces
+every `randomChance` roll to fail. Any move that still lands never rolled — which is what
+"always hits" means — so the assertions are exact rather than probabilistic. Under v4's
+behaviour every one of them fails.
+
+Re-run after the change:
+
+```
+cp -R $BUNDLE/showdown_overlay/. .
+npm run build
+npx mocha test/sim/abilities/wingtipvortex.js                       # 2382 passing, 0 failing
+npx mocha --no-config --no-package test/sim/abilities/wingtipvortex.js   # 26 passing
+npx tsc                                                             # exit 0
+npx eslint data/mods/championsregmapidgeot config/custom-formats.ts \
+           test/sim/abilities/wingtipvortex.js                      # exit 0
+node $BUNDLE/verify.js                                              # team VALID
+```
+
+Two Mega-turn timing tests were added at the same time. Both pass against the engine as
+shipped: Mega Evolution resolves before every move in the turn, so the vortex is up
+before a faster attacker connects, and the turn's move order is re-sorted using the Mega
+forme's Speed (Pidgeot 121 < Garchomp 122 < Mega Pidgeot 124 at level 50, no investment).
 ```
 
 ## `results/test-output.txt`
@@ -699,7 +833,7 @@ checkout, `npm ci`, overlay, build, test, validate — and finished with exit 0:
 
 
   Wingtip Vortex
-    ✔ should be the ability of a Normal/Flying Mega Pidgeot with 83/93/99/112/88/104 base stats (54ms)
+    ✔ should be the ability of a Normal/Flying Mega Pidgeot with 83/93/99/112/88/104 base stats (66ms)
     ✔ should not set any weather of its own
     ✔ should coexist with normal weather
     Flying-component weakness reduction
@@ -710,12 +844,20 @@ checkout, `npm ci`, overlay, build, test, validate — and finished with exit 0:
       ✔ should only reduce the Flying-type component of the matchup
       ✔ should not touch weaknesses with no Flying component
     wind-flagged move accuracy
-      ✔ should give Hurricane its normal accuracy check in rain
-      ✔ should give Hurricane its normal accuracy check in sun
-      ✔ should give Blizzard its normal accuracy check in snow
-      ✔ should leave moves without the wind flag alone
+      ✔ should make Hurricane always hit in rain
+      ✔ should make Hurricane always hit in sun
+      ✔ should make Blizzard always hit in snow
+      ✔ should be the reason Hurricane hit in sun
+      ✔ should make wind moves hit through extreme accuracy and evasion stages
+      ✔ should not make moves without the wind flag hit through weather or stages
       ✔ should apply to wind moves between two Pokemon that are not the holder
-      ✔ should stop normalizing wind moves once the holder leaves the field
+      ✔ should stop guaranteeing wind moves the moment the holder leaves the field
+      ✔ should not carry wind moves through semi-invulnerability
+    the turn Pidgeot Mega Evolves
+      ✔ should protect Pidgeot before an attack that turn resolves
+      ✔ should leave Pidgeot unprotected on a turn it does not Mega Evolve
+      ✔ should order moves by the Mega forme Speed on the turn it Mega Evolves
+      ✔ should order moves by the base forme Speed when it does not Mega Evolve
 
   Custom Mega Pidgeot mod data
     ✔ should give Hyper Beam 100 accuracy
@@ -724,7 +866,7 @@ checkout, `npm ci`, overlay, build, test, validate — and finished with exit 0:
     ✔ should validate a team with Pidgeot + Pidgeotite + Work Up
 
 
-  19 passing (146ms)
+  26 passing (187ms)
 
 ```
 

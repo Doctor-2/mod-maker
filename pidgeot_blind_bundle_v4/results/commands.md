@@ -71,3 +71,33 @@ checkout, `npm ci`, overlay, build, test, validate — and finished with exit 0:
 * `node verify.js` → team `VALID: no problems reported`
 * `git status` in the fresh checkout shows the six overlay files added and nothing else
   changed against the `v0.11.11` tree.
+
+## v4.1 — wind rule corrected
+
+v4 read "guarantees the normal accuracy check" as *restoring* a wind move's ordinary
+accuracy. The canonical rule is that wind-flagged moves **always hit**. The
+`onAnyModifyMove` handler was replaced with No Guard's accuracy-event pattern narrowed to
+the wind flag, and the wind tests were rewritten around it.
+
+The rewritten tests drive `createBattle({ forceRandomChance: false, … })`, which forces
+every `randomChance` roll to fail. Any move that still lands never rolled — which is what
+"always hits" means — so the assertions are exact rather than probabilistic. Under v4's
+behaviour every one of them fails.
+
+Re-run after the change:
+
+```
+cp -R $BUNDLE/showdown_overlay/. .
+npm run build
+npx mocha test/sim/abilities/wingtipvortex.js                       # 2382 passing, 0 failing
+npx mocha --no-config --no-package test/sim/abilities/wingtipvortex.js   # 26 passing
+npx tsc                                                             # exit 0
+npx eslint data/mods/championsregmapidgeot config/custom-formats.ts \
+           test/sim/abilities/wingtipvortex.js                      # exit 0
+node $BUNDLE/verify.js                                              # team VALID
+```
+
+Two Mega-turn timing tests were added at the same time. Both pass against the engine as
+shipped: Mega Evolution resolves before every move in the turn, so the vortex is up
+before a faster attacker connects, and the turn's move order is re-sorted using the Mega
+forme's Speed (Pidgeot 121 < Garchomp 122 < Mega Pidgeot 124 at level 50, no investment).

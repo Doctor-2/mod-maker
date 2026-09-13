@@ -20,24 +20,21 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 			}
 		},
 
-		// The normal accuracy check is guaranteed for wind-flagged moves, globally.
-		// Weather rewrites the accuracy of several wind moves in their own `onModifyMove`
-		// (Hurricane: never misses in rain, 50 in sun; Blizzard: never misses in snow/hail;
-		// Bleakwind/Sandsear/Wildbolt Storm: never miss in rain). That handler runs in the
-		// `singleEvent` at battle-actions.ts:431, before this one at :439, so restoring the
-		// move's data accuracy here puts the move back on its ordinary accuracy check.
-		// Everything downstream of `move.accuracy` still applies normally: accuracy/evasion
-		// stages, Compound Eyes, Wide Lens, Gravity.
-		onAnyModifyMove(move) {
-			if (!move.flags['wind']) return;
-			const baseAccuracy = this.dex.moves.get(move.id).accuracy;
-			if (move.accuracy !== baseAccuracy) move.accuracy = baseAccuracy;
+		// Wind-flagged moves always hit, globally. Same shape as No Guard's accuracy
+		// handler, narrowed to the wind flag: returning true from the Accuracy event makes
+		// battle-actions.ts skip the accuracy roll entirely, so weather, accuracy/evasion
+		// stages and accuracy modifiers all stop mattering for these moves.
+		// Deliberately no onAnyInvulnerability counterpart: this is an accuracy guarantee,
+		// not a way through Fly/Dig/Dive. A wind move that normally hits a semi-invulnerable
+		// target (Gust, Twister) still does; one that doesn't (Blizzard) still doesn't.
+		onAnyAccuracy(accuracy, target, source, move) {
+			if (move?.flags['wind']) return true;
 		},
 
 		flags: {},
 		name: "Wingtip Vortex",
 		rating: 4,
 		num: 1001,
-		shortDesc: "Flying weaknesses are neutralized and wind moves take their normal accuracy check, globally.",
+		shortDesc: "Flying weaknesses are neutralized and wind moves always hit, globally.",
 	},
 };

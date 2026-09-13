@@ -16,6 +16,11 @@ function superEffective(b) {
 	return b.log.filter(line => line.startsWith(prefix)).map(line => line.slice(prefix.length));
 }
 
+/** The Pokemon that used each move this battle, in resolution order. */
+function moveOrder(b) {
+	return b.log.filter(line => line.startsWith('|move|')).map(line => line.split('|')[2]);
+}
+
 let battle;
 
 describe('Wingtip Vortex', () => {
@@ -139,66 +144,138 @@ describe('Wingtip Vortex', () => {
 	});
 
 	describe(`wind-flagged move accuracy`, () => {
-		/** Runs the given turns and reports the accuracy `moveid` was checked at each time. */
-		function accuracyOf(moveid, teams, choices, options) {
-			battle = mod.createBattle(options || {}, teams);
-			const seen = [];
-			battle.onEvent('Accuracy', battle.format, (accuracy, target, source, move) => {
-				if (move.id === moveid) seen.push(accuracy);
-				return false; // force a miss, so the rest of the turn stays quiet
-			});
+		/**
+		 * Runs the given turns with every random chance forced to fail, so any move that
+		 * actually rolls for accuracy misses. A move that still lands did not roll at all,
+		 * which is exactly what "always hits" means.
+		 */
+		function landed(teams, choices, options, setup) {
+			battle = mod.createBattle({ forceRandomChance: false, ...options }, teams);
+			if (setup) setup(battle);
 			for (const choice of choices) battle.makeChoices(...choice);
-			return seen;
+			return !battle.log.some(line => line.startsWith('|-miss|'));
 		}
 
 		const windTeams = () => [[
-			{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['raindance', 'sunnyday', 'snowscape'] },
+			{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['raindance', 'sunnyday', 'snowscape', 'workup'] },
 		], [
-			{ species: 'Smeargle', ability: 'owntempo', moves: ['hurricane', 'blizzard', 'thunder'] },
+			{ species: 'Smeargle', ability: 'owntempo', moves: ['hurricane', 'blizzard', 'thunder', 'aircutter'] },
 		]];
 
-		it('should give Hurricane its normal accuracy check in rain', () => {
-			const seen = accuracyOf('hurricane', windTeams(), [['move raindance mega', 'move hurricane']]);
-			assert.deepEqual(seen, [70], 'rain should not let Hurricane skip its accuracy check');
+		it('should make Hurricane always hit in rain', () => {
+			assert(landed(windTeams(), [['move raindance mega', 'move hurricane']]));
 		});
 
-		it('should give Hurricane its normal accuracy check in sun', () => {
-			const seen = accuracyOf('hurricane', windTeams(), [['move sunnyday mega', 'move hurricane']]);
-			assert.deepEqual(seen, [70], 'sun should not drop Hurricane to 50 accuracy');
+		it('should make Hurricane always hit in sun', () => {
+			// Sun would otherwise drop Hurricane to 50 accuracy
+			assert(landed(windTeams(), [['move sunnyday mega', 'move hurricane']]));
 		});
 
-		it('should give Blizzard its normal accuracy check in snow', () => {
-			const seen = accuracyOf('blizzard', windTeams(), [['move snowscape mega', 'move blizzard']]);
-			assert.deepEqual(seen, [70], 'snow should not let Blizzard skip its accuracy check');
+		it('should make Blizzard always hit in snow', () => {
+			assert(landed(windTeams(), [['move snowscape mega', 'move blizzard']]));
 		});
 
-		it('should leave moves without the wind flag alone', () => {
-			const seen = accuracyOf('thunder', windTeams(), [['move raindance mega', 'move thunder']]);
-			assert.deepEqual(seen, [true], 'Thunder is not wind-flagged, so rain should still make it always hit');
+		it('should be the reason Hurricane hit in sun', () => {
+			// Same turn without the Mega Evolution: 50 accuracy, and the roll is forced to fail
+			assert.false(landed(windTeams(), [['move sunnyday', 'move hurricane']]));
+		});
+
+		it('should make wind moves hit through extreme accuracy and evasion stages', () => {
+			const hit = landed(windTeams(), [['move workup mega', 'move aircutter']], {}, b => {
+				b.boost({ evasion: 6 }, b.p1.active[0]);
+				b.boost({ accuracy: -6 }, b.p2.active[0]);
+			});
+			assert(hit, 'Air Cutter is wind-flagged, so the stages should not matter');
+		});
+
+		it('should not make moves without the wind flag hit through weather or stages', () => {
+			// Thunder keeps its own weather behaviour: always hits in rain...
+			assert(landed(windTeams(), [['move raindance mega', 'move thunder']]));
+			// ...and still rolls its ordinary 70 accuracy outside it
+			assert.false(landed(windTeams(), [['move workup mega', 'move thunder']]));
 		});
 
 		it('should apply to wind moves between two Pokemon that are not the holder', () => {
-			const seen = accuracyOf('hurricane', [[
-				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['raindance'] },
+			const hit = landed([[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['workup'] },
 				{ species: 'Wynaut', ability: 'shadowtag', moves: ['splash'] },
 			], [
 				{ species: 'Smeargle', ability: 'owntempo', moves: ['hurricane'] },
 				{ species: 'Ditto', ability: 'limber', moves: ['splash'] },
-			]], [['move raindance mega, move splash', 'move hurricane 2, move splash']], { gameType: 'doubles' });
-			assert.deepEqual(seen, [70]);
+			]], [['move workup mega, move splash', 'move hurricane 2, move splash']], { gameType: 'doubles' });
+			assert(hit, 'no weather here, so the guarantee is the only reason it can land');
 		});
 
-		it('should stop normalizing wind moves once the holder leaves the field', () => {
-			const seen = accuracyOf('hurricane', [[
-				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['raindance'] },
+		it('should stop guaranteeing wind moves the moment the holder leaves the field', () => {
+			battle = mod.createBattle({ forceRandomChance: false }, [[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['workup'] },
 				{ species: 'Wynaut', ability: 'shadowtag', moves: ['splash'] },
 			], [
 				{ species: 'Smeargle', ability: 'owntempo', moves: ['hurricane'] },
-			]], [
-				['move raindance mega', 'move hurricane'],
-				['switch 2', 'move hurricane'],
-			]);
-			assert.deepEqual(seen, [70, true], 'rain should make Hurricane always hit again');
+			]]);
+			battle.makeChoices('move workup mega', 'move hurricane');
+			assert.false(battle.log.some(line => line.startsWith('|-miss|')), 'should hit while the holder is active');
+
+			battle.makeChoices('switch 2', 'move hurricane');
+			assert(battle.log.some(line => line.startsWith('|-miss|')), 'should roll its ordinary accuracy once the holder is gone');
+		});
+
+		it('should not carry wind moves through semi-invulnerability', () => {
+			// Aerodactyl outspeeds Mega Pidgeot, so it is airborne before the move resolves.
+			// Accuracy is guaranteed, so a miss here can only be the invulnerability check.
+			const teams = () => [[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['blizzard', 'gust'] },
+			], [
+				{ species: 'Aerodactyl', ability: 'pressure', moves: ['fly'] },
+			]];
+			assert.false(landed(teams(), [['move blizzard mega', 'move fly']]), 'Blizzard does not hit a target in the air');
+			assert(landed(teams(), [['move gust mega', 'move fly']]), 'Gust always did hit a target in the air');
+		});
+	});
+
+	describe(`the turn Pidgeot Mega Evolves`, () => {
+		it('should protect Pidgeot before an attack that turn resolves', () => {
+			battle = mod.createBattle([[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['workup'] },
+			], [
+				{ species: 'Aerodactyl', ability: 'pressure', moves: ['rockslide'] },
+			]]);
+			// Aerodactyl is faster, so its Rock Slide resolves before Pidgeot's own move —
+			// but after Mega Evolution, which happens ahead of every move in the turn
+			battle.makeChoices('move workup mega', 'move rockslide');
+			assert.deepEqual(superEffective(battle), [], 'Rock should already be neutral on the Flying component');
+		});
+
+		it('should leave Pidgeot unprotected on a turn it does not Mega Evolve', () => {
+			battle = mod.createBattle([[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['workup'] },
+			], [
+				{ species: 'Aerodactyl', ability: 'pressure', moves: ['rockslide'] },
+			]]);
+			battle.makeChoices('move workup', 'move rockslide');
+			assert.deepEqual(superEffective(battle), ['p1a: Pidgeot|1']);
+		});
+
+		it('should order moves by the Mega forme Speed on the turn it Mega Evolves', () => {
+			// Champions stats at level 50 with no investment: Pidgeot 121, Garchomp 122,
+			// Mega Pidgeot 124 — so the Mega Evolution is what flips the order
+			battle = mod.createBattle([[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['workup'], nature: 'Serious' },
+			], [
+				{ species: 'Garchomp', ability: 'roughskin', moves: ['swordsdance'], nature: 'Serious' },
+			]]);
+			battle.makeChoices('move workup mega', 'move swordsdance');
+			assert.equal(moveOrder(battle)[0], 'p1a: Pidgeot');
+		});
+
+		it('should order moves by the base forme Speed when it does not Mega Evolve', () => {
+			battle = mod.createBattle([[
+				{ species: 'Pidgeot', ability: 'keeneye', item: 'pidgeotite', moves: ['workup'], nature: 'Serious' },
+			], [
+				{ species: 'Garchomp', ability: 'roughskin', moves: ['swordsdance'], nature: 'Serious' },
+			]]);
+			battle.makeChoices('move workup', 'move swordsdance');
+			assert.equal(moveOrder(battle)[0], 'p2a: Garchomp');
 		});
 	});
 });
