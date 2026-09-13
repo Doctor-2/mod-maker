@@ -1,0 +1,49 @@
+name: Pidgeot Phase 2 Probes
+
+on:
+  push:
+    branches:
+      - gpt/pidgeot-phase2-probes
+    paths:
+      - 'pidgeot_blind_bundle_v4/**'
+      - '.github/workflows/pidgeot-phase2.yml'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout benchmark branch
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Clone Pokemon Showdown v0.11.11
+        run: git clone --depth 1 --branch v0.11.11 https://github.com/smogon/pokemon-showdown.git ps
+
+      - name: Install Showdown dependencies
+        working-directory: ps
+        run: npm ci
+
+      - name: Apply v4.1 overlay
+        run: cp -R pidgeot_blind_bundle_v4/showdown_overlay/. ps/
+
+      - name: Build Showdown
+        working-directory: ps
+        run: npm run build
+
+      - name: Run v4.1 mechanics tests only
+        working-directory: ps
+        run: npx mocha --no-config --no-package test/sim/abilities/wingtipvortex.js --reporter spec
+
+      - name: Run Phase 2 timing probes only
+        working-directory: ps
+        run: npx mocha --no-config --no-package test/sim/misc/pidgeot-phase2.js --reporter spec
+
+      - name: TypeScript check
+        working-directory: ps
+        run: npx tsc
