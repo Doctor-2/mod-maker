@@ -59,6 +59,7 @@ jobs:
           npx mocha --no-config --no-package \
             test/sim/misc/pidgeot-phase2-v2.js \
             test/sim/misc/pidgeot-phase2-v4.js \
+            test/sim/misc/pidgeot-phase2-v5.js \
             --reporter spec 2>&1 | tee "$GITHUB_WORKSPACE/.phase2-results/latest.txt"
           code=${PIPESTATUS[0]}
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
