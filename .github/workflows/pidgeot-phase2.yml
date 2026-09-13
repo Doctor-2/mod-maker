@@ -45,14 +45,17 @@ jobs:
         working-directory: ps
         run: npx mocha --no-config --no-package test/sim/abilities/wingtipvortex.js --reporter spec
 
-      - name: Run clean Phase 2 v2 probes and capture output
+      - name: Run clean Phase 2 v2-v3 probes and capture output
         id: phase2
         working-directory: ps
         shell: bash
         run: |
           mkdir -p "$GITHUB_WORKSPACE/.phase2-results"
           set +e
-          npx mocha --no-config --no-package test/sim/misc/pidgeot-phase2-v2.js --reporter spec 2>&1 | tee "$GITHUB_WORKSPACE/.phase2-results/latest.txt"
+          npx mocha --no-config --no-package \
+            test/sim/misc/pidgeot-phase2-v2.js \
+            test/sim/misc/pidgeot-phase2-v3.js \
+            --reporter spec 2>&1 | tee "$GITHUB_WORKSPACE/.phase2-results/latest.txt"
           code=${PIPESTATUS[0]}
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
