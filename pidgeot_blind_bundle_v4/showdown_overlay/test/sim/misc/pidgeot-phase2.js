@@ -92,4 +92,56 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			assert.false(hasMiss(battle), 'the faster ally should get the accuracy guarantee before the slower Pidgeot pivots out');
 		});
 	});
+
+	describe('paired role probes', () => {
+		it('custom Pidgeot should flip a Pelipper Electric survival threshold that Mega Dragonite does not', () => {
+			const run = anchor => {
+				battle = custom.createBattle({ gameType: 'doubles', forceRandomChance: false }, [[
+					anchor,
+					{
+						species: 'Pelipper', ability: 'drizzle', item: 'sitrusberry', nature: 'Bold',
+						evs: { hp: 32, spd: 32 }, moves: ['protect'],
+					},
+				], [
+					{ species: 'Rotom-Wash', ability: 'levitate', nature: 'Serious', moves: ['thunderbolt'] },
+					{ species: 'Magikarp', moves: ['splash'] },
+				]]);
+				const pelipper = battle.p1.active[1];
+				battle.makeChoices('move protect, move protect', 'move thunderbolt 2, move splash');
+				const result = { fainted: pelipper.fainted, hp: pelipper.hp, maxhp: pelipper.maxhp };
+				battle.destroy();
+				battle = null;
+				return result;
+			};
+
+			const vortex = run({ species: 'Pidgeot-Mega', ability: 'wingtipvortex', moves: ['protect'] });
+			const dragonite = run({ species: 'Dragonite-Mega', ability: 'multiscale', moves: ['protect'] });
+
+			assert.false(vortex.fainted, `Wingtip Vortex should let this test-spread Pelipper survive: ${vortex.hp}/${vortex.maxhp}`);
+			assert(dragonite.fainted, `without Wingtip Vortex the same Pelipper should be KOed by the x4 Electric hit`);
+		});
+
+		it('custom Pidgeot should also protect an opposing Charizard Y from one layer of Rock weakness', () => {
+			const run = anchor => {
+				battle = custom.createBattle({ gameType: 'doubles' }, [[
+					anchor,
+					{ species: 'Garchomp', ability: 'roughskin', moves: ['rockslide'] },
+				], [
+					{ species: 'Charizard-Mega-Y', ability: 'drought', moves: ['sunnyday'] },
+					{ species: 'Magikarp', moves: ['splash'] },
+				]]);
+				battle.makeChoices('move protect, move rockslide', 'move sunnyday, move splash');
+				const result = superEffective(battle);
+				battle.destroy();
+				battle = null;
+				return result;
+			};
+
+			const vortex = run({ species: 'Pidgeot-Mega', ability: 'wingtipvortex', moves: ['protect'] });
+			const dragonite = run({ species: 'Dragonite-Mega', ability: 'multiscale', moves: ['protect'] });
+
+			assert.deepEqual(vortex, ['p2a: Charizard|1'], 'Vortex should reduce Fire/Flying Rock x4 to x2 even for the opponent');
+			assert.deepEqual(dragonite, ['p2a: Charizard|2'], 'without Vortex Charizard Y should retain its x4 Rock weakness');
+		});
+	});
 });
