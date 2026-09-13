@@ -5,7 +5,7 @@ const common = require('./../../common');
 const custom = common.mod('championsregmapidgeot');
 let battle;
 const L50 = set => ({ level: 50, ...set });
-const STOCK_FORMAT = 'gen9championsvgc2026regma@@@!openteamsheets,!teampreview';
+const STOCK_FORMAT = 'gen9championsvgc2026regma';
 
 function turnMoves(log) {
 	return log.filter(line => line.startsWith('|move|')).map(line => {
@@ -15,7 +15,9 @@ function turnMoves(log) {
 }
 
 function createStockBattle(options, teams) {
-	return common.createBattle({ formatid: STOCK_FORMAT, ...options }, teams);
+	const b = common.createBattle({ formatid: STOCK_FORMAT, ...options }, teams);
+	b.makeChoices(); // complete the official M-A Team Preview with default ordering
+	return b;
 }
 function createCustomBattle(options, teams) {
 	return custom.createBattle(options, teams);
