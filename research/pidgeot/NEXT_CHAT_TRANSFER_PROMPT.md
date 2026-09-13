@@ -9,6 +9,7 @@ Branch: `gpt/pidgeot-phase2-probes`
 
 Read first:
 
+0. `research/PROJECT_METHOD_AND_CONTEXT.md`
 1. `research/pidgeot/NEXT_CHAT_HANDOFF.md`
 2. `research/pidgeot/BLIND_PHASE_FREEZE.md`
 3. `research/pidgeot/02_FINAL_RAW_EVIDENCE_V1.md`
