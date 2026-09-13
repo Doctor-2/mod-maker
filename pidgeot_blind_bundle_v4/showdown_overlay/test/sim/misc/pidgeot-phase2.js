@@ -32,7 +32,7 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move hurricane 1', 'move splash, move splash');
-			battle.choose('p1', 'switch 3');
+			battle.choose('p1', 'switch 3, pass');
 			assert(hasMiss(battle), 'after the faster Pidgeot U-turns out, the slower allied Hurricane should roll accuracy and miss in sun');
 		});
 
@@ -60,7 +60,7 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move splash', 'move thundershock 2, move splash');
-			battle.choose('p1', 'switch 3');
+			battle.choose('p1', 'switch 3, pass');
 			assert.deepEqual(superEffective(battle), ['p1b: Tornadus|1'], 'the later Electric attack should regain the Flying weakness after Pidgeot leaves');
 		});
 
@@ -88,7 +88,7 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move hurricane 1', 'move splash, move splash');
-			battle.choose('p1', 'switch 3');
+			battle.choose('p1', 'switch 3, pass');
 			assert.false(hasMiss(battle), 'the faster ally should get the accuracy guarantee before the slower Pidgeot pivots out');
 		});
 	});
@@ -103,7 +103,10 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 						evs: { hp: 32, spd: 32 }, moves: ['sleeptalk'],
 					},
 				], [
-					{ species: 'Rotom-Wash', ability: 'levitate', nature: 'Serious', moves: ['thunderbolt'] },
+					{
+						species: 'Rotom-Wash', ability: 'levitate', item: 'leftovers', nature: 'Calm',
+						evs: { spa: 32 }, moves: ['thunderbolt'],
+					},
 					{ species: 'Magikarp', moves: ['splash'] },
 				]]);
 				const pelipper = battle.p1.active[1];
