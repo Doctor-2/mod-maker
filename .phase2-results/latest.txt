@@ -2,52 +2,37 @@
 
   Custom Mega Pidgeot phase 2 probes
     H10: U-turn has a field-duration cost
-      1) early U-turn should remove the wind accuracy guarantee before a slower ally moves
+      ✔ early U-turn should remove the wind accuracy guarantee before a slower ally moves (72ms)
       ✔ staying in should keep the wind accuracy guarantee for a slower ally
       ✔ early U-turn should restore a later Flying weakness on an ally
       ✔ staying in should keep the later Flying weakness suppressed on an ally
-      2) a slower U-turn should preserve the field rule for actions that already resolved
+      1) a slower U-turn should preserve the field rule for actions that already resolved
     paired role probes
-      3) custom Pidgeot should flip a Pelipper Electric survival threshold that Mega Dragonite does not
+      2) custom Pidgeot should flip a Pelipper Electric survival threshold that Mega Dragonite does not
       ✔ custom Pidgeot should also protect an opposing Charizard Y from one layer of Rock weakness
 
 
-  4 passing (150ms)
-  3 failing
+  5 passing (149ms)
+  2 failing
 
   1) Custom Mega Pidgeot phase 2 probes
        H10: U-turn has a field-duration cost
-         early U-turn should remove the wind accuracy guarantee before a slower ally moves:
-     Error: [Invalid choice] Can't pass: Your Smeargle must make a move (or switch)
-      at Side.emitChoiceError (dist/sim/side.js:328:42)
-      at Side.choosePass (dist/sim/side.js:1024:23)
-      at Side.choose (dist/sim/side.js:976:21)
-      at Battle.choose (dist/sim/battle.js:2443:15)
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:35:11)
+         a slower U-turn should preserve the field rule for actions that already resolved:
+     AssertionError [ERR_ASSERTION]: the faster ally should get the accuracy guarantee before the slower Pidgeot pivots out
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:100:16)
       at process.processImmediate (node:internal/timers:484:21)
 
   2) Custom Mega Pidgeot phase 2 probes
-       H10: U-turn has a field-duration cost
-         a slower U-turn should preserve the field rule for actions that already resolved:
-     Error: [Invalid choice] Can't pass: Your Aerodactyl must make a move (or switch)
-      at Side.emitChoiceError (dist/sim/side.js:328:42)
-      at Side.choosePass (dist/sim/side.js:1024:23)
-      at Side.choose (dist/sim/side.js:976:21)
-      at Battle.choose (dist/sim/battle.js:2443:15)
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:91:11)
-      at process.processImmediate (node:internal/timers:484:21)
-
-  3) Custom Mega Pidgeot phase 2 probes
        paired role probes
          custom Pidgeot should flip a Pelipper Electric survival threshold that Mega Dragonite does not:
 
-      AssertionError [ERR_ASSERTION]: without Wingtip Vortex the same Pelipper should be KOed by the x4 Electric hit
+      AssertionError [ERR_ASSERTION]: without Wingtip Vortex the same Pelipper should be KOed by the x4 Electric hit: {"fainted":false,"hp":167,"maxhp":167,"effectiveness":[]}
       + expected - actual
 
       -false
       +true
       
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:124:4)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:138:4)
       at process.processImmediate (node:internal/timers:484:21)
 
 
