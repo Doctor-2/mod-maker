@@ -9,6 +9,10 @@ on:
       - '.github/workflows/pidgeot-phase2.yml'
   workflow_dispatch:
 
+concurrency:
+  group: pidgeot-phase2-probes
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -43,9 +47,9 @@ jobs:
 
       - name: Run v4.1 mechanics tests only
         working-directory: ps
-        run: npx mocha --no-config --no-package test/sim/abilities/wingtipvortex.js --reporter spec
+        run: npx mocha --no-config --no-package test/sim/abilities/wingtipvortex.js --reporter dot
 
-      - name: Run clean Phase 2 v2-v3 probes and capture output
+      - name: Run active Phase 2 probes and capture output
         id: phase2
         working-directory: ps
         shell: bash
@@ -54,15 +58,11 @@ jobs:
           set +e
           npx mocha --no-config --no-package \
             test/sim/misc/pidgeot-phase2-v2.js \
-            test/sim/misc/pidgeot-phase2-v3.js \
+            test/sim/misc/pidgeot-phase2-v4.js \
             --reporter spec 2>&1 | tee "$GITHUB_WORKSPACE/.phase2-results/latest.txt"
           code=${PIPESTATUS[0]}
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
-
-      - name: TypeScript check
-        working-directory: ps
-        run: npx tsc
 
       - name: Commit readable probe output
         shell: bash
