@@ -10,6 +10,10 @@ function hasMiss(b) {
 	return b.log.some(line => line.startsWith('|-miss|'));
 }
 
+function moveCount(b, moveName) {
+	return b.log.filter(line => line.startsWith('|move|') && line.includes(`|${moveName}|`)).length;
+}
+
 function superEffective(b) {
 	const prefix = '|-supereffective|';
 	return b.log.filter(line => line.startsWith(prefix)).map(line => line.slice(prefix.length));
@@ -32,7 +36,9 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move hurricane 1', 'move splash, move splash');
-			battle.choose('p1', 'switch 3, pass');
+			// Mid-turn pivot: the slower ally has not acted yet, so the replacement choice and
+			// that ally's still-pending move are submitted together.
+			battle.choose('p1', 'switch 3, move hurricane 1');
 			assert(hasMiss(battle), 'after the faster Pidgeot U-turns out, the slower allied Hurricane should roll accuracy and miss in sun');
 		});
 
@@ -88,8 +94,11 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move hurricane 1', 'move splash, move splash');
-			battle.choose('p1', 'switch 3, pass');
+			// The parser still asks for a complete side choice at the pivot boundary. Re-submit
+			// Hurricane and separately assert it did not execute twice.
+			battle.choose('p1', 'switch 3, move hurricane 1');
 			assert.false(hasMiss(battle), 'the faster ally should get the accuracy guarantee before the slower Pidgeot pivots out');
+			assert.equal(moveCount(battle, 'Hurricane'), 1, 'the already-resolved allied Hurricane must not execute twice');
 		});
 	});
 
@@ -111,7 +120,12 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 				]]);
 				const pelipper = battle.p1.active[1];
 				battle.makeChoices('move protect, move sleeptalk', 'move thunderbolt 2, move splash');
-				const result = { fainted: pelipper.fainted, hp: pelipper.hp, maxhp: pelipper.maxhp };
+				const result = {
+					fainted: pelipper.fainted,
+					hp: pelipper.hp,
+					maxhp: pelipper.maxhp,
+					effectiveness: superEffective(battle),
+				};
 				battle.destroy();
 				battle = null;
 				return result;
@@ -120,8 +134,8 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			const vortex = run({ species: 'Pidgeot-Mega', ability: 'wingtipvortex', moves: ['protect'] });
 			const dragonite = run({ species: 'Dragonite-Mega', ability: 'multiscale', moves: ['protect'] });
 
-			assert.false(vortex.fainted, `Wingtip Vortex should let this test-spread Pelipper survive: ${vortex.hp}/${vortex.maxhp}`);
-			assert(dragonite.fainted, `without Wingtip Vortex the same Pelipper should be KOed by the x4 Electric hit`);
+			assert.false(vortex.fainted, `Wingtip Vortex should let this test-spread Pelipper survive: ${JSON.stringify(vortex)}`);
+			assert(dragonite.fainted, `without Wingtip Vortex the same Pelipper should be KOed by the x4 Electric hit: ${JSON.stringify(dragonite)}`);
 		});
 
 		it('custom Pidgeot should also protect an opposing Charizard Y from one layer of Rock weakness', () => {
