@@ -32,6 +32,7 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move hurricane 1', 'move splash, move splash');
+			battle.makeChoices('switch 3', '');
 			assert(hasMiss(battle), 'after the faster Pidgeot U-turns out, the slower allied Hurricane should roll accuracy and miss in sun');
 		});
 
@@ -59,6 +60,7 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move splash', 'move thundershock 2, move splash');
+			battle.makeChoices('switch 3', '');
 			assert.deepEqual(superEffective(battle), ['p1b: Tornadus|1'], 'the later Electric attack should regain the Flying weakness after Pidgeot leaves');
 		});
 
@@ -86,6 +88,7 @@ describe('Custom Mega Pidgeot phase 2 probes', () => {
 			]]);
 
 			battle.makeChoices('move uturn 1, move hurricane 1', 'move splash, move splash');
+			battle.makeChoices('switch 3', '');
 			assert.false(hasMiss(battle), 'the faster ally should get the accuracy guarantee before the slower Pidgeot pivots out');
 		});
 	});
