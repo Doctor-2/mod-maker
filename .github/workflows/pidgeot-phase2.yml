@@ -61,6 +61,7 @@ jobs:
             test/sim/misc/pidgeot-phase2-v4.js \
             test/sim/misc/pidgeot-phase2-v5.js \
             test/sim/misc/pidgeot-phase2-v6.js \
+            test/sim/misc/pidgeot-phase2-v7.js \
             --reporter spec 2>&1 | tee "$GITHUB_WORKSPACE/.phase2-results/latest.txt"
           code=${PIPESTATUS[0]}
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
