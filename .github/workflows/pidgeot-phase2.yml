@@ -20,13 +20,15 @@ jobs:
       - name: Checkout benchmark branch
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Clone Pokemon Showdown v0.11.11
+        run: git clone --depth 1 --branch v0.11.11 https://github.com/smogon/pokemon-showdown.git ps
+
+      - name: Setup Node with npm cache
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
-      - name: Clone Pokemon Showdown v0.11.11
-        run: git clone --depth 1 --branch v0.11.11 https://github.com/smogon/pokemon-showdown.git ps
+          cache: npm
+          cache-dependency-path: ps/package-lock.json
 
       - name: Install Showdown dependencies
         working-directory: ps
@@ -43,14 +45,14 @@ jobs:
         working-directory: ps
         run: npx mocha --no-config --no-package test/sim/abilities/wingtipvortex.js --reporter spec
 
-      - name: Run Phase 2 probes and capture output
+      - name: Run clean Phase 2 v2 probes and capture output
         id: phase2
         working-directory: ps
         shell: bash
         run: |
           mkdir -p "$GITHUB_WORKSPACE/.phase2-results"
           set +e
-          npx mocha --no-config --no-package test/sim/misc/pidgeot-phase2.js --reporter spec 2>&1 | tee "$GITHUB_WORKSPACE/.phase2-results/latest.txt"
+          npx mocha --no-config --no-package test/sim/misc/pidgeot-phase2-v2.js --reporter spec 2>&1 | tee "$GITHUB_WORKSPACE/.phase2-results/latest.txt"
           code=${PIPESTATUS[0]}
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
