@@ -5,7 +5,7 @@ const common = require('./../../common');
 const custom = common.mod('championsregmapidgeot');
 let battle;
 const L50 = set => ({ level: 50, ...set });
-const STOCK_FORMAT = '[Gen 9 Champions] VGC 2026 Reg M-A';
+const STOCK_FORMAT = '[Gen 9 Champions] VGC 2026 Reg M-A@@@!teampreview';
 
 function turnMoves(log) {
 	return log.filter(line => line.startsWith('|move|')).map(line => {
