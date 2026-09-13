@@ -2,36 +2,43 @@
 
   Custom Mega Pidgeot phase 2 probes
     H10: U-turn has a field-duration cost
-      1) early U-turn should remove the wind accuracy guarantee before a later opponent moves
-      ✔ staying in should keep the wind accuracy guarantee for a later opponent
-      ✔ early U-turn should restore a later Flying weakness on an ally
+      ✔ early U-turn should restore a later Flying weakness on an ally (74ms)
       ✔ staying in should keep the later Flying weakness suppressed on an ally
-      2) a late U-turn should not retroactively remove the guarantee from an earlier move
-    actual damage semantics
+    actual damage semantics at Champions level 50
       ✔ should roughly halve actual Electric damage when only the Flying weakness component is removed
-    paired role probes
-      ✔ custom Pidgeot should also protect an opposing Charizard Y from one layer of Rock weakness
+      1) should turn this explicit level-50 Pelipper benchmark from a Rotom-W Thunderbolt OHKO into survival
+    paired role costs
+      ✔ should also protect an opposing Charizard Y from one layer of Rock weakness
+    two-turn Pranav-shell paired decision tree vs Sneasler + Rotom-W pressure
+      2) should produce the preregistered resource-vs-tempo divergence
 
 
-  5 passing (132ms)
+  4 passing (176ms)
   2 failing
 
   1) Custom Mega Pidgeot phase 2 probes
-       H10: U-turn has a field-duration cost
-         early U-turn should remove the wind accuracy guarantee before a later opponent moves:
-     Error: Not all choices done
-      at Battle.commitChoices (dist/sim/battle.js:2475:39)
-      at Battle.makeChoices (dist/sim/battle.js:2469:10)
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:29:11)
+       actual damage semantics at Champions level 50
+         should turn this explicit level-50 Pelipper benchmark from a Rotom-W Thunderbolt OHKO into survival:
+
+      AssertionError [ERR_ASSERTION]: level-50 control branch should faint: {"fainted":false,"damage":0,"hp":167,"pelipperSpD":122,"rotomSpA":125,"effectiveness":[]}
+      + expected - actual
+
+      -false
+      +true
+      
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:99:4)
       at process.processImmediate (node:internal/timers:484:21)
 
   2) Custom Mega Pidgeot phase 2 probes
-       H10: U-turn has a field-duration cost
-         a late U-turn should not retroactively remove the guarantee from an earlier move:
-     Error: Not all choices done
-      at Battle.commitChoices (dist/sim/battle.js:2475:39)
-      at Battle.makeChoices (dist/sim/battle.js:2469:10)
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:77:11)
+       two-turn Pranav-shell paired decision tree vs Sneasler + Rotom-W pressure
+         should produce the preregistered resource-vs-tempo divergence:
+     Error: [Invalid choice] Can't move: Your Pelipper doesn't have a move matching ironhead
+      at Side.emitChoiceError (dist/sim/side.js:328:42)
+      at Side.chooseMove (dist/sim/side.js:399:23)
+      at Side.choose (dist/sim/side.js:961:21)
+      at Battle.makeChoices (dist/sim/battle.js:2462:34)
+      at runBranch (test/sim/misc/pidgeot-phase2.js:167:12)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:190:22)
       at process.processImmediate (node:internal/timers:484:21)
 
 
