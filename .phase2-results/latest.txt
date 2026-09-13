@@ -12,38 +12,36 @@
       ✔ custom Pidgeot should also protect an opposing Charizard Y from one layer of Rock weakness
 
 
-  4 passing (141ms)
+  4 passing (143ms)
   3 failing
 
   1) Custom Mega Pidgeot phase 2 probes
        H10: U-turn has a field-duration cost
          early U-turn should remove the wind accuracy guarantee before a slower ally moves:
-     Error: [Invalid choice] Incomplete choice: switch 3 - missing other pokemon
+     Error: [Invalid choice] Can't pass: Your Smeargle must make a move (or switch)
       at Side.emitChoiceError (dist/sim/side.js:328:42)
-      at Battle.choose (dist/sim/battle.js:2450:12)
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:41:11)
+      at Side.choosePass (dist/sim/side.js:1024:23)
+      at Side.choose (dist/sim/side.js:976:21)
+      at Battle.choose (dist/sim/battle.js:2443:15)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:34:11)
       at process.processImmediate (node:internal/timers:484:21)
 
   2) Custom Mega Pidgeot phase 2 probes
        H10: U-turn has a field-duration cost
          a slower U-turn should preserve the field rule for actions that already resolved:
-     Error: [Invalid choice] Incomplete choice: switch 3 - missing other pokemon
+     Error: [Invalid choice] Can't pass: Your Aerodactyl must make a move (or switch)
       at Side.emitChoiceError (dist/sim/side.js:328:42)
-      at Battle.choose (dist/sim/battle.js:2450:12)
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:98:11)
+      at Side.choosePass (dist/sim/side.js:1024:23)
+      at Side.choose (dist/sim/side.js:976:21)
+      at Battle.choose (dist/sim/battle.js:2443:15)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:86:11)
       at process.processImmediate (node:internal/timers:484:21)
 
   3) Custom Mega Pidgeot phase 2 probes
        paired role probes
          custom Pidgeot should flip a Pelipper Electric survival threshold that Mega Dragonite does not:
-
-      AssertionError [ERR_ASSERTION]: without Wingtip Vortex the same Pelipper should be KOed by the x4 Electric hit: {"fainted":false,"hp":167,"maxhp":167,"effectiveness":[]}
-      + expected - actual
-
-      -false
-      +true
-      
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:137:4)
+     AssertionError [ERR_ASSERTION]: Wingtip Vortex should let this test-spread Pelipper survive: {"fainted":true,"hp":0,"maxhp":167,"effectiveness":["p1b: Pelipper|1"],"log":["|t:|1789300217","|gametype|doubles","|player|p1|Player 1||","|player|p2|Player 2||","|gen|9","|tier|[championsregmapidgeot] Doubles Custom Game","|raw|<div class=\"infobox\"><details class=\"readmore\" open><summary><strong>4 custom rules:</strong></summary> ^!Obtainable, ^!Team Preview, !Cancel Mod, ^!Endless Battle Clause</details></div>","|","|t:|1789300217","|teamsize|p1|2","|teamsize|p2|2","|start","|split|p1","|switch|p1a: Pidgeot|Pidgeot-Mega, M|158/158","|switch|p1a: Pidgeot|Pidgeot-Mega, M|158/158","|split|p1","|switch|p1b: Pelipper|Pelipper, F|167/167","|switch|p1b: Pelipper|Pelipper, F|167/167","|split|p2","|switch|p2a: Rotom|Rotom-Wash|125/125","|switch|p2a: Rotom|Rotom-Wash|125/125","|split|p2","|switch|p2b: Magikarp|Magikarp, F|95/95","|switch|p2b: Magikarp|Magikarp, F|95/95","|-ability|p1a: Pidgeot|Wingtip Vortex","|-weather|RainDance|[from] ability: Drizzle|[of] p1b: Pelipper","|turn|1","|","|t:|1789300217","|move|p1a: Pidgeot|Protect|p1a: Pidgeot","|-singleturn|p1a: Pidgeot|Protect","|move|p2a: Rotom|Thunderbolt|p1b: Pelipper","|-fieldactivate|ability: Wingtip Vortex","|-supereffective|p1b: Pelipper|1","|split|p1","|-damage|p1b: Pelipper|0 fnt","|-damage|p1b: Pelipper|0 fnt","|faint|p1b: Pelipper","|move|p2b: Magikarp|Splash|p2b: Magikarp","|-nothing","|","|-weather|RainDance|[upkeep]","|upkeep","|turn|2"]}
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:111:16)
       at process.processImmediate (node:internal/timers:484:21)
 
 
