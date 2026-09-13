@@ -12,24 +12,28 @@
       ✔ custom Pidgeot should also protect an opposing Charizard Y from one layer of Rock weakness
 
 
-  4 passing (147ms)
+  4 passing (150ms)
   3 failing
 
   1) Custom Mega Pidgeot phase 2 probes
        H10: U-turn has a field-duration cost
          early U-turn should remove the wind accuracy guarantee before a slower ally moves:
-     Error: [Invalid choice] Incomplete choice: switch 3 - missing other pokemon
+     Error: [Invalid choice] Can't pass: Your Smeargle must make a move (or switch)
       at Side.emitChoiceError (dist/sim/side.js:328:42)
-      at Battle.choose (dist/sim/battle.js:2450:12)
+      at Side.choosePass (dist/sim/side.js:1024:23)
+      at Side.choose (dist/sim/side.js:976:21)
+      at Battle.choose (dist/sim/battle.js:2443:15)
       at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:35:11)
       at process.processImmediate (node:internal/timers:484:21)
 
   2) Custom Mega Pidgeot phase 2 probes
        H10: U-turn has a field-duration cost
          a slower U-turn should preserve the field rule for actions that already resolved:
-     Error: [Invalid choice] Incomplete choice: switch 3 - missing other pokemon
+     Error: [Invalid choice] Can't pass: Your Aerodactyl must make a move (or switch)
       at Side.emitChoiceError (dist/sim/side.js:328:42)
-      at Battle.choose (dist/sim/battle.js:2450:12)
+      at Side.choosePass (dist/sim/side.js:1024:23)
+      at Side.choose (dist/sim/side.js:976:21)
+      at Battle.choose (dist/sim/battle.js:2443:15)
       at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:91:11)
       at process.processImmediate (node:internal/timers:484:21)
 
@@ -43,7 +47,7 @@
       -false
       +true
       
-      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:121:4)
+      at Context.<anonymous> (test/sim/misc/pidgeot-phase2.js:124:4)
       at process.processImmediate (node:internal/timers:484:21)
 
 
