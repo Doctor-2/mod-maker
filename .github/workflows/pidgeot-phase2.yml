@@ -9,6 +9,9 @@ on:
       - '.github/workflows/pidgeot-phase2.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   probe:
     runs-on: ubuntu-latest
@@ -40,10 +43,31 @@ jobs:
         working-directory: ps
         run: npx mocha --no-config --no-package test/sim/abilities/wingtipvortex.js --reporter spec
 
-      - name: Run Phase 2 timing probes only
+      - name: Run Phase 2 probes and capture output
+        id: phase2
         working-directory: ps
-        run: npx mocha --no-config --no-package test/sim/misc/pidgeot-phase2.js --reporter spec
+        shell: bash
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/.phase2-results"
+          set +e
+          npx mocha --no-config --no-package test/sim/misc/pidgeot-phase2.js --reporter spec 2>&1 | tee "$GITHUB_WORKSPACE/.phase2-results/latest.txt"
+          code=${PIPESTATUS[0]}
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
 
       - name: TypeScript check
         working-directory: ps
         run: npx tsc
+
+      - name: Commit readable probe output
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .phase2-results/latest.txt
+          git diff --cached --quiet || git commit -m "Record latest Pidgeot phase 2 probe output [skip ci]"
+          git push
+
+      - name: Fail workflow if Phase 2 probes failed
+        if: steps.phase2.outputs.exit_code != '0'
+        run: exit 1
