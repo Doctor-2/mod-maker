@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   probe:
@@ -49,33 +49,14 @@ jobs:
         working-directory: ps
         run: npx mocha --no-config --no-package test/sim/abilities/wingtipvortex.js --reporter dot
 
-      - name: Run active Phase 2 probes and capture output
-        id: phase2
+      - name: Run active Phase 2 probes
         working-directory: ps
-        shell: bash
         run: |
-          mkdir -p "$GITHUB_WORKSPACE/.phase2-results"
-          set +e
           npx mocha --no-config --no-package \
             test/sim/misc/pidgeot-phase2-v2.js \
             test/sim/misc/pidgeot-phase2-v4.js \
             test/sim/misc/pidgeot-phase2-v5.js \
             test/sim/misc/pidgeot-phase2-v6.js \
             test/sim/misc/pidgeot-phase2-v7.js \
-            --reporter spec 2>&1 | tee "$GITHUB_WORKSPACE/.phase2-results/latest.txt"
-          code=${PIPESTATUS[0]}
-          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
-          exit 0
-
-      - name: Commit readable probe output
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .phase2-results/latest.txt
-          git diff --cached --quiet || git commit -m "Record latest Pidgeot phase 2 probe output [skip ci]"
-          git push
-
-      - name: Fail workflow if Phase 2 probes failed
-        if: steps.phase2.outputs.exit_code != '0'
-        run: exit 1
+            test/sim/misc/pidgeot-phase2-v8.js \
+            --reporter spec
