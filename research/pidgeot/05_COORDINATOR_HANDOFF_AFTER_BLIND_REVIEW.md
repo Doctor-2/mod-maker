@@ -1,16 +1,20 @@
-# Custom Mega Pidgeot — coordinator handoff after independent blind review return
+# Custom Mega Pidgeot — coordinator handoff at independent-blind-review boundary
 
-Date/state: 2026-09-14. This file is for the next coordinating chat. It is not an independent-review input.
+Current state: 2026-09-26. This file is for the next coordinating chat. It is **not** an input for the independent blind reviewer.
 
 ## 1. Current workflow state
 
-The first-pass M-A blind evidence collection is frozen.
+The first-pass M-A blind evidence collection is complete and frozen.
 
-An independent Claude blind review has now been produced outside this coordinating chat. The coordinating chat that created this handoff has **not read, summarized, evaluated, or reframed that returned report**. This is intentional so the next chat can preserve and audit the report from the raw source without inheriting a second-hand interpretation.
+Designer intent has **not** been revealed.
 
-Designer intent has not been revealed to the coordinating analysis and must remain withheld until the returned independent report is preserved and factually audited.
+The coordinating analyst's own historical blind reasoning is separately frozen in:
 
-No new open-ended M-A competitive scenarios should be added before that audit is complete unless an integrity error is found in the frozen implementation/evidence.
+- `research/pidgeot/03_INTERNAL_BLIND_ANALYSIS_FREEZE.md`
+
+An independent high-reasoning blind review has **not yet been supplied back to the coordinator in this workflow**. The immediate next stage is to run that independent review from the neutral input packet, or, if the user has already run it elsewhere, to preserve the returned report verbatim and audit it before reading the internal analyst freeze.
+
+Do not add open-ended M-A scenarios now unless an integrity error is found in the frozen implementation/evidence.
 
 ## 2. Repository / branches
 
@@ -19,7 +23,7 @@ Repository:
 
 Canonical implementation branch:
 - `claude/gallant-euler-6mpbzy`
-- v4.1 commit sequence includes `fd5206b` and corrected `32d2a5f`
+- v4.1 correction commit: `32d2a5f` (preceded by `fd5206b`)
 
 Frozen competitive-probe / research branch:
 - `gpt/pidgeot-phase2-probes`
@@ -52,32 +56,36 @@ Other package changes:
 - Otherwise use the Champions Pidgeot movepool.
 - Standard Mega Stone / one-Mega-per-battle constraints remain.
 
-Current unresolved edge assumption:
-- wind accuracy guarantee does not copy No Guard's separate hit-through-semi-invulnerability behavior.
+Current unresolved edge assumptions:
+- the wind accuracy guarantee does not copy No Guard's separate hit-through-semi-invulnerability behavior;
 - Neutralizing Gas / Gastro Acid / Trace / Skill Swap / Role Play / Receiver interactions remain designer-unresolved; current code treats Wingtip as an ordinary ability for those edges.
 
-## 4. Primary source files
+## 4. Frozen source files
 
-Read these before doing any new analysis:
+For a new coordinating chat, read in this order:
 
 1. `research/PROJECT_METHOD_AND_CONTEXT.md`
-2. `research/pidgeot/BLIND_PHASE_FREEZE.md`
-3. `research/pidgeot/02_FINAL_RAW_EVIDENCE_V1.md`
-4. `research/pidgeot/01_SINGLES_RAW_CROSSCHECK.md`
-5. `research/pidgeot/FINAL_REVIEW_INPUT_MANIFEST.md`
-6. `research/pidgeot/FINAL_INDEPENDENT_REVIEW_PROTOCOL.md`
-7. `research/pidgeot/04_INDEPENDENT_REVIEW_RETURN_PROTOCOL.md`
+2. `research/pidgeot/NEXT_CHAT_HANDOFF.md`
+3. `research/pidgeot/BLIND_PHASE_FREEZE.md`
+4. `research/pidgeot/02_FINAL_RAW_EVIDENCE_V1.md`
+5. `research/pidgeot/01_SINGLES_RAW_CROSSCHECK.md`
+6. `research/pidgeot/FINAL_REVIEW_INPUT_MANIFEST.md`
+7. `research/pidgeot/FINAL_INDEPENDENT_REVIEW_PROTOCOL.md`
+8. `research/pidgeot/04_INDEPENDENT_REVIEW_RETURN_PROTOCOL.md`
 
-Do **not** read `research/pidgeot/03_INTERNAL_BLIND_ANALYSIS_FREEZE.md` until the returned independent report has first been preserved and factually audited against the neutral/raw source set. After that audit, read it for historical comparison.
+At this boundary, **do not read**:
+- `research/pidgeot/03_INTERNAL_BLIND_ANALYSIS_FREEZE.md`
 
-The returned Claude report itself should be stored verbatim in a separate `research/pidgeot/independent_reviews/` file before any editing or comparison.
+until the independent blind report has been produced, preserved verbatim, and factually audited against the neutral/raw source set.
+
+This sequencing is deliberate: the coordinator's historical blind judgment must not contaminate the independent review or its first factual audit.
 
 ## 5. Neutral M-A engine evidence map
 
-The exact definitions, synthetic SPs, seeds, source provenance and limitations are in `02_FINAL_RAW_EVIDENCE_V1.md`. This shorthand is navigation only.
+The exact definitions, synthetic SP allocations, seeds, source provenance and limitations are in `02_FINAL_RAW_EVIDENCE_V1.md`. This list is navigation only and does not state a tier judgment.
 
-- E01: declared Pelipper / Rotom-W Thunderbolt threshold changes from KO without Wingtip to survival with Wingtip; actual HP damage ratio was separately checked.
-- E02: same initial Sneasler + Rotom-W pressure produces different two-turn board/resource states for custom Pidgeot vs Mega Dragonite; the scenario does not determine which full game is favored.
+- E01: declared Pelipper / Rotom-W Thunderbolt threshold changes from KO without Wingtip to survival with Wingtip; actual HP damage semantics were separately checked.
+- E02: same initial Sneasler + Rotom-W pressure produces different two-turn board/resource states for custom Pidgeot vs Mega Dragonite; the scenario does not establish which full game is favored.
 - E03: Speed-155 Modest custom Pidgeot can Tailwind before neutral max-SP Garchomp 154, allowing slower Pelipper to receive Tailwind and act before Garchomp in the same turn; Speed-124 bulky Pidgeot cannot.
 - E04: beside Mega Charizard Y, base Aerodactyl retains Wide Guard and high-speed Tailwind utility when Aerodactyl is not the selected Mega; base Pidgeot does not reproduce those exact functions in the paired scenario.
 - E05: official No Guard Mega Pidgeot does not protect allied Pelipper at the E01 threshold; custom Wingtip Pidgeot does.
@@ -90,7 +98,7 @@ The exact definitions, synthetic SPs, seeds, source provenance and limitations a
 
 There is no aggregate custom-Pidgeot ladder win rate, tournament result, optimized-SP proof, full M-B balance test, or full Gen 7 OU balance test.
 
-## 6. Important provenance / interpretation constraints
+## 6. Provenance / interpretation constraints
 
 - Limitless public teams expose species/item/ability/nature/moves but not Champions SPs. Synthetic SPs used in probes are test allocations, not player allocations.
 - Deterministic engine scenarios are not win-rate or tournament-performance evidence.
@@ -100,62 +108,72 @@ There is no aggregate custom-Pidgeot ladder win rate, tournament result, optimiz
 - Harness/parser/CI failures during development are engineering history, not competitive evidence.
 - Earlier analysis that omitted the Delta Stream/Strong Winds defensive effect was superseded before final evidence collection and must not be reused.
 
-## 7. Historical prior analyst record
+## 7. Independent blind review — next action
 
-The first coordinating analyst's blind reasoning, preregistered predictions, corrections, hypothesis updates and final pre-independent-review strength judgment are preserved verbatim in:
+Preferred first-pass input is exactly the neutral packet specified by:
 
-- `research/pidgeot/03_INTERNAL_BLIND_ANALYSIS_FREEZE.md`
+- `research/pidgeot/BLIND_INDEPENDENT_REVIEW_PROMPT.md`
+- `research/pidgeot/FINAL_REVIEW_INPUT_MANIFEST.md`
+- `research/pidgeot/FINAL_INDEPENDENT_REVIEW_PROTOCOL.md`
 
-This file is deliberately evaluative and is not a neutral evidence source.
+Do not append:
+- designer intent;
+- the prior analyst's internal freeze;
+- prior tier judgments;
+- supported/refuted hypothesis labels;
+- suggested conclusions.
 
-Do not summarize or reveal its conclusions to the independent reviewer before the returned report is frozen. In this workflow, the independent report already exists; nevertheless, audit that report against neutral/raw evidence first, then read the internal file for comparison. This prevents the audit itself from becoming a competitive-judgment alignment exercise.
+The user can use Claude Opus 5 Extra/Max for this independent blind review to conserve scarce GPT Work quota. Model choice is secondary to source isolation and zero-leading input.
 
-## 8. Returned independent report: next actions
+## 8. When the independent report returns
 
-When the user supplies the Claude report in the new chat:
+Follow `research/pidgeot/04_INDEPENDENT_REVIEW_RETURN_PROTOCOL.md`:
 
-1. save it verbatim before analysis;
-2. confirm it was generated before designer intent was revealed;
-3. audit only factual/source/engine/provenance claims against neutral/raw evidence;
-4. preserve any corrections in a separate audit note rather than rewriting the report;
-5. freeze the independent report plus audit note;
+1. store the report verbatim in `research/pidgeot/independent_reviews/`;
+2. record model/config if supplied;
+3. factually audit it against neutral/raw evidence only;
+4. store corrections/overclaims in a separate audit note;
+5. freeze report + audit;
 6. only then read `03_INTERNAL_BLIND_ANALYSIS_FREEZE.md` and compare the two blind records;
-7. only after both blind records are preserved should the user be asked for designer intent in their own words.
+7. only after both blind records are preserved should designer intent be collected.
 
-Detailed procedure:
-- `research/pidgeot/04_INDEPENDENT_REVIEW_RETURN_PROTOCOL.md`
+## 9. Designer-intent boundary
 
-## 9. Designer-intent reveal boundary
+When the workflow reaches this boundary, collect the designer's explanation in their own words **before** showing a synthesized blind conclusion.
 
-Do not reveal the prior analysts' combined conclusion to the user immediately before asking for intent.
-
-Ask the user to state, in their own words, the original:
+Ask for:
 - intended role(s);
 - target power/strength range;
 - reasoning behind stats/type/ability;
 - reasoning behind Work Up and Hyper Beam changes;
 - expected team structures/synergies;
 - expected weaknesses/counterplay;
-- any deliberate interaction the blind work may or may not have found.
+- deliberate interactions the blind work may or may not have found.
 
-Store this as a direct `DESIGNER INTENT` source before synthesizing it with blind conclusions.
+Store it as a direct `DESIGNER INTENT` source.
 
-## 10. Post-intent and final workflow
+## 10. Final synthesis model allocation
 
-After intent is preserved:
+After designer intent and any minimal post-intent verification are frozen:
 
-1. compare neutral evidence, prior analyst blind freeze, independent blind report, and designer intent as four distinct records;
-2. add only minimal targeted tests for a concrete unresolved discrepancy/intent claim that could materially change role, set, team structure, counterplay, opportunity cost or strength assessment;
-3. do not reopen unlimited M-A scenario mining;
-4. prepare a final evidence pack with raw/direct material first;
-5. use a highest-reasoning model for final synthesis if desired.
+- build a raw-first final evidence pack;
+- use a highest-reasoning model for final synthesis if desired.
 
-The user can access GPT Work high/max-style reasoning and Claude Opus 5 Extra/Max. Model choice should not change source isolation. The scarce highest-reasoning pass is most useful once the evidence, independent report, designer intent and any necessary post-intent tests have all been frozen.
+The user can access:
+- GPT Work high/max-style reasoning, but quota is scarce;
+- Claude Opus 5 Extra/Max, with more concern about prose quality.
+
+Recommended allocation:
+- independent blind evidence review can use Claude Opus 5 Extra/Max;
+- reserve GPT Work Max/Extra-High-like budget for the final integrated synthesis if available;
+- optionally use a separate adversarial review pass after the final draft.
+
+No model may be given a requested tier, desired outcome, or persuasive summary. Inputs must include suitable original/raw information and remain zero-leading.
 
 ## 11. Communication/process constraints
 
-- Continue automatically when no genuine user decision/input is needed.
-- Do not ask the user to repeat mechanics/results that are already in the repository.
+- Continue automatically when no genuine user input is needed.
+- Do not ask the user to repeat mechanics/results already in the repository.
 - Do not make the user shuttle existing repo material between tools/AIs.
 - Prefer a small number of high-information tests across different team structures and plausible actions.
 - Keep `CANONICAL RULE`, `PUBLIC META`, `ENGINE`, `CALC`, `INFERENCE`, `UNRESOLVED`, and later `DESIGNER INTENT` distinct.
